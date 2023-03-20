@@ -3,52 +3,55 @@ import toast from "react-hot-toast";
 import useSWR, { mutate } from "swr";
 import { useDebounce } from "use-debounce";
 import { useRouter } from "next/router";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo, PropsWithChildren, ReactNode } from "react";
+import type { ChangeEvent } from "react";
 
 import Layout from "@/components/app/Layout";
 import Loader from "@/components/app/Loader";
 import LoadingDots from "@/components/app/loading-dots";
 import { fetcher } from "@/lib/fetcher";
 import { HttpMethod } from "@/types";
-
-import type { ChangeEvent } from "react";
-
 import type { WithSitePost } from "@/types";
+
+import isHotkey from 'is-hotkey'
+import { Editable, withReact, useSlate, Slate } from 'slate-react'
+import {
+  Editor,
+  Transforms,
+  createEditor,
+  Descendant,
+  Element as SlateElement,
+  BaseElement,
+} from 'slate'
+import { withHistory } from 'slate-history'
+import { CustomEditor, CustomElement, CustomText } from "@/types/editor";
+
+import { Button, Icon, Toolbar } from '@/components/editor/components'
+
+const HOTKEYS = {
+  'mod+b': 'bold',
+  'mod+i': 'italic',
+  'mod+u': 'underline',
+  'mod+`': 'code',
+}
+
+const LIST_TYPES = ['numbered-list', 'bulleted-list']
+const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
 
 interface PostData {
   title: string;
   description: string;
-  content: string;
+  content: Descendant[];
 }
 
-const CONTENT_PLACEHOLDER = `Write some content. Markdown supported:
 
-# A H1 header
-
-## A H2 header
-
-Fun fact: You embed tweets by pasting the tweet URL in a new line:
-
-2nd paragraph. *Italic*, and **bold**. Itemized lists look like:
-
-  * this one
-  * that one
-  * the other one
-
-Ordered lists look like:
-
-  1. first item
-  2. second item
-  3. third item
-
-> Block quotes are written like so.
->
-> They can span multiple paragraphs,
-> if you like.
-
-            `;
 
 export default function Post() {
+
+  const renderElement = useCallback(props => <Element {...props} />, [])
+  const renderLeaf = useCallback(props => <Leaf {...props} />, [])
+  const editor: CustomEditor = useMemo(() => withHistory(withReact(createEditor())), [])
+
   const router = useRouter();
 
   // TODO: Undefined check redirects to error
@@ -64,6 +67,10 @@ export default function Post() {
     }
   );
 
+  const [publishing, setPublishing] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+
+
   const [savedState, setSavedState] = useState(
     post
       ? `Last saved at ${Intl.DateTimeFormat("en", { month: "short" }).format(
@@ -77,18 +84,19 @@ export default function Post() {
       : "Saving changes..."
   );
 
+  // стейт для всіх даних посту
   const [data, setData] = useState<PostData>({
     title: "",
     description: "",
-    content: "",
+    content: [],
   });
 
   useEffect(() => {
-    if (post)
+    if (post) // from useSWR
       setData({
         title: post.title ?? "",
         description: post.description ?? "",
-        content: post.content ?? "",
+        content: post.content as Descendant[] ?? null,   //? не знаю чи правильно "as Descendant[]"
       });
   }, [post]);
 
@@ -138,9 +146,6 @@ export default function Post() {
   useEffect(() => {
     if (debouncedData.title) saveChanges(debouncedData);
   }, [debouncedData, saveChanges]);
-
-  const [publishing, setPublishing] = useState(false);
-  const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
     if (data.title && data.description && data.content && !publishing)
@@ -241,19 +246,44 @@ export default function Post() {
               <div className="w-full border-t border-gray-300" />
             </div>
           </div>
-          <TextareaAutosize
-            name="content"
-            onInput={(e: ChangeEvent<HTMLTextAreaElement>) =>
-              setData({
-                ...data,
-                content: (e.target as HTMLTextAreaElement).value,
-              })
-            }
-            className="w-full px-2 py-3 text-gray-800 placeholder-gray-400 text-lg mb-5 resize-none border-none focus:outline-none focus:ring-0"
-            placeholder={CONTENT_PLACEHOLDER}
-            value={data.content}
-          />
+
+
+          <Slate editor={editor} value={initialValue}>
+            <Toolbar>
+              <MarkButton format="bold" icon="format_bold" />
+              <MarkButton format="italic" icon="format_italic" />
+              <MarkButton format="underline" icon="format_underlined" />
+              <MarkButton format="code" icon="code" />
+              <BlockButton format="heading-one" icon="looks_one" />
+              <BlockButton format="heading-two" icon="looks_two" />
+              <BlockButton format="block-quote" icon="format_quote" />
+              <BlockButton format="numbered-list" icon="format_list_numbered" />
+              <BlockButton format="bulleted-list" icon="format_list_bulleted" />
+              <BlockButton format="left" icon="format_align_left" />
+              <BlockButton format="center" icon="format_align_center" />
+              <BlockButton format="right" icon="format_align_right" />
+              <BlockButton format="justify" icon="format_align_justify" />
+            </Toolbar>
+            <Editable
+              renderElement={renderElement}
+              renderLeaf={renderLeaf}
+              placeholder="Enter some rich text…"
+              spellCheck
+              autoFocus
+              onKeyDown={event => {
+                for (const hotkey in HOTKEYS) {
+                  if (isHotkey(hotkey, event as any)) {
+                    event.preventDefault()
+                    const mark = HOTKEYS[hotkey]
+                    toggleMark(editor, mark)
+                  }
+                }
+              }}
+            />
+          </Slate>
+
         </div>
+
         <footer className="h-20 z-5 fixed bottom-0 inset-x-0 border-solid border-t border-gray-500 bg-white">
           <div className="max-w-screen-xl mx-auto px-10 sm:px-20 h-full flex justify-between items-center">
             <div className="text-sm">
@@ -285,3 +315,184 @@ export default function Post() {
     </>
   );
 }
+
+const toggleBlock = (editor: CustomEditor, format: string) => {
+  const isActive = isBlockActive(
+    editor,
+    format,
+    TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type'
+  )
+  const isList = LIST_TYPES.includes(format)
+
+  Transforms.unwrapNodes(editor, {
+    match: n =>
+      !Editor.isEditor(n) &&
+      SlateElement.isElement(n) &&
+      LIST_TYPES.includes(n.type) &&
+      !TEXT_ALIGN_TYPES.includes(format),
+    split: true,
+  })
+  let newProperties: Partial<SlateElement>
+  if (TEXT_ALIGN_TYPES.includes(format)) {
+    newProperties = {
+      align: isActive ? undefined : format,
+    }
+  } else {
+    newProperties = {
+      type: isActive ? 'paragraph' : isList ? 'list-item' : format,
+    }
+  }
+  Transforms.setNodes<SlateElement>(editor, newProperties)
+
+  if (!isActive && isList) {
+    const block = { type: format, children: [] }
+    Transforms.wrapNodes(editor, block)
+  }
+}
+
+const toggleMark = (editor: CustomEditor, format: string) => {
+  const isActive = isMarkActive(editor, format)
+
+  if (isActive) {
+    Editor.removeMark(editor, format)
+  } else {
+    Editor.addMark(editor, format, true)
+  }
+}
+
+const isBlockActive = (editor: CustomEditor, format: string, blockType = 'type') => {
+  const { selection } = editor
+  if (!selection) return false
+
+  const [match] = Array.from(
+    Editor.nodes(editor, {
+      at: Editor.unhangRange(editor, selection),
+      match: n =>
+        !Editor.isEditor(n) &&
+        SlateElement.isElement(n) &&
+        n[blockType] === format,
+    })
+  )
+
+  return !!match
+}
+
+const isMarkActive = (editor: CustomEditor, format: string) => {
+  const marks = Editor.marks(editor)
+  return marks ? marks[format] === true : false
+}
+
+const Element = ({ attributes, children, element }: { attributes: Node, children: ReactNode, element: CustomElement }) => {
+  const style = { textAlign: element.align ?? '' }
+  switch (element.type) {
+    case 'block-quote':
+      return (
+        <blockquote style={style} {...attributes}>
+          {children}
+        </blockquote>
+      )
+    case 'bulleted-list':
+      return (
+        <ul style={style} {...attributes}>
+          {children}
+        </ul>
+      )
+    case 'heading-one':
+      return (
+        <h1 style={style} {...attributes}>
+          {children}
+        </h1>
+      )
+    case 'heading-two':
+      return (
+        <h2 style={style} {...attributes}>
+          {children}
+        </h2>
+      )
+    case 'list-item':
+      return (
+        <li style={style} {...attributes}>
+          {children}
+        </li>
+      )
+    case 'numbered-list':
+      return (
+        <ol style={style} {...attributes}>
+          {children}
+        </ol>
+      )
+    default:
+      return (
+        <p style={style} {...attributes}>
+          {children}
+        </p>
+      )
+  }
+}
+
+const Leaf = ({ attributes, children, leaf }: { attributes: Node, children: ReactNode, leaf: CustomText }) => {
+  if (leaf.bold) {
+    children = <strong>{children}</strong>
+  }
+
+  if (leaf.code) {
+    children = <code>{children}</code>
+  }
+
+  if (leaf.italic) {
+    children = <em>{children}</em>
+  }
+
+  if (leaf.underline) {
+    children = <u>{children}</u>
+  }
+
+  return <span {...attributes}>{children}</span>
+}
+
+const BlockButton = ({ format, icon }: { format: string }) => {
+  const editor = useSlate()
+  return (
+    <Button
+      active={isBlockActive(
+        editor,
+        format,
+        TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type'
+      )}
+      onMouseDown={event => {
+        event.preventDefault()
+        toggleBlock(editor, format)
+      }}
+    >
+      <Icon>{icon}</Icon>
+    </Button>
+  )
+}
+
+const MarkButton = ({ format, icon }: { format: string }) => {
+  const editor = useSlate()
+  return (
+    <Button
+      active={isMarkActive(editor, format)}
+      onMouseDown={event => {
+        event.preventDefault()
+        toggleMark(editor, format)
+      }}
+    >
+      <Icon>{icon}</Icon>
+    </Button>
+  )
+}
+
+const initialValue: Descendant[] = [
+  {
+    type: 'paragraph',
+    children: [
+      { text: 'Почніть ' },
+      { text: 'створювати', bold: true },
+      { text: ' свій, ' },
+      { text: 'найкращий', italic: true },
+      { text: ' пост!' },
+    ],
+  },
+]

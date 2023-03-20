@@ -137,6 +137,12 @@ export async function createPost(
             id: siteId,
           },
         },
+        content: [
+          {
+            type: "paragraph",
+            children: [{ text: "" }],
+          },
+        ],
       },
     });
 
