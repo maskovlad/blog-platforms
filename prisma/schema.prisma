@@ -72,7 +72,7 @@ model Post {
   id            String   @id @default(cuid())
   title         String?  @db.Text
   description   String?  @db.Text
-  content       Json?  
+  content       String?  @db.Text
   slug          String   @default(cuid())
   image         String?  @db.Text
   imageBlurhash String?  @db.Text
