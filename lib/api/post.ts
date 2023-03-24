@@ -10,6 +10,8 @@ import { getBlurDataURL, placeholderBlurhash } from "@/lib/util";
 
 import type { WithSitePost } from "@/types";
 
+import { Descendant } from "slate";
+
 interface AllPosts {
   posts: Array<Post>;
   site: Site | null;
@@ -111,6 +113,20 @@ export async function createPost(
 }>> {
   const { siteId } = req.query;
 
+  const initialValue: Descendant[] = [
+    {
+      type: "paragraph",
+      children: [
+        { text: "Почніть " },
+        { text: "створювати", bold: true },
+        { text: " свій, " },
+        { text: "найкращий", italic: true },
+        { text: " пост! Site ID=" },
+        { text: siteId as string },
+      ],
+    },
+  ];
+
   if (!siteId || typeof siteId !== "string" || !session?.user?.id) {
     return res
       .status(400)
@@ -137,12 +153,7 @@ export async function createPost(
             id: siteId,
           },
         },
-        content: [
-          {
-            type: "paragraph",
-            children: [{ text: "" }],
-          },
-        ],
+        content: initialValue,
       },
     });
 

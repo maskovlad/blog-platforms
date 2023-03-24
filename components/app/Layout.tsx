@@ -32,6 +32,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
   return (
     <>
       <div>
+
         <Head>
           <title>{title}</title>
           <link rel="icon" href={logo} />
@@ -58,6 +59,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
           <meta name="twitter:description" content={description} />
           <meta name="twitter:image" content={logo} />
         </Head>
+
         <div className="absolute left-0 right-0 h-16 border-b bg-white border-gray-200">
           <div className="flex justify-between items-center h-full max-w-screen-xl mx-auto px-10 sm:px-20">
             <div className="flex space-x-4">
@@ -103,6 +105,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
             </a>
           </div>
         </div>
+
         {rootPage && (
           <div className="absolute left-0 right-0 top-16 flex justify-center items-center font-cal space-x-16 border-b bg-white border-gray-200">
             <Link
@@ -123,6 +126,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
             </Link>
           </div>
         )}
+
         {sitePage && (
           <div className="absolute left-0 right-0 top-16 font-cal border-b bg-white border-gray-200">
             <div className="flex justify-between items-center space-x-16 max-w-screen-xl mx-auto px-10 sm:px-20">
@@ -159,6 +163,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
             </div>
           </div>
         )}
+
         {postPage && (
           <div className="absolute left-0 right-0 top-16 font-cal border-b bg-white border-gray-200">
             <div className="flex justify-between items-center space-x-16 max-w-screen-xl mx-auto px-10 sm:px-20">
@@ -197,6 +202,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
             </div>
           </div>
         )}
+        
         <div className="pt-28">{children}</div>
       </div>
     </>
