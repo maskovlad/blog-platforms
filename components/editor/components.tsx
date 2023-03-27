@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { Ref, PropsWithChildren } from 'react'
 import ReactDOM from 'react-dom'
 import { cx, css } from '@emotion/css'
@@ -7,6 +8,7 @@ interface BaseProps {
   [key: string]: unknown
 }
 type OrNull<T> = T | null
+
 
 export const Button = React.forwardRef(
   (
@@ -25,7 +27,7 @@ export const Button = React.forwardRef(
   ) => (
     <span
       {...props}
-      ref={ref}
+      ref={ref as any}
       className={cx(
         className,
         css`
@@ -43,7 +45,7 @@ export const Button = React.forwardRef(
   )
 )
 
-/* export const EditorValue = React.forwardRef(
+export const EditorValue = React.forwardRef(
   (
     {
       className,
@@ -62,7 +64,7 @@ export const Button = React.forwardRef(
       .join('\n')
     return (
       <div
-        ref={ref}
+        ref={ref as any}
         {...props}
         className={cx(
           className,
@@ -80,7 +82,7 @@ export const Button = React.forwardRef(
             background: #f8f8f8;
           `}
         >
-          Slate's value as text
+          Slate&apos;s value as text
         </div>
         <div
           className={css`
@@ -98,7 +100,7 @@ export const Button = React.forwardRef(
       </div>
     )
   }
-) */
+)
 
 export const Icon = React.forwardRef(
   (
@@ -107,7 +109,7 @@ export const Icon = React.forwardRef(
   ) => (
     <span
       {...props}
-      ref={ref}
+      ref={ref as any}
       className={cx(
         'material-icons',
         className,
@@ -120,14 +122,14 @@ export const Icon = React.forwardRef(
   )
 )
 
-/* export const Instruction = React.forwardRef(
+export const Instruction = React.forwardRef(
   (
     { className, ...props }: PropsWithChildren<BaseProps>,
     ref: Ref<OrNull<HTMLDivElement>>
   ) => (
     <div
       {...props}
-      ref={ref}
+      ref={ref as any}
       className={cx(
         className,
         css`
@@ -140,7 +142,7 @@ export const Icon = React.forwardRef(
       )}
     />
   )
-) */
+)
 
 export const Menu = React.forwardRef(
   (
@@ -150,7 +152,7 @@ export const Menu = React.forwardRef(
     <div
       {...props}
       data-test-id="menu"
-      ref={ref}
+      ref={ref as any}
       className={cx(
         className,
         css`
@@ -167,12 +169,12 @@ export const Menu = React.forwardRef(
   )
 )
 
-/* export const Portal = ({ children }) => {
+export const Portal = ({ children }) => {
   return typeof document === 'object'
     ? ReactDOM.createPortal(children, document.body)
     : null
 }
- */
+
 export const Toolbar = React.forwardRef(
   (
     { className, ...props }: PropsWithChildren<BaseProps>,
@@ -180,15 +182,17 @@ export const Toolbar = React.forwardRef(
   ) => (
     <Menu
       {...props}
-      ref={ref}
+      ref={ref as any}
       className={cx(
         className,
         css`
-          position: relative;
-          padding: 1px 18px 17px;
-          margin: 0 -20px;
-          border-bottom: 2px solid #eee;
-          margin-bottom: 20px;
+          position: sticky;
+          top:0;
+          background: white;
+          padding: 1rem;
+          border-top: 1px solid #d6d6d6;
+          border-bottom: 1px solid #d6d6d6;
+          z-index: 99;
         `
       )}
     />

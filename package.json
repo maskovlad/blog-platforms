@@ -30,6 +30,7 @@
     "react-highlight": "^0.15.0",
     "react-hot-toast": "^2.4.0",
     "react-textarea-autosize": "^8.4.0",
+    "react-tooltip": "^5.10.1",
     "slate": "^0.91.4",
     "slate-history": "^0.86.0",
     "slate-react": "^0.91.11",

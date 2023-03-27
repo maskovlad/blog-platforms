@@ -14,6 +14,10 @@ import { CustomEditor, CustomElement, CustomText } from "@/types/editor";
 import { Button, Icon, Toolbar } from '@/components/editor/components'
 import { useCallback, useMemo, useState } from 'react';
 
+import { Tooltip } from 'react-tooltip'
+import 'react-tooltip/dist/react-tooltip.css';
+import { cx, css } from '@emotion/css'
+
 const HOTKEYS = {
   'mod+b': 'bold',
   'mod+i': 'italic',
@@ -24,56 +28,59 @@ const HOTKEYS = {
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
 
-export default function SviyEditor({ content, onChange }: { content: Descendant[], onChange:any }) {
+export default function SviyEditor({ content, onChange }: { content: Descendant[], onChange: any }) {
 
   const renderElement = useCallback(props => <Element {...props} />, [])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
   const editor: CustomEditor = useMemo(() => withHistory(withReact(createEditor())), [])
 
   return (
-    <Slate editor={editor} value={content} onChange={(content) => onChange(content)}>
-      <Toolbar>
-        <MarkButton format="bold" icon="format_bold" />
-        <MarkButton format="italic" icon="format_italic" />
-        <MarkButton format="underline" icon="format_underlined" />
-        <MarkButton format="code" icon="code" />
-        <BlockButton format="heading-one" icon="looks_one" />
-        <BlockButton format="heading-two" icon="looks_two" />
-        <BlockButton format="block-quote" icon="format_quote" />
-        <BlockButton format="numbered-list" icon="format_list_numbered" />
-        <BlockButton format="bulleted-list" icon="format_list_bulleted" />
-        <BlockButton format="left" icon="format_align_left" />
-        <BlockButton format="center" icon="format_align_center" />
-        <BlockButton format="right" icon="format_align_right" />
-        <BlockButton format="justify" icon="format_align_justify" />
-        <BlockButton format="code-block" icon="integration_instructions" />
-      </Toolbar>
-      <Editable
-        renderElement={renderElement}
-        renderLeaf={renderLeaf}
-        placeholder="Enter some rich text…"
-        spellCheck
-        autoFocus
-        onKeyDown={event => {
-          for (const hotkey in HOTKEYS) {
-            if (isHotkey(hotkey, event as any)) {
-              event.preventDefault()
-              const mark = HOTKEYS[hotkey]
-              toggleMark(editor, mark)
+    <>
+      <Tooltip id='format-tooltip' />
+      <Slate editor={editor} value={content} onChange={(content) => onChange(content)}>
+        <Toolbar>
+          <MarkButton format="bold" icon="format_bold" hint="Жирний" />
+          <MarkButton format="italic" icon="format_italic" hint="Нахилений" />
+          <MarkButton format="underline" icon="format_underlined" hint="Підкреслений" />
+          <MarkButton format="code" icon="code" hint="Код" />
+          <BlockButton format="heading-one" icon="looks_one" hint="Заголовок 1" />
+          <BlockButton format="heading-two" icon="looks_two" hint="Заголовок 2" />
+          <BlockButton format="block-quote" icon="format_quote" hint="Цитата" />
+          <BlockButton format="numbered-list" icon="format_list_numbered" hint="Нумерований" />
+          <BlockButton format="bulleted-list" icon="format_list_bulleted" hint="Список" />
+          <BlockButton format="left" icon="format_align_left" hint="По лівому краю" />
+          <BlockButton format="center" icon="format_align_center" hint="По центру" />
+          <BlockButton format="right" icon="format_align_right" hint="По правому краю" />
+          <BlockButton format="justify" icon="format_align_justify" hint="По ширині" />
+          <BlockButton format="code-block" icon="integration_instructions" hint="Блок коду" />
+        </Toolbar>
+        <Editable
+          renderElement={renderElement}
+          renderLeaf={renderLeaf}
+          placeholder="Enter some rich text…"
+          spellCheck
+          autoFocus
+          onKeyDown={event => {
+            for (const hotkey in HOTKEYS) {
+              if (isHotkey(hotkey, event as any)) {
+                event.preventDefault()
+                const mark = HOTKEYS[hotkey]
+                toggleMark(editor, mark)
+              }
             }
-          }
-        }}
-      />
-    </Slate>
+          }}
+        />
+      </Slate>
+    </>
   )
 
-  
+
 
 }
 
 
-const toggleBlock = (editor: CustomEditor, format: string) => {
-  
+const toggleBlock = (editor, format) => {
+
   const isActive = isBlockActive(
     editor,
     format,
@@ -89,7 +96,9 @@ const toggleBlock = (editor: CustomEditor, format: string) => {
       !TEXT_ALIGN_TYPES.includes(format),
     split: true,
   })
+
   let newProperties: Partial<SlateElement>
+
   if (TEXT_ALIGN_TYPES.includes(format)) {
     newProperties = {
       align: isActive ? undefined : format,
@@ -99,16 +108,16 @@ const toggleBlock = (editor: CustomEditor, format: string) => {
       type: isActive ? 'paragraph' : isList ? 'list-item' : format,
     }
   }
-  
+
   Transforms.setNodes<SlateElement>(editor, newProperties)
 
   if (!isActive && isList) {
-    const block:CustomElement = { type: format, children: [] }
+    const block: CustomElement = { type: format, children: [] }
     Transforms.wrapNodes(editor, block)
   }
 }
 
-const toggleMark = (editor: CustomEditor, format: string) => {
+const toggleMark = (editor, format) => {
   const isActive = isMarkActive(editor, format)
 
   if (isActive) {
@@ -140,7 +149,7 @@ const isMarkActive = (editor: CustomEditor, format: string) => {
   return marks ? marks[format] === true : false
 }
 
-const Element = ({ attributes, children, element }: { attributes: Node, children: ReactNode, element: CustomElement }) => {
+const Element = ({ attributes, children, element }) => {
   const style = { textAlign: element.align ?? '' }
   switch (element.type) {
     case 'block-quote':
@@ -151,12 +160,6 @@ const Element = ({ attributes, children, element }: { attributes: Node, children
         >
           {children}
         </blockquote>
-      )
-    case 'bulleted-list':
-      return (
-        <ul style={style} {...attributes}>
-          {children}
-        </ul>
       )
     case 'heading-one':
       return (
@@ -172,7 +175,7 @@ const Element = ({ attributes, children, element }: { attributes: Node, children
       )
     case 'list-item':
       return (
-        <li style={style} className='list-disc' {...attributes}>
+        <li style={style} {...attributes}>
           {children}
         </li>
       )
@@ -181,6 +184,12 @@ const Element = ({ attributes, children, element }: { attributes: Node, children
         <ol style={style} className='list-decimal' {...attributes}>
           {children}
         </ol>
+      )
+    case 'bulleted-list':
+      return (
+        <ul style={style} className='list-disc' {...attributes}>
+          {children}
+        </ul>
       )
     case 'code-block':
       return (
@@ -197,7 +206,7 @@ const Element = ({ attributes, children, element }: { attributes: Node, children
   }
 }
 
-const Leaf = ({ attributes, children, leaf }: { attributes: Node, children: ReactNode, leaf: CustomText }) => {
+const Leaf = ({ attributes, children, leaf }: { attributes: Node, children: any, leaf: CustomText }) => {
   if (leaf.bold) {
     children = <strong>{children}</strong>
   }
@@ -217,8 +226,9 @@ const Leaf = ({ attributes, children, leaf }: { attributes: Node, children: Reac
   return <span {...attributes}>{children}</span>
 }
 
-const BlockButton = ({ format, icon }: { format: string, icon:string }) => {
+const BlockButton = ({ format, icon, hint }: { format: string, icon: string, hint: string }) => {
   const editor = useSlate()
+
   return (
     <Button
       active={isBlockActive(
@@ -230,13 +240,14 @@ const BlockButton = ({ format, icon }: { format: string, icon:string }) => {
         event.preventDefault()
         toggleBlock(editor, format)
       }}
+      data-tooltip-id="format-tooltip" data-tooltip-content={hint}
     >
       <Icon>{icon}</Icon>
     </Button>
   )
 }
 
-const MarkButton = ({ format, icon }: { format: string, icon: string }) => {
+const MarkButton = ({ format, icon, hint }: { format: string, icon: string, hint: string }) => {
   const editor = useSlate()
   return (
     <Button
@@ -245,6 +256,7 @@ const MarkButton = ({ format, icon }: { format: string, icon: string }) => {
         event.preventDefault()
         toggleMark(editor, format)
       }}
+      data-tooltip-id="format-tooltip" data-tooltip-content={hint}
     >
       <Icon>{icon}</Icon>
     </Button>

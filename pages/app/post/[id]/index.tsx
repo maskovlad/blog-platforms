@@ -15,7 +15,6 @@ import type { WithSitePost } from "@/types";
 
 import { Descendant } from "slate";
 import SviyEditor from "@/components/editor/SviyEditor";
-import RichTextEditor from "@/components/editor/RichTextEditor";
 import Head from "next/head";
 
 interface PostData {
@@ -50,11 +49,11 @@ export default function Post() {
   // рядок стану
   const [savedState, setSavedState] = useState(
     post
-      ? `Збереження ${Intl.DateTimeFormat("en", { month: "short" }).format(
+      ? `Збереження ${Intl.DateTimeFormat("uk", { month: "short" }).format(
         new Date(post.updatedAt)
-      )} ${Intl.DateTimeFormat("en", { day: "2-digit" }).format(
+      )} ${Intl.DateTimeFormat("uk", { day: "2-digit" }).format(
         new Date(post.updatedAt)
-      )} ${Intl.DateTimeFormat("en", {
+      )} ${Intl.DateTimeFormat("uk", {
         hour: "numeric",
         minute: "numeric",
       }).format(new Date(post.updatedAt))}`
@@ -81,7 +80,7 @@ export default function Post() {
   // збереження
   const saveChanges = useCallback(
     async (data: PostData) => {
-      setSavedState("Saving changes...");
+      setSavedState("Зберігаю...");
 
       try {
         const response = await fetch("/api/post", {
@@ -100,11 +99,11 @@ export default function Post() {
         if (response.ok) {
           const responseData = await response.json();
           setSavedState(
-            `Last save ${Intl.DateTimeFormat("en", { month: "short" }).format(
+            `Збережено ${Intl.DateTimeFormat("uk", { month: "short" }).format(
               new Date(responseData.updatedAt)
-            )} ${Intl.DateTimeFormat("en", { day: "2-digit" }).format(
+            )} ${Intl.DateTimeFormat("uk", { day: "2-digit" }).format(
               new Date(responseData.updatedAt)
-            )} at ${Intl.DateTimeFormat("en", {
+            )} at ${Intl.DateTimeFormat("uk", {
               hour: "numeric",
               minute: "numeric",
             }).format(new Date(responseData.updatedAt))}`
@@ -198,14 +197,32 @@ export default function Post() {
 
   return (
     <>
-    <Head>
+      <Head>
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
-    </Head>
+      </Head>
       <Layout siteId={post?.site?.id}>
-        <div className="max-w-screen-xl mx-auto px-10 sm:px-20 mt-10 mb-16">
+        <div className="relative max-w-screen-xl mx-auto px-10 sm:px-20 mt-10 mb-16">
+
+          <button
+            onClick={async () => {
+              await publish();
+            }}
+            title={
+              disabled
+                ? "Пост повинен мати заголовок, опис і контент."
+                : "Публікувати"
+            }
+            disabled={disabled}
+            className={`${disabled
+              ? "cursor-not-allowed bg-gray-300 border-gray-300"
+              : "bg-black hover:bg-white hover:text-black border-black"
+              } absolute top-1 right-1 px-4 h-12 text-lg text-white border-2 focus:outline-none transition-all ease-in-out duration-150`}
+          >
+            {publishing ? <LoadingDots /> : "Публікувати  →"}
+          </button>
 
           <TextareaAutosize
             name="title"
@@ -233,46 +250,20 @@ export default function Post() {
             value={data.description}
           />
 
-          <div className="relative mb-6">
-            <div
-              className="absolute inset-0 flex items-center"
-              aria-hidden="true"
-            >
-              <div className="w-full border-t border-gray-300" />
-            </div>
-          </div>
-
-          {data?.content && ( 
+          {data?.content && (
             <SviyEditor content={data.content as Descendant[]} onChange={onChange} />
-          )} 
+          )}
           {/* <RichTextEditor /> */}
         </div>
 
-        <footer className="h-20 z-5 fixed bottom-0 inset-x-0 border-solid border-t border-gray-500 bg-white">
+        <footer className="h-8 z-5 fixed bottom-0 inset-x-0 border-solid border-t border-gray-500 bg-white">
           <div className="max-w-screen-xl mx-auto px-10 sm:px-20 h-full flex justify-between items-center">
             <div className="text-sm">
               <strong>
-                <p>{post?.published ? "Published" : "Draft"}</p>
+                {post?.published ? "Опубліковано" : "Чорновик"}
               </strong>
-              <p>{savedState}</p>
+              {' '}|{' '}{savedState}
             </div>
-            <button
-              onClick={async () => {
-                await publish();
-              }}
-              title={
-                disabled
-                  ? "Post must have a title, description, and content to be published."
-                  : "Publish"
-              }
-              disabled={disabled}
-              className={`${disabled
-                ? "cursor-not-allowed bg-gray-300 border-gray-300"
-                : "bg-black hover:bg-white hover:text-black border-black"
-                } mx-2 w-32 h-12 text-lg text-white border-2 focus:outline-none transition-all ease-in-out duration-150`}
-            >
-              {publishing ? <LoadingDots /> : "Publish  →"}
-            </button>
           </div>
         </footer>
 
