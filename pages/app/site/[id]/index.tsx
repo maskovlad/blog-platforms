@@ -10,6 +10,7 @@ import { fetcher } from "@/lib/fetcher";
 import { HttpMethod } from "@/types";
 
 import type { Post, Site } from "@prisma/client";
+import { css } from "@emotion/css";
 
 interface SitePostData {
   posts: Array<Post>;
@@ -22,6 +23,7 @@ export default function SiteIndex() {
   const router = useRouter();
   const { id: siteId } = router.query;
 
+  // оновлення даних з кешу useSWR
   const { data } = useSWR<SitePostData>(
     siteId && `/api/post?siteId=${siteId}&published=true`,
     fetcher,
@@ -30,6 +32,7 @@ export default function SiteIndex() {
     }
   );
 
+  // створення посту
   async function createPost(siteId: string) {
     try {
       const res = await fetch(`/api/post?siteId=${siteId}`, {
@@ -50,9 +53,41 @@ export default function SiteIndex() {
 
   return (
     <Layout>
-      <div className="py-20 max-w-screen-xl mx-auto px-10 sm:px-20">
-        <div className="flex flex-col sm:flex-row space-y-5 sm:space-y-0 justify-between items-center">
-          <h1 className="font-cal text-5xl">
+      <div
+        className={css`
+          padding-left: 2.5rem;
+          padding-right: 2.5rem;
+          padding-top: 5rem;
+          padding-bottom: 5rem;
+          margin-left: auto;
+          margin-right: auto;
+          max-width: 1280px;
+
+          @media (min-width: 640px) {
+            padding-left: 5rem;
+            padding-right: 5rem;
+          }
+        `}
+      >
+        <div
+          className={css`
+            display: flex;
+            margin-top: 1.25rem;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+
+            @media (min-width: 640px) {
+              margin-top: 0;
+              flex-direction: row;
+            }
+          `}
+        >
+          <h1
+            className={css`
+              font-size: 3rem;
+            `}
+          >
             Пости для {data ? data?.site?.name : "..."}
           </h1>
           <button
@@ -60,40 +95,121 @@ export default function SiteIndex() {
               setCreatingPost(true);
               createPost(siteId as string);
             }}
-            className={`${creatingPost
-              ? "cursor-not-allowed bg-gray-300 border-gray-300"
-              : "text-white bg-black hover:bg-white hover:text-black border-black"
-              } font-cal text-lg w-3/4 sm:w-48 tracking-wide border-2 px-5 py-3 transition-all ease-in-out duration-150`}
+            className={css`
+              padding-top: 0.5rem;
+              padding-bottom: 0.5rem;
+              padding-left: 1rem;
+              padding-right: 1rem;
+              transition-property: all;
+              transition-duration: 150ms;
+              transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+              font-size: 1.125rem;
+              line-height: 1.75rem;
+              letter-spacing: 0.025em;
+              width: 75%;
+              border-width: 2px;
+
+              @media (min-width: 640px) {
+                width: 12rem;
+              }
+              ${creatingPost
+                ? "background-color: #D1D5DB;border-color: #D1D5DB;cursor: not-allowed;"
+                : "background-color: #42cc00;color: #ffffff;border-color: #42cc00;:hover{background-color: #ffffff; color: #42cc00;}"}
+            `}
           >
             {creatingPost ? (
               <LoadingDots />
             ) : (
               <>
-                Новий Пост <span className="ml-2">＋</span>
+                Новий Пост{" "}
+                <span
+                  className={css`
+                    margin-left: 0.5rem;
+                  `}
+                >
+                  ＋
+                </span>
               </>
             )}
           </button>
         </div>
-        <div className="my-10 grid gap-y-10">
+
+        {/* список постів */}
+        <div
+          className={css`
+            display: grid;
+            margin-top: 2.5rem;
+            margin-bottom: 2.5rem;
+            row-gap: 2.5rem;
+          `}
+        >
           {data ? (
             data.posts.length > 0 ? (
               data.posts.map((post) => (
+                <div
+                  key={post.id}
+                  className={css`
+                    display: block;
 
-                <div key={post.id} className='block md:grid grid-cols-[repeat(auto-fit,minmax(325px,1fr))]'>
-
+                    @media (min-width: 768px) {
+                      display: grid;
+                      grid-template-columns: repeat(
+                        auto-fit,
+                        minmax(325px, 1fr)
+                      );
+                    }
+                  `}
+                >
                   <Link href={`/post/${post.id}`}>
-                    <div className="flex flex-col md:flex-row md:h-60 rounded-lg overflow-hidden">
-                      <div className="relative w-full h-60 md:h-auto md:flex-none">
+                    <div
+                      className={css`
+                        display: flex;
+                        overflow: hidden;
+                        flex-direction: column;
+                        border-radius: 0.5rem;
+
+                        @media (min-width: 768px) {
+                          flex-direction: row;
+                        }
+                      `}
+                    >
+                      <div
+                        className={css`
+                          position: relative;
+                          width: 100%;
+
+                          @media (min-width: 768px) {
+                            flex: none;
+                            height: auto;
+                          }
+                        `}
+                      >
                         {post.image ? (
                           <BlurImage
                             alt={post.title ?? "Unknown Thumbnail"}
                             width={500}
                             height={400}
-                            className="h-full object-cover"
+                            className={css`
+                              object-fit: cover;
+                              height: 100%;
+                            `}
                             src={post.image}
                           />
                         ) : (
-                          <div className="absolute flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-4xl">
+                          <div
+                            className={css`
+                              display: flex;
+                              position: absolute;
+                              background-color: #f3f4f6;
+                              color: #6b7280;
+                              font-size: 2.25rem;
+                              line-height: 2.5rem;
+                              justify-content: center;
+                              align-items: center;
+                              width: 100%;
+                              height: 100%;
+                            `}
+                          >
                             ?
                           </div>
                         )}
@@ -101,15 +217,47 @@ export default function SiteIndex() {
                     </div>
                   </Link>
 
-                  <div className="relative p-10">
+                  <div
+                    className={css`
+                      position: relative;
+                      padding: 2.5rem;
+                    `}
+                  >
                     <Link href={`/post/${post.id}`}>
-                      <h2 className="font-cal text-3xl">{post.title}</h2>
+                      <h2
+                        className={css`
+                          font-size: 1.875rem;
+                          line-height: 2.25rem;
+                        `}
+                      >
+                        {post.title}
+                      </h2>
                     </Link>
-                    <p className="text-base my-5 line-clamp-3">
+                    <p
+                      className={css`
+                        margin-top: 1.25rem;
+                        margin-bottom: 1.25rem;
+                        font-size: 1rem;
+                        line-height: 1.5rem;
+                      `}
+                    >
                       {post.description}
                     </p>
                     <a
-                      className="font-cal px-3 py-1 tracking-wide rounded bg-gray-200 text-gray-600 absolute bottom-5 left-10 whitespace-nowrap"
+                      className={css`
+                        position: absolute;
+                        bottom: 1.25rem;
+                        left: 2.5rem;
+                        padding-top: 0.25rem;
+                        padding-bottom: 0.25rem;
+                        padding-left: 0.75rem;
+                        padding-right: 0.75rem;
+                        background-color: #e5e7eb;
+                        color: #4b5563;
+                        letter-spacing: 0.025em;
+                        white-space: nowrap;
+                        border-radius: 0.25rem;
+                      `}
                       href={`${process.env.NEXT_PUBLIC_SITE_PROTOCOL}${data.site?.subdomain}.${process.env.NEXT_PUBLIC_SITE_URL}/${post.slug}`}
                       onClick={(e) => e.stopPropagation()}
                       rel="noreferrer"
@@ -119,22 +267,92 @@ export default function SiteIndex() {
                     </a>
                   </div>
                 </div>
-
               ))
             ) : (
               <>
-                <div className="flex flex-col md:flex-row md:h-60 rounded-lg overflow-hidden border border-gray-200">
-                  <div className="relative w-full h-60 md:h-auto md:w-1/3 md:flex-none bg-gray-300" />
-                  <div className="relative p-10 grid gap-5">
-                    <div className="w-28 h-10 rounded-md bg-gray-300" />
-                    <div className="w-48 h-6 rounded-md bg-gray-300" />
-                    <div className="w-48 h-6 rounded-md bg-gray-300" />
-                    <div className="w-48 h-6 rounded-md bg-gray-300" />
+                <div
+                  className={css`
+                    display: flex;
+                    overflow: hidden;
+                    flex-direction: column;
+                    border-radius: 0.5rem;
+                    border-width: 1px;
+                    border-color: #e5e7eb;
+
+                    @media (min-width: 768px) {
+                      flex-direction: row;
+                    }
+                  `}
+                >
+                  <div
+                    className={css`
+                      position: relative;
+                      background-color: #d1d5db;
+                      width: 100%;
+
+                      @media (min-width: 768px) {
+                        flex: none;
+                        width: 33.333333%;
+                        height: auto;
+                      }
+                    `}
+                  />
+                  <div
+                    className={css`
+                      display: grid;
+                      position: relative;
+                      padding: 2.5rem;
+                      gap: 1.25rem;
+                    `}
+                  >
+                    <div
+                      className={css`
+                        background-color: #d1d5db;
+                        width: 7rem;
+                        height: 2.5rem;
+                        border-radius: 0.375rem;
+                      `}
+                    />
+                    <div
+                      className={css`
+                        background-color: #d1d5db;
+                        width: 12rem;
+                        height: 1.5rem;
+                        border-radius: 0.375rem;
+                      `}
+                    />
+                    <div
+                      className={css`
+                        background-color: #d1d5db;
+                        width: 12rem;
+                        height: 1.5rem;
+                        border-radius: 0.375rem;
+                      `}
+                    />
+                    <div
+                      className={css`
+                        background-color: #d1d5db;
+                        width: 12rem;
+                        height: 1.5rem;
+                        border-radius: 0.375rem;
+                      `}
+                    />
                   </div>
                 </div>
-                <div className="text-center">
-                  <p className="text-2xl font-cal text-gray-600">
-                    Ви ще не маєте постів &quot;Новий Пост&quot; щоб додати його.
+                <div
+                  className={css`
+                    text-align: center;
+                  `}
+                >
+                  <p
+                    className={css`
+                      color: #4b5563;
+                      font-size: 1.5rem;
+                      line-height: 2rem;
+                    `}
+                  >
+                    Ви ще не маєте постів &quot;Новий Пост&quot; щоб додати
+                    його.
                   </p>
                 </div>
               </>
@@ -143,14 +361,127 @@ export default function SiteIndex() {
             [0, 1].map((i) => (
               <div
                 key={i}
-                className="flex flex-col md:flex-row md:h-60 rounded-lg overflow-hidden border border-gray-200"
+                className={css`
+                  display: flex;
+                  overflow: hidden;
+                  flex-direction: column;
+                  border-radius: 0.5rem;
+                  border-width: 1px;
+                  border-color: #e5e7eb;
+
+                  @media (min-width: 768px) {
+                    flex-direction: row;
+                  }
+                `}
               >
-                <div className="relative w-full h-60 md:h-auto md:w-1/3 md:flex-none bg-gray-300 animate-pulse" />
-                <div className="relative p-10 grid gap-5">
-                  <div className="w-28 h-10 rounded-md bg-gray-300 animate-pulse" />
-                  <div className="w-48 h-6 rounded-md bg-gray-300 animate-pulse" />
-                  <div className="w-48 h-6 rounded-md bg-gray-300 animate-pulse" />
-                  <div className="w-48 h-6 rounded-md bg-gray-300 animate-pulse" />
+                <div
+                  className={css`
+                    position: relative;
+                    background-color: #d1d5db;
+                    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+                    @keyframes pulse {
+                      0%,
+                      100% {
+                        opacity: 1;
+                      }
+                      50% {
+                        opacity: 0.5;
+                      }
+                    }
+                    width: 100%;
+
+                    @media (min-width: 768px) {
+                      flex: none;
+                      width: 33.333333%;
+                      height: auto;
+                    }
+                  `}
+                />
+                <div
+                  className={css`
+                    display: grid;
+                    position: relative;
+                    padding: 2.5rem;
+                    gap: 1.25rem;
+                  `}
+                >
+                  <div
+                    className={css`
+                      background-color: #d1d5db;
+                      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+                      @keyframes pulse {
+                        0%,
+                        100% {
+                          opacity: 1;
+                        }
+                        50% {
+                          opacity: 0.5;
+                        }
+                      }
+                      width: 7rem;
+                      height: 2.5rem;
+                      border-radius: 0.375rem;
+                    `}
+                  />
+                  <div
+                    className={css`
+                      background-color: #d1d5db;
+                      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+                      @keyframes pulse {
+                        0%,
+                        100% {
+                          opacity: 1;
+                        }
+                        50% {
+                          opacity: 0.5;
+                        }
+                      }
+                      width: 12rem;
+                      height: 1.5rem;
+                      border-radius: 0.375rem;
+                    `}
+                  />
+                  <div
+                    className={css`
+                      background-color: #d1d5db;
+                      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+                      @keyframes pulse {
+                        0%,
+                        100% {
+                          opacity: 1;
+                        }
+                        50% {
+                          opacity: 0.5;
+                        }
+                      }
+                      width: 12rem;
+                      height: 1.5rem;
+                      border-radius: 0.375rem;
+                    `}
+                  />
+                  <div
+                    className={css`
+                      background-color: #d1d5db;
+                      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+                      @keyframes pulse {
+                        0%,
+                        100% {
+                          opacity: 1;
+                        }
+                        50% {
+                          opacity: 0.5;
+                        }
+                      }
+                      width: 12rem;
+                      height: 1.5rem;
+                      border-radius: 0.375rem;
+                    `}
+                  />
                 </div>
               </div>
             ))
