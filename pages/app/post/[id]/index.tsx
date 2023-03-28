@@ -5,6 +5,7 @@ import { useDebounce } from "use-debounce";
 import { useRouter } from "next/router";
 import { useState, useEffect, useCallback } from "react";
 import type { ChangeEvent } from "react";
+import { css, cx } from "@emotion/css";
 
 import Layout from "@/components/app/Layout";
 import Loader from "@/components/app/Loader";
@@ -23,10 +24,7 @@ interface PostData {
   content: Descendant[] | null;
 }
 
-
-
 export default function Post() {
-
   const router = useRouter();
 
   // TODO: Undefined check redirects to error
@@ -50,13 +48,13 @@ export default function Post() {
   const [savedState, setSavedState] = useState(
     post
       ? `Збереження ${Intl.DateTimeFormat("uk", { month: "short" }).format(
-        new Date(post.updatedAt)
-      )} ${Intl.DateTimeFormat("uk", { day: "2-digit" }).format(
-        new Date(post.updatedAt)
-      )} ${Intl.DateTimeFormat("uk", {
-        hour: "numeric",
-        minute: "numeric",
-      }).format(new Date(post.updatedAt))}`
+          new Date(post.updatedAt)
+        )} ${Intl.DateTimeFormat("uk", { day: "2-digit" }).format(
+          new Date(post.updatedAt)
+        )} ${Intl.DateTimeFormat("uk", {
+          hour: "numeric",
+          minute: "numeric",
+        }).format(new Date(post.updatedAt))}`
       : "Зберігаю..."
   );
 
@@ -64,16 +62,17 @@ export default function Post() {
   const [data, setData] = useState<PostData>({
     title: "",
     description: "",
-    content: null
+    content: null,
   });
 
   // оновлення даних з кешу useSWR
   useEffect(() => {
-    if (post) // from useSWR
+    if (post)
+      // from useSWR
       setData({
         title: post.title ?? "",
         description: post.description ?? "",
-        content: post.content as Descendant[],   //? не знаю чи правильно "as Descendant[]"
+        content: post.content as Descendant[], //? не знаю чи правильно "as Descendant[]"
       });
   }, [post]);
 
@@ -184,8 +183,8 @@ export default function Post() {
   }
 
   const onChange = (content: Descendant[]) => {
-    setData({ ...data, content })
-  }
+    setData({ ...data, content });
+  };
 
   // лоадер
   if (isValidating)
@@ -204,8 +203,22 @@ export default function Post() {
         />
       </Head>
       <Layout siteId={post?.site?.id}>
-        <div className="relative max-w-screen-xl mx-auto px-10 sm:px-20 mt-10 mb-16">
+        <div
+          // className="relative max-w-screen-xl mx-auto px-10 sm:px-20 mt-10 mb-16"
+          className={css`
+            position: relative;
+            padding-left: 2.5rem;
+            padding-right: 2.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 4rem;
+            max-width: 1280px;
 
+            @media (min-width: 640px) {
+              padding-left: 5rem;
+              padding-right: 5rem;
+            }
+          `}
+        >
           <button
             onClick={async () => {
               await publish();
@@ -216,10 +229,28 @@ export default function Post() {
                 : "Публікувати"
             }
             disabled={disabled}
-            className={`${disabled
-              ? "cursor-not-allowed bg-gray-300 border-gray-300"
-              : "bg-black hover:bg-white hover:text-black border-black"
-              } absolute top-1 right-1 px-4 h-12 text-lg text-white border-2 focus:outline-none transition-all ease-in-out duration-150`}
+            className={css`
+              position: absolute;
+              top: -8.5rem;
+              right: 3rem;
+              padding-left: 1rem;
+              padding-right: 1rem;
+              transition-property: all;
+              transition-duration: 150ms;
+              transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+              color: #ffffff;
+              height: 2.5rem;
+              border-width: 2px;
+
+              background-color: ${disabled ? "#D1D5DB" : "#42cc00"};
+              border-color: ${disabled ? "#D1D5DB" : "#42cc00"};
+              cursor: ${disabled ? "not-allowed" : "pointer"};
+
+              :hover {
+                background-color: #ffffff;
+                color: #42cc00;
+              }
+            `}
           >
             {publishing ? <LoadingDots /> : "Публікувати  →"}
           </button>
@@ -232,8 +263,25 @@ export default function Post() {
                 title: (e.target as HTMLTextAreaElement).value,
               })
             }
-            className="w-full px-2 py-4 text-gray-800 placeholder-gray-400 mt-6 text-5xl font-cal resize-none border-none focus:outline-none focus:ring-0"
-            placeholder="Untitled Post"
+            // className="w-full px-2 py-4 text-gray-800 placeholder-gray-400 mt-6 text-5xl font-cal resize-none border-none focus:outline-none focus:ring-0"
+            className={css`
+              padding-left: 0.5rem;
+              padding-right: 0.5rem;
+              padding-top: 1rem;
+              padding-bottom: 1rem;
+              margin-top: 1.5rem;
+              color: #1f2937;
+              font-size: 3rem;
+              line-height: 1;
+              width: 100%;
+              border-style: none;
+              resize: none;
+
+              :focus {
+                outline: none;
+              }
+            `}
+            placeholder="Заголовок посту"
             value={data.title}
           />
 
@@ -245,28 +293,81 @@ export default function Post() {
                 description: (e.target as HTMLTextAreaElement).value,
               })
             }
-            className="w-full px-2 py-3 text-gray-800 placeholder-gray-400 text-xl mb-3 resize-none border-none focus:outline-none focus:ring-0"
-            placeholder="No description provided. Click to edit."
+            // className="w-full px-2 py-3 text-gray-800 placeholder-gray-400 text-xl mb-3 resize-none border-none focus:outline-none focus:ring-0"
+            className={css`
+              padding-left: 0.5rem;
+              padding-right: 0.5rem;
+              padding-top: 0.75rem;
+              padding-bottom: 0.75rem;
+              margin-bottom: 0.75rem;
+              color: #1f2937;
+              font-size: 1.25rem;
+              line-height: 1.75rem;
+              width: 100%;
+              border-style: none;
+              resize: none;
+
+              :focus {
+                outline: none;
+              }
+            `}
+            placeholder="Опис вашого посту"
             value={data.description}
           />
 
           {data?.content && (
-            <SviyEditor content={data.content as Descendant[]} onChange={onChange} />
+            <SviyEditor
+              content={data.content as Descendant[]}
+              onChange={onChange}
+            />
           )}
-          {/* <RichTextEditor /> */}
         </div>
 
-        <footer className="h-8 z-5 fixed bottom-0 inset-x-0 border-solid border-t border-gray-500 bg-white">
-          <div className="max-w-screen-xl mx-auto px-10 sm:px-20 h-full flex justify-between items-center">
-            <div className="text-sm">
-              <strong>
-                {post?.published ? "Опубліковано" : "Чорновик"}
-              </strong>
-              {' '}|{' '}{savedState}
+        <footer
+          className={css`
+            position: fixed;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background-color: #ffffff;
+            height: 2rem;
+            border-top-width: 1px;
+            border-color: #d6d6d6;
+            border-style: solid;
+          `}
+        >
+          <div
+            className={css`
+              display: flex;
+              padding-left: 2.5rem;
+              padding-right: 2.5rem;
+              margin-left: auto;
+              margin-right: auto;
+              justify-content: flex-end;
+              align-items: center;
+              max-width: 1280px;
+              height: 100%;
+              font-size: 0.875rem;
+              line-height: 1.25rem;
+
+              @media (min-width: 640px) {
+                padding-left: 5rem;
+                padding-right: 5rem;
+              }
+            `}
+          >
+            <div
+              className={css`
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                width: 300px;
+              `}
+            >
+              <strong>{post?.published ? "Опубліковано" : "Чорновик"}</strong> |{" "}
+              {savedState}
             </div>
           </div>
         </footer>
-
       </Layout>
     </>
   );

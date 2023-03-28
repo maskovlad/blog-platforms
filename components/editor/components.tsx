@@ -1,14 +1,13 @@
 /* eslint-disable react/display-name */
-import React, { Ref, PropsWithChildren } from 'react'
-import ReactDOM from 'react-dom'
-import { cx, css } from '@emotion/css'
+import React, { Ref, PropsWithChildren } from "react";
+import ReactDOM from "react-dom";
+import { cx, css } from "@emotion/css";
 
 interface BaseProps {
-  className: string
-  [key: string]: unknown
+  className: string;
+  [key: string]: unknown;
 }
-type OrNull<T> = T | null
-
+type OrNull<T> = T | null;
 
 export const Button = React.forwardRef(
   (
@@ -19,8 +18,8 @@ export const Button = React.forwardRef(
       ...props
     }: PropsWithChildren<
       {
-        active: boolean
-        reversed: boolean
+        active: boolean;
+        reversed: boolean;
       } & BaseProps
     >,
     ref: Ref<OrNull<HTMLSpanElement>>
@@ -34,16 +33,16 @@ export const Button = React.forwardRef(
           cursor: pointer;
           color: ${reversed
             ? active
-              ? 'white'
-              : '#aaa'
+              ? "white"
+              : "#aaa"
             : active
-              ? 'black'
-              : '#ccc'};
+            ? "black"
+            : "#ccc"};
         `
       )}
     />
   )
-)
+);
 
 export const EditorValue = React.forwardRef(
   (
@@ -53,15 +52,15 @@ export const EditorValue = React.forwardRef(
       ...props
     }: PropsWithChildren<
       {
-        value: any
+        value: any;
       } & BaseProps
     >,
     ref: Ref<OrNull<null>>
   ) => {
     const textLines = value.document.nodes
-      .map(node => node.text)
+      .map((node) => node.text)
       .toArray()
-      .join('\n')
+      .join("\n");
     return (
       <div
         ref={ref as any}
@@ -98,9 +97,9 @@ export const EditorValue = React.forwardRef(
           {textLines}
         </div>
       </div>
-    )
+    );
   }
-)
+);
 
 export const Icon = React.forwardRef(
   (
@@ -111,7 +110,7 @@ export const Icon = React.forwardRef(
       {...props}
       ref={ref as any}
       className={cx(
-        'material-icons',
+        "material-icons",
         className,
         css`
           font-size: 18px;
@@ -120,7 +119,7 @@ export const Icon = React.forwardRef(
       )}
     />
   )
-)
+);
 
 export const Instruction = React.forwardRef(
   (
@@ -142,7 +141,7 @@ export const Instruction = React.forwardRef(
       )}
     />
   )
-)
+);
 
 export const Menu = React.forwardRef(
   (
@@ -167,13 +166,13 @@ export const Menu = React.forwardRef(
       )}
     />
   )
-)
+);
 
 export const Portal = ({ children }) => {
-  return typeof document === 'object'
+  return typeof document === "object"
     ? ReactDOM.createPortal(children, document.body)
-    : null
-}
+    : null;
+};
 
 export const Toolbar = React.forwardRef(
   (
@@ -187,14 +186,21 @@ export const Toolbar = React.forwardRef(
         className,
         css`
           position: sticky;
-          top:0;
+          top: 0;
+          margin: 1rem -2.5rem;
           background: white;
-          padding: 1rem;
+          padding: 0.2rem 2.5rem;
           border-top: 1px solid #d6d6d6;
           border-bottom: 1px solid #d6d6d6;
           z-index: 99;
+
+          @media (min-width: 640px) {
+            margin-left: -5rem;
+            margin-right: -5rem;
+            padding: 0.5rem 5rem;
+          }
         `
       )}
     />
   )
-)
+);

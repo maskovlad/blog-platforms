@@ -16,9 +16,7 @@ export const getSiteData = cache(async (site: string): Promise<_SiteData> => {
     };
   }
 
-  console.log(filter)
-
-  const data = (await prisma.site.findUnique({
+    const data = (await prisma.site.findUnique({
     where: filter,
     include: {
       user: true,
@@ -68,8 +66,6 @@ export const getPostData = cache(async (site: string, slug: string) => {
       },
     },
   });
-
-  console.log({fetchers:data})
 
   if (!data) return { notFound: true, revalidate: 10 };
 

@@ -16,6 +16,10 @@ import type { ChangeEvent } from "react";
 
 import type { WithSitePost } from "@/types";
 import { placeholderBlurhash } from "@/lib/util";
+import { css } from '@emotion/css';
+
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 interface SettingsData {
   slug: string;
@@ -30,6 +34,7 @@ export default function PostSettings() {
   // TODO: Undefined check redirects to error
   const { id: postId } = router.query;
 
+  // оновлення даних з кешу useSWR
   const { data: settings, isValidating } = useSWR<WithSitePost>(
     `/api/post?postId=${postId}`,
     fetcher,
@@ -43,6 +48,8 @@ export default function PostSettings() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletingPost, setDeletingPost] = useState(false);
 
+  // стан з настройками
+  // todo додати seo
   const [data, setData] = useState<SettingsData>({
     image: settings?.image ?? "",
     imageBlurhash: settings?.imageBlurhash ?? "",
@@ -50,6 +57,7 @@ export default function PostSettings() {
     id: settings?.id ?? "",
   });
 
+  // відстеження змін настройок
   useEffect(() => {
     if (settings)
       setData({
@@ -60,6 +68,7 @@ export default function PostSettings() {
       });
   }, [settings]);
 
+  // збереження настройок
   async function savePostSettings(data: SettingsData) {
     setSaving(true);
 
@@ -87,6 +96,7 @@ export default function PostSettings() {
     }
   }
 
+  // видалення посту
   async function deletePost(postId: string) {
     setDeletingPost(true);
     try {
@@ -104,6 +114,7 @@ export default function PostSettings() {
     }
   }
 
+  // loader
   if (isValidating)
     return (
       <Layout>
@@ -114,23 +125,102 @@ export default function PostSettings() {
   return (
     <>
       <Layout siteId={settings?.site?.id}>
+        <Tooltip id="question" />
+
         <Toaster
           position="top-right"
           toastOptions={{
             duration: 10000,
           }}
         />
-        <div className="max-w-screen-xl mx-auto px-10 sm:px-20 mt-20 mb-16">
-          <h1 className="font-cal text-5xl mb-12">Post Settings</h1>
-          <div className="mb-28 flex flex-col space-y-12">
-            <div className="space-y-6">
-              <h2 className="font-cal text-2xl">Post Slug</h2>
-              <div className="border border-gray-700 rounded-lg flex items-center max-w-lg">
-                <span className="px-5 font-cal rounded-l-lg border-r border-gray-600 whitespace-nowrap">
-                  {settings?.site?.subdomain}.{process.env.NEXT_PUBLIC_SITE_URL}/
+
+        <div
+          className={css`
+            padding-left: 2.5rem;
+            padding-right: 2.5rem;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 4rem;
+            margin-top: 5rem;
+            max-width: 1280px;
+
+            @media (min-width: 640px) {
+              padding-left: 5rem;
+              padding-right: 5rem;
+            }
+          `}
+        >
+          <h1
+            className={css`
+              margin-bottom: 3rem;
+              font-size: 3rem;
+              line-height: 1;
+            `}
+          >
+            Настройки посту
+          </h1>
+          <div
+            className={css`
+              display: flex;
+              margin-bottom: 7rem;
+              margin-top: 3rem;
+              flex-direction: column;
+            `}
+          >
+            <div //* slug
+              className={css`
+                margin-top: 1.5rem;
+              `}
+            >
+              <h2
+                className={css`
+                  font-size: 1.5rem;
+                  line-height: 2rem;
+                  margin-bottom: 1rem;
+                `}
+              >
+                Slug посту{" "}
+                <Hint text="Вигляд в адресному рядку браузера - латиниця, цифри, риски" />
+              </h2>
+
+              <div
+                className={css`
+                  display: flex;
+                  align-items: center;
+                  max-width: 32rem;
+                  border-radius: 0.5rem;
+                  border-width: 1px;
+                  border-color: #374151;
+                `}
+              >
+                <span
+                  className={css`
+                    padding-left: 1.25rem;
+                    padding-right: 1.25rem;
+                    white-space: nowrap;
+                    border-top-left-radius: 0.5rem;
+                    border-bottom-left-radius: 0.5rem;
+                    border-right-width: 1px;
+                    border-color: #4b5563;
+                  `}
+                >
+                  {settings?.site?.subdomain}.{process.env.NEXT_PUBLIC_SITE_URL}
+                  /
                 </span>
                 <input
-                  className="w-full px-5 py-3 font-cal text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none rounded-r-lg placeholder-gray-400"
+                  className={css`
+                    padding-top: 0.75rem;
+                    padding-bottom: 0.75rem;
+                    padding-left: 1.25rem;
+                    padding-right: 1.25rem;
+                    background-color: #ffffff;
+                    color: #374151;
+                    width: 100%;
+                    border-radius: 0;
+                    border-top-right-radius: 0.5rem;
+                    border-bottom-right-radius: 0.5rem;
+                    border-style: none;
+                  `}
                   type="text"
                   name="slug"
                   placeholder="post-slug"
@@ -141,11 +231,36 @@ export default function PostSettings() {
                 />
               </div>
             </div>
-            <div className="space-y-6">
-              <h2 className="font-cal text-2xl">Thumbnail Image</h2>
+
+            <div //* thumb
+              className={css`
+                margin-top: 1.5rem;
+              `}
+            >
+              <h2
+                className={css`
+                  font-size: 1.5rem;
+                  line-height: 2rem;
+                `}
+              >
+                Зображення посту{" "}
+                <Hint text="Відображається на картках в списках постів" />
+              </h2>
               <div
-                className={`${data.image ? "" : "animate-pulse bg-gray-300 h-150"
-                  } relative mt-5 w-full border-2 border-gray-800 border-dashed rounded-md`}
+                // className={`${
+                //   data.image ? "" : "animate-pulse bg-gray-300 h-150"
+                // } relative mt-5 w-full border-2 border-gray-800 border-dashed rounded-md`}
+                className={css`
+                  position: relative;
+                  margin-top: 1.25rem;
+                  width: 400px;
+                  border-radius: 0.375rem;
+                  border-width: 2px;
+                  border-color: #1f2937;
+                  border-style: dashed;
+                  ${!data.image &&
+                  "background-color: #D1D5DB; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;@keyframes pulse {0%, 100% {opacity: 1;}50% {opacity: .5;}}; "}
+                `}
               >
                 <CloudinaryUploadWidget
                   callback={(e) =>
@@ -158,7 +273,26 @@ export default function PostSettings() {
                   {({ open }) => (
                     <button
                       onClick={open}
-                      className="absolute w-full h-full rounded-md bg-gray-200 z-10 flex flex-col justify-center items-center opacity-0 hover:opacity-100 transition-all ease-linear duration-200"
+                      className={css`
+                        display: flex;
+                        position: absolute;
+                        z-index: 10;
+                        background-color: #e5e7eb;
+                        transition-property: all;
+                        transition-duration: 200ms;
+                        transition-timing-function: linear;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 0.375rem;
+                        opacity: 0;
+
+                        :hover {
+                          opacity: 1;
+                        }
+                      `}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -168,11 +302,12 @@ export default function PostSettings() {
                       >
                         <path d="M16 16h-3v5h-2v-5h-3l4-4 4 4zm3.479-5.908c-.212-3.951-3.473-7.092-7.479-7.092s-7.267 3.141-7.479 7.092c-2.57.463-4.521 2.706-4.521 5.408 0 3.037 2.463 5.5 5.5 5.5h3.5v-2h-3.5c-1.93 0-3.5-1.57-3.5-3.5 0-2.797 2.479-3.833 4.433-3.72-.167-4.218 2.208-6.78 5.567-6.78 3.453 0 5.891 2.797 5.567 6.78 1.745-.046 4.433.751 4.433 3.72 0 1.93-1.57 3.5-3.5 3.5h-3.5v2h3.5c3.037 0 5.5-2.463 5.5-5.5 0-2.702-1.951-4.945-4.521-5.408z" />
                       </svg>
-                      <p>Upload another image</p>
+                      <p>Завантажити інше зображення</p>
                     </button>
                   )}
                 </CloudinaryUploadWidget>
 
+                {/*картинка*/}
                 {data.image && (
                   <BlurImage
                     src={data.image}
@@ -180,27 +315,73 @@ export default function PostSettings() {
                     width={800}
                     height={500}
                     placeholder="blur"
-                    className="rounded-md w-full h-full object-cover"
+                    className={css`
+                      object-fit: cover;
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 0.375rem;
+                    `}
                     blurDataURL={data.imageBlurhash || placeholderBlurhash}
                   />
                 )}
               </div>
 
-              <div className="w-full h-10" />
-              <div className="flex flex-col space-y-6 max-w-lg">
-                <h2 className="font-cal text-2xl">Delete Post</h2>
+              <div // розрив
+                className={css`
+                  width: 100%;
+                  height: 2.5rem;
+                `}
+              />
+
+              {/* //* видалення посту*/}
+              <div
+                className={css`
+                  display: flex;
+                  margin-top: 1.5rem;
+                  flex-direction: column;
+                  max-width: 32rem;
+                  gap: 1.5rem;
+                `}
+              >
+                <h2
+                  className={css`
+                    font-size: 1.5rem;
+                    line-height: 2rem;
+                  `}
+                >
+                  Видалення посту
+                </h2>
                 <p>
-                  Permanently delete your post and all of its contents from our
-                  platform. This action is not reversible – please continue with
-                  caution.
+                  Назавжди видалити вашу публікацію та весь її вміст із вашого
+                  сайту. Цю дію неможливо відмінити – будьте обережні.
                 </p>
                 <button
                   onClick={() => {
                     setShowDeleteModal(true);
                   }}
-                  className="bg-red-500 text-white border-red-500 hover:text-red-500 hover:bg-white px-5 py-3 max-w-max font-cal border-solid border rounded-md focus:outline-none transition-all ease-in-out duration-150"
+                  className={css`
+                    padding: 0.75rem 1.25rem;
+                    background-color: #ef4444;
+                    transition-property: all;
+                    transition-duration: 150ms;
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    color: #ffffff;
+                    max-width: max-content;
+                    border-radius: 0.375rem;
+                    border-width: 1px;
+                    border-color: #ef4444;
+                    border-style: solid;
+
+                    :hover {
+                      background-color: #ffffff;
+                      color: #ef4444;
+                    }
+                    :focus {
+                      outline: none;
+                    }
+                  `}
                 >
-                  Delete Post
+                  Видалити Пост
                 </button>
               </div>
             </div>
@@ -212,54 +393,199 @@ export default function PostSettings() {
               event.preventDefault();
               await deletePost(postId as string);
             }}
-            className="inline-block w-full max-w-md pt-8 overflow-hidden text-center align-middle transition-all bg-white shadow-xl rounded-lg"
+            className={css`
+              display: inline-block;
+              overflow: hidden;
+              padding-top: 2rem;
+              background-color: #ffffff;
+              transition-property: all;
+              text-align: center;
+              vertical-align: middle;
+              width: 100%;
+              max-width: 28rem;
+              border-radius: 0.5rem;
+              box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            `}
           >
-            <h2 className="font-cal text-2xl mb-6">Delete Post</h2>
-            <div className="grid gap-y-5 w-5/6 mx-auto">
+            <h2
+              className={css`
+                margin-bottom: 1.5rem;
+                font-size: 1.5rem;
+                line-height: 2rem;
+              `}
+            >
+              Видалення посту
+            </h2>
+            <div
+              className={css`
+                display: grid;
+                margin-left: auto;
+                margin-right: auto;
+                width: 83.333333%;
+                row-gap: 1.25rem;
+              `}
+            >
               <p className="text-gray-600 mb-3">
-                Are you sure you want to delete your post? This action is not
-                reversible.
+                Ви впевнені, що хочете видалити свою публікацію? Цю дію не можна
+                відмінити.
               </p>
             </div>
-            <div className="flex justify-between items-center mt-10 w-full">
+            <div
+              className={css`
+                display: flex;
+                margin-top: 2.5rem;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+              `}
+            >
               <button
                 type="button"
-                className="w-full px-5 py-5 text-sm text-gray-400 hover:text-black border-t border-gray-300 rounded-bl focus:outline-none focus:ring-0 transition-all ease-in-out duration-150"
+                className={css`
+                  padding-top: 1.25rem;
+                  padding-bottom: 1.25rem;
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem;
+                  transition-property: all;
+                  transition-duration: 150ms;
+                  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                  color: #9ca3af;
+                  font-size: 0.875rem;
+                  line-height: 1.25rem;
+                  width: 100%;
+                  border-bottom-left-radius: 0.25rem;
+                  border-top-width: 1px;
+                  border-color: #d1d5db;
+
+                  :focus-visible {
+                    box-shadow: 0 0 3px 1px #000000;
+                    border-right-width: 1px;
+                  }
+                  :focus {
+                    outline: none;
+                  }
+
+                  :hover {
+                    color: #000000;
+                  }
+                `}
                 onClick={() => setShowDeleteModal(false)}
               >
-                CANCEL
+                ВІДМІНА
               </button>
 
               <button
                 type="submit"
                 disabled={deletingPost}
-                className={`${deletingPost
-                    ? "cursor-not-allowed text-gray-400 bg-gray-50"
-                    : "bg-white text-gray-600 hover:text-black"
-                  } w-full px-5 py-5 text-sm border-t border-l border-gray-300 rounded-br focus:outline-none focus:ring-0 transition-all ease-in-out duration-150`}
+                className={css`
+                  padding-top: 1.25rem;
+                  padding-bottom: 1.25rem;
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem;
+                  transition-property: all;
+                  transition-duration: 150ms;
+                  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                  font-size: 0.875rem;
+                  line-height: 1.25rem;
+                  width: 100%;
+                  border-bottom-right-radius: 0.25rem;
+                  border-top-width: 1px;
+                  border-left-width: 1px;
+                  border-color: #d1d5db;
+                  :focus-visible {
+                    box-shadow: 0 0 3px 1px #ef4444;
+                  }
+                  :focus {
+                    outline: none;
+                  }
+                  ${deletingPost
+                    ? "background-color: #F9FAFB;color: #9CA3AF;cursor: not-allowed;"
+                    : "background-color: #ffffff;color: #ef4444;:hover {color: #000000;}"}
+                `}
               >
-                {deletingPost ? <LoadingDots /> : "DELETE POST"}
+                {deletingPost ? <LoadingDots /> : "ВИДАЛИТИ"}
               </button>
             </div>
           </form>
         </Modal>
-        <footer className="h-20 z-20 fixed bottom-0 inset-x-0 border-solid border-t border-gray-500 bg-white">
-          <div className="max-w-screen-xl mx-auto px-10 sm:px-20 h-full flex justify-end items-center">
+
+        <footer
+          className={css`
+            position: fixed;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 20;
+            background-color: #ffffff;
+            height: 4rem;
+            border-top-width: 1px;
+            border-color: #6b7280;
+            border-style: solid;
+          `}
+        >
+          <div
+            className={css`
+              display: flex;
+              padding-left: 2.5rem;
+              padding-right: 2.5rem;
+              margin-left: auto;
+              margin-right: auto;
+              justify-content: flex-end;
+              align-items: center;
+              max-width: 1280px;
+              height: 100%;
+
+              @media (min-width: 640px) {
+                padding-left: 5rem;
+                padding-right: 5rem;
+              }
+            `}
+          >
             <button
               onClick={() => {
                 savePostSettings(data);
               }}
               disabled={saving}
-              className={`${saving
-                  ? "cursor-not-allowed bg-gray-300 border-gray-300"
-                  : "bg-black hover:bg-white hover:text-black border-black"
-                } mx-2 w-36 h-12 text-lg text-white border-2 focus:outline-none transition-all ease-in-out duration-150`}
+              className={css`
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+                transition-property: all;
+                transition-duration: 150ms;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                color: #ffffff;
+                height: 2.5rem;
+                padding-left: 1rem;
+                padding-right: 1rem; 
+                border-width: 2px;
+                ${saving
+                  ? "background-color: #D1D5DB;border-color: #D1D5DB;cursor: not-allowed;"
+                  : "background-color: #42cc00;border-color: #42cc00;:hover {background-color: #ffffff;color:#42cc00;}"
+                }
+              `}
             >
-              {saving ? <LoadingDots /> : "Save Changes"}
+              {saving ? <LoadingDots /> : "Зберегти зміни"}
             </button>
           </div>
         </footer>
       </Layout>
     </>
+  );
+}
+
+export const Hint = ({text}:{text:string}) => {
+  return (
+    <sup
+      className={css`
+        background: #000;
+        border-radius: 50%;
+        font-size: 10px;
+        cursor: pointer;
+      `}
+      data-tooltip-id="question"
+      data-tooltip-content={text}
+    >
+      ❔
+    </sup>
   );
 }

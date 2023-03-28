@@ -19,14 +19,12 @@ export default function middleware(req:NextRequest){
 
   const hostname = req.headers.get("host") || "sviy.site"
 
-  console.log({hostname})
-
   const currentHost =
     process.env.NODE_ENV === "production" && process.env.VERCEL === "1"
       ? hostname
           .replace('.sviy.site', "")
      : hostname.replace(/\.localhost:\d+/, "");
-     console.log({currentHost})
+    //  console.log({currentHost})
   
      // rewrites for app pages
   if (currentHost == "app") {

@@ -120,7 +120,7 @@ export default async function Post({
   const { site, slug } = params;
   const { data, adjacentPosts } = await getPostData(site, slug);
 
-  console.log({ PostContent: data?.content })
+  // console.log({ PostContent: data?.content })
 
   if (!data) return null;
 

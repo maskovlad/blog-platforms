@@ -38,3 +38,6 @@ next-env.d.ts
 
 # тимчасові копії
 ~*
+
+# vscode
+blog-platforms.code-workspace

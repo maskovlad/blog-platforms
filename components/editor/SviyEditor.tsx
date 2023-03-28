@@ -6,7 +6,6 @@ import {
   createEditor,
   Descendant,
   Element as SlateElement,
-  BaseElement,
 } from 'slate'
 import { withHistory } from 'slate-history'
 import { CustomEditor, CustomElement, CustomText } from "@/types/editor";
@@ -16,7 +15,6 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css';
-import { cx, css } from '@emotion/css'
 
 const HOTKEYS = {
   'mod+b': 'bold',
