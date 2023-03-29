@@ -24,6 +24,7 @@ export default async function post(req: NextApiRequest, res: NextApiResponse) {
       .end("Bad request. domain parameter cannot be an array.");
 
   try {
+    // *перевірка доступності до реєстрації субдомену
     if (subdomain) {
       const sub = (domain as string).replace(/[^a-zA-Z0-9/-]+/g, "");
 
@@ -38,7 +39,9 @@ export default async function post(req: NextApiRequest, res: NextApiResponse) {
       return res.status(200).json(available);
     }
 
+    //* реєстрація субдомену в vercel
     const response = await fetch(
+      // todo поставити свій запрос ?
       `https://api.vercel.com/v6/domains/${domain}/config?teamId=${process.env.TEAM_ID_VERCEL}`,
       {
         method: HttpMethod.GET,
@@ -51,7 +54,7 @@ export default async function post(req: NextApiRequest, res: NextApiResponse) {
 
     const data = await response.json();
 
-    // * мабуть перевірка, чи доступне конфігурування в таблиці Site, але шось не бачу там такого поля
+    // *  вдало чи ні
     const valid = data?.configuredBy ? true : false;
 
     return res.status(200).json(valid);
