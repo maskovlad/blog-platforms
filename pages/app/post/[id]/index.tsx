@@ -203,9 +203,7 @@ export default function Post() {
         />
       </Head>
       <Layout siteId={post?.site?.id}>
-        <div
-          // className="relative max-w-screen-xl mx-auto px-10 sm:px-20 mt-10 mb-16"
-          className={css`
+        <div className={css`
             position: relative;
             padding-left: 2.5rem;
             padding-right: 2.5rem;
@@ -217,8 +215,7 @@ export default function Post() {
               padding-left: 5rem;
               padding-right: 5rem;
             }
-          `}
-        >
+          `}>
           <button
             onClick={async () => {
               await publish();
@@ -263,7 +260,6 @@ export default function Post() {
                 title: (e.target as HTMLTextAreaElement).value,
               })
             }
-            // className="w-full px-2 py-4 text-gray-800 placeholder-gray-400 mt-6 text-5xl font-cal resize-none border-none focus:outline-none focus:ring-0"
             className={css`
               padding-left: 0.5rem;
               padding-right: 0.5rem;
@@ -293,7 +289,6 @@ export default function Post() {
                 description: (e.target as HTMLTextAreaElement).value,
               })
             }
-            // className="w-full px-2 py-3 text-gray-800 placeholder-gray-400 text-xl mb-3 resize-none border-none focus:outline-none focus:ring-0"
             className={css`
               padding-left: 0.5rem;
               padding-right: 0.5rem;
@@ -323,8 +318,7 @@ export default function Post() {
           )}
         </div>
 
-        <footer
-          className={css`
+        <footer  className={css`
             position: fixed;
             right: 0;
             left: 0;
@@ -334,10 +328,8 @@ export default function Post() {
             border-top-width: 1px;
             border-color: #d6d6d6;
             border-style: solid;
-          `}
-        >
-          <div
-            className={css`
+          `}>
+          <div className={css`
               display: flex;
               padding-left: 2.5rem;
               padding-right: 2.5rem;
@@ -354,15 +346,12 @@ export default function Post() {
                 padding-left: 5rem;
                 padding-right: 5rem;
               }
-            `}
-          >
-            <div
-              className={css`
+            `}>
+            <div className={css`
                 font-size: 0.875rem;
                 line-height: 1.25rem;
                 width: 300px;
-              `}
-            >
+              `}>
               <strong>{post?.published ? "Опубліковано" : "Чорновик"}</strong> |{" "}
               {savedState}
             </div>

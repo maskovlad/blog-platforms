@@ -16,6 +16,8 @@ import { HttpMethod } from "@/types";
 
 import type { Site } from "@prisma/client";
 import { placeholderBlurhash } from '@/lib/util';
+import { css } from '@emotion/css';
+import { Hint } from "@/components/app/Hint";
 
 interface SettingsData
   extends Pick<
@@ -35,21 +37,13 @@ export default function SiteSettings() {
   const { id } = router.query;
   const siteId = id;
 
-  const { data: settings } = useSWR<Site | null>(
-    siteId && `/api/site?siteId=${siteId}`,
-    fetcher,
-    {
-      onError: () => router.push("/"),
-      revalidateOnFocus: false,
-    }
-  );
-
   const [saving, setSaving] = useState(false);
   const [adding, setAdding] = useState(false);
   const [error, setError] = useState<any | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletingSite, setDeletingSite] = useState(false);
 
+  // стейт настройок
   const [data, setData] = useState<SettingsData>({
     id: "",
     name: null,
@@ -61,10 +55,22 @@ export default function SiteSettings() {
     imageBlurhash: null,
   });
 
+  // оновлення даних через useSWR
+  const { data: settings } = useSWR<Site | null>(
+    siteId && `/api/site?siteId=${siteId}`,
+    fetcher,
+    {
+      onError: () => router.push("/"),
+      revalidateOnFocus: false,
+    }
+  );
+
+  // оновлення стейту настройок
   useEffect(() => {
     if (settings) setData(settings);
   }, [settings]);
 
+  // збереження настройок
   async function saveSiteSettings(data: SettingsData) {
     setSaving(true);
 
@@ -94,6 +100,7 @@ export default function SiteSettings() {
     }
   }
 
+  // видалення сайту
   async function deleteSite(siteId: string) {
     setDeletingSite(true);
 
@@ -109,9 +116,11 @@ export default function SiteSettings() {
       setDeletingSite(false);
     }
   }
+
   const [debouncedSubdomain] = useDebounce(data?.subdomain, 1500);
   const [subdomainError, setSubdomainError] = useState<string | null>(null);
 
+  // перевірка доступності субдомену
   useEffect(() => {
     async function checkSubdomain() {
       try {
@@ -137,6 +146,7 @@ export default function SiteSettings() {
       checkSubdomain();
   }, [debouncedSubdomain, settings?.subdomain]);
 
+  // додавання власного домену
   async function handleCustomDomain() {
     const customDomain = data.customDomain;
 
@@ -166,20 +176,76 @@ export default function SiteSettings() {
 
   return (
     <Layout>
+
       <Toaster
         position="top-right"
         toastOptions={{
           duration: 10000,
         }}
       />
-      <div className="max-w-screen-xl mx-auto px-10 sm:px-20 mt-20 mb-16">
-        <h1 className="font-cal text-5xl mb-12">Site Settings</h1>
-        <div className="mb-28 flex flex-col space-y-12">
-          <div className="flex flex-col space-y-6">
-            <h2 className="font-cal text-2xl">Name</h2>
-            <div className="border border-gray-700 rounded-lg overflow-hidden flex items-center max-w-lg">
+
+      <div className={css`
+        padding-left: 2.5rem;
+        padding-right: 2.5rem; 
+        margin-left: auto;
+        margin-right: auto; 
+        margin-bottom: 4rem; 
+        margin-top: 5rem; 
+        max-width: 1280px; 
+
+        @media (min-width: 640px) { 
+          padding-left: 5rem;
+        padding-right: 5rem; 
+        }
+      `}>
+
+        <h1 className={css`
+          margin-bottom: 3rem; 
+          font-size: 3rem;
+          line-height: 1; 
+        `}>
+          Настройки сайту</h1>
+
+        <div className={css`
+          display: flex; 
+          margin-bottom: 7rem; 
+          margin-top: 3rem; 
+          flex-direction: column; 
+        `}>
+          <div className={css`
+            display: flex; 
+            margin-top: 1.5rem; 
+            flex-direction: column; 
+          `}>
+            <h2 className={css`
+              font-size: 1.5rem;
+              line-height: 2rem; 
+            `}>
+              Назва</h2>
+            <div className={css`
+              display: flex; 
+              overflow: hidden; 
+              align-items: center; 
+              max-width: 32rem; 
+              border-radius: 0.5rem; 
+              border-width: 1px; 
+              border-color: #374151; 
+            `}>
               <input
-                className="w-full px-5 py-3 font-cal text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none placeholder-gray-400"
+                className={css`
+                  padding-top: 0.75rem;
+                  padding-bottom: 0.75rem; 
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem; 
+                  background-color: #ffffff; 
+                  color: #374151; 
+                  width: 100%; 
+                  border-radius: 0; 
+                  border-style: none; 
+
+                  :focus {
+                    outline: none;
+                `}
                 name="name"
                 onInput={(e) =>
                   setData((data) => ({
@@ -187,17 +253,46 @@ export default function SiteSettings() {
                     name: (e.target as HTMLTextAreaElement).value,
                   }))
                 }
-                placeholder="Untitled Site"
+                placeholder="Без назви"
                 type="text"
                 value={data.name || ""}
               />
             </div>
           </div>
-          <div className="flex flex-col space-y-6">
-            <h2 className="font-cal text-2xl">Description</h2>
-            <div className="border border-gray-700 rounded-lg overflow-hidden flex items-center max-w-lg">
+
+          <div className={css`
+            display: flex; 
+            margin-top: 1.5rem; 
+            flex-direction: column; 
+          `}>
+            <h2 className={css`
+              font-size: 1.5rem;
+              line-height: 2rem; 
+            `}>
+              Опис</h2>
+            <div className={css`
+              display: flex; 
+              overflow: hidden; 
+              align-items: center; 
+              max-width: 32rem; 
+              border-radius: 0.5rem; 
+              border-width: 1px; 
+              border-color: #374151; `}>
               <textarea
-                className="w-full px-5 py-3 font-cal text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none placeholder-gray-400"
+                className={css`
+                  padding-top: 0.75rem;
+                  padding-bottom: 0.75rem; 
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem; 
+                  background-color: #ffffff; 
+                  color: #374151; 
+                  width: 100%; 
+                  border-radius: 0; 
+                  border-style: none; 
+
+                  :focus {
+                    outline: none;
+                `}
                 name="description"
                 onInput={(e) =>
                   setData((data) => ({
@@ -205,15 +300,31 @@ export default function SiteSettings() {
                     description: (e.target as HTMLTextAreaElement).value,
                   }))
                 }
-                placeholder="Lorem ipsum forem dimsum"
+                placeholder="Немає опису"
                 rows={3}
                 value={data?.description || ""}
               />
             </div>
           </div>
-          <div className="flex flex-col space-y-6">
-            <h2 className="font-cal text-2xl">Font</h2>
-            <div className="border border-gray-700 rounded-lg overflow-hidden flex items-center max-w-lg">
+
+          <div className={css`
+            display: flex; 
+            margin-top: 1.5rem; 
+            flex-direction: column; `}>
+            <h2 className={css`
+              font-size: 1.5rem;
+              line-height: 2rem; 
+            `}>
+              Шрифт</h2>
+            <div className={css`
+              display: flex; 
+              overflow: hidden; 
+              align-items: center; 
+              max-width: 32rem; 
+              border-radius: 0.5rem; 
+              border-width: 1px; 
+              border-color: #374151; 
+            `}>
               <select
                 onChange={(e) =>
                   setData((data) => ({
@@ -222,19 +333,59 @@ export default function SiteSettings() {
                   }))
                 }
                 value={data?.font || "font-cal"}
-                className="w-full px-5 py-3 font-cal text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none placeholder-gray-400"
-              >
+                className={css`
+                  padding-top: 0.75rem;
+                  padding-bottom: 0.75rem; 
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem; 
+                  background-color: #ffffff; 
+                  color: #374151; 
+                  width: 100%; 
+                  border-radius: 0; 
+                  border-style: none; 
+                `}>
                 <option value="font-cal">Cal Sans</option>
                 <option value="font-lora">Lora</option>
                 <option value="font-work">Work Sans</option>
               </select>
             </div>
           </div>
-          <div className="flex flex-col space-y-6">
-            <h2 className="font-cal text-2xl">Subdomain</h2>
-            <div className="border border-gray-700 rounded-lg flex items-center max-w-lg">
+
+          <div className={css`
+            display: flex; 
+            margin-top: 1.5rem; 
+            flex-direction: column; 
+          `}>
+            <h2 className={css`
+              font-size: 1.5rem;
+              line-height: 2rem; 
+            `}>
+              Субдомен</h2>
+            <div className={css`
+              display: flex; 
+              align-items: center; 
+              max-width: 32rem; 
+              border-radius: 0.5rem; 
+              border-width: 1px; 
+              border-color: #374151; 
+            `}>
               <input
-                className="w-1/2 px-5 py-3 font-cal text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none rounded-l-lg placeholder-gray-400"
+                className={css`
+                  padding-top: 0.75rem;
+                  padding-bottom: 0.75rem; 
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem; 
+                  background-color: #ffffff; 
+                  color: #374151; 
+                  width: 50%; 
+                  border-radius: 0; 
+                  border-top-left-radius: 0.5rem;
+                  border-bottom-left-radius: 0.5rem; 
+                  border-style: none;                 
+
+                  :focus {
+                    outline: none;
+               `}
                 name="subdomain"
                 onInput={(e) =>
                   setData((data) => ({
@@ -246,19 +397,42 @@ export default function SiteSettings() {
                 type="text"
                 value={data.subdomain || ""}
               />
-              <div className="w-1/2 h-12 flex justify-center items-center font-cal rounded-r-lg border-l border-gray-600 bg-gray-100">
-                vercel.pub
+              <div className={css`
+                display: flex; 
+                background-color: #F3F4F6; 
+                justify-content: center; 
+                align-items: center; 
+                width: 50%; 
+                height: 3rem; 
+                border-top-right-radius: 0.5rem;
+                border-bottom-right-radius: 0.5rem; 
+                border-left-width: 1px; 
+                border-color: #4B5563; 
+              `}>
+                sviy.site
               </div>
             </div>
             {subdomainError && (
-              <p className="px-5 text-left text-red-500">
-                <b>{subdomainError}</b> is not available. Please choose another
-                subdomain.
+              <p className={css`
+                padding-left: 1.25rem;
+                padding-right: 1.25rem; 
+                color: #EF4444; 
+                text-align: left; 
+              `}>
+                <b>{subdomainError}</b> зайнято. Виберіть будь ласка інший субдомен.
               </p>
             )}
           </div>
-          <div className="flex flex-col space-y-6">
-            <h2 className="font-cal text-2xl">Custom Domain</h2>
+          
+          <div className={css`
+            display: flex; 
+            margin-top: 1.5rem; 
+            flex-direction: column; `}>
+            <h2 className={css`
+              font-size: 1.5rem;
+              line-height: 2rem; 
+            `}>
+              Власний домен</h2>
             {settings?.customDomain ? (
               <DomainCard data={data} />
             ) : (
@@ -267,12 +441,34 @@ export default function SiteSettings() {
                   e.preventDefault();
                   await handleCustomDomain();
                 }}
-                className="flex justify-start items-center space-x-3 max-w-lg"
-              >
-                <div className="border border-gray-700 flex-auto rounded-lg overflow-hidden">
+                className={css`
+                  display: flex; 
+                  justify-content: flex-start; 
+                  align-items: center; 
+                  max-width: 32rem; 
+                `}>
+                <div className={css`
+                  overflow: hidden; 
+                  flex: 1 1 auto; 
+                  border-radius: 0.5rem; 
+                  border-width: 1px; 
+                  border-color: #374151; `}>
                   <input
                     autoComplete="off"
-                    className="w-full px-5 py-3 font-cal text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none placeholder-gray-400"
+                    className={css`padding-top: 0.75rem;
+                        padding-bottom: 0.75rem; 
+                        padding-left: 1.25rem;
+                        padding-right: 1.25rem; 
+                        background-color: #ffffff; 
+                        color: #374151; 
+                        width: 100%; 
+                        border-radius: 0; 
+                        border-style: none; 
+
+                        :focus {
+                          outline: none;
+                        }
+                      `}
                     name="customDomain"
                     onInput={(e) => {
                       setData((data) => ({
@@ -288,14 +484,39 @@ export default function SiteSettings() {
                 </div>
                 <button
                   type="submit"
-                  className="bg-black text-white border-black hover:text-black hover:bg-white px-5 py-3 w-28 font-cal border-solid border rounded-md focus:outline-none transition-all ease-in-out duration-150"
-                >
-                  {adding ? <LoadingDots /> : "Add"}
+                  className={css`
+                    margin-left: 1rem;
+                    padding: 0.75rem 1.25rem; 
+                    background-color: #3258d9; 
+                    transition-property: all; 
+                    transition-duration: 150ms; 
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); 
+                    color: #ffffff; 
+                    border-radius: 0.375rem; 
+                    border-width: 1px; 
+                    border-color: #3258d9; 
+                    border-style: solid; 
+
+                    :hover {
+                    background-color: #ffffff; 
+                    color: #3258d9; 
+                  }`}>
+                  {adding ? <LoadingDots /> : "Додати"}
                 </button>
               </form>
             )}
             {error && (
-              <div className="text-red-500 text-left w-full max-w-2xl mt-5 text-sm flex items-center space-x-2">
+              <div className={css`
+                display: flex; 
+                margin-top: 1.25rem; 
+                margin-left: 0.5rem; 
+                color: #EF4444; 
+                font-size: 0.875rem;
+                line-height: 1.25rem; 
+                text-align: left; 
+                align-items: center; 
+                width: 100%; 
+                max-width: 42rem; `}>
                 <svg
                   viewBox="0 0 24 24"
                   width="20"
@@ -306,17 +527,16 @@ export default function SiteSettings() {
                   strokeLinejoin="round"
                   fill="none"
                   shapeRendering="geometricPrecision"
-                  style={{ color: "#f44336" }}
-                >
+                  style={{ color: "#f44336" }}>
                   <circle cx="12" cy="12" r="10" fill="white" />
                   <path d="M12 8v4" stroke="#f44336" />
                   <path d="M12 16h.01" stroke="#f44336" />
                 </svg>
                 {error.code == 403 ? (
                   <p>
-                    <b>{error.domain}</b> is already owned by another team.
+                    <b>{error.domain}</b> - це ім&apos;я зайнято, спробуйте, будь ласка інше, або запросіть делегування.
                     <button
-                      className="ml-1"
+                      className={css`margin-left: 0.25rem; `}
                       onClick={async (e) => {
                         e.preventDefault();
                         await fetch(
@@ -324,47 +544,83 @@ export default function SiteSettings() {
                         ).then((res) => {
                           if (res.ok) {
                             toast.success(
-                              `Requested delegation for ${error.domain}. Try adding the domain again in a few minutes.`
+                              `Запросіть делегування для ${error.domain}. Спробуйте додати домен за кілька хвилин.`
                             );
                           } else {
                             alert(
-                              "There was an error requesting delegation. Please try again later."
+                              "Помилка запросу на делегування.Спробуйте, будь ласка пізніше."
                             );
                           }
                         });
-                      }}
-                    >
-                      <u>Click here to request access.</u>
+                      }}>
+                      <u>Натисніть тут для запросу.</u>
                     </button>
                   </p>
                 ) : (
                   <p>
-                    Cannot add <b>{error.domain}</b> since it&apos;s already
-                    assigned to another project.
+                    Неможливо додати <b>{error.domain}</b>, тому що він пов'язаний з іншим проєктом.
                   </p>
                 )}
               </div>
             )}
           </div>
-          <div className="flex flex-col space-y-6 relative">
-            <h2 className="font-cal text-2xl">Thumbnail Image</h2>
+
+          <div className={`
+            display: flex; 
+            position: relative; 
+            margin-top: 1.5rem; 
+            flex-direction: column; 
+          `}>
+            <h2 className={css`
+              font-size: 1.5rem;
+              line-height: 2rem; 
+            `}>
+              Зображення сайту{" "}
+              <Hint text="Imagetest" />
+              </h2>
             <div
-              className={`${data.image ? "" : "animate-pulse bg-gray-300 h-150"
-                } relative mt-5 w-full border-2 border-gray-800 border-dashed rounded-md`}
-            >
+              className={css`
+                position: relative;
+                margin-top: 1.25rem;
+                width: 100%;
+                border-radius: 0.375rem;
+                border-width: 2px;
+                border-color: #1F2937;
+                border-style: dashed; 
+                ${data.image 
+                  ? "" 
+                  : "background-color:#D1D5DB;animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;@keyframes pulse {0%,100%{opacity: 1;}50%{opacity:0.5;}};"
+                }
+                `}>
               <CloudinaryUploadWidget
                 callback={(e) =>
                   setData({
                     ...data,
                     image: e.secure_url,
                   })
-                }
-              >
+                }>
                 {({ open }) => (
                   <button
                     onClick={open}
-                    className="absolute w-full h-full rounded-md bg-gray-200 z-10 flex flex-col justify-center items-center opacity-0 hover:opacity-100 transition-all ease-linear duration-200"
-                  >
+                    className={css`
+                      display: flex; 
+                      position: absolute; 
+                      z-index: 10; 
+                      background-color: #E5E7EB; 
+                      transition-property: all; 
+                      transition-duration: 200ms; 
+                      transition-timing-function: linear; 
+                      flex-direction: column; 
+                      justify-content: center; 
+                      align-items: center; 
+                      width: 100%; 
+                      height: 100%; 
+                      border-radius: 0.375rem; 
+                      opacity: 0; 
+
+                      :hover {
+                      opacity: 1; 
+                      }`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="100"
@@ -373,7 +629,7 @@ export default function SiteSettings() {
                     >
                       <path d="M16 16h-3v5h-2v-5h-3l4-4 4 4zm3.479-5.908c-.212-3.951-3.473-7.092-7.479-7.092s-7.267 3.141-7.479 7.092c-2.57.463-4.521 2.706-4.521 5.408 0 3.037 2.463 5.5 5.5 5.5h3.5v-2h-3.5c-1.93 0-3.5-1.57-3.5-3.5 0-2.797 2.479-3.833 4.433-3.72-.167-4.218 2.208-6.78 5.567-6.78 3.453 0 5.891 2.797 5.567 6.78 1.745-.046 4.433.751 4.433 3.72 0 1.93-1.57 3.5-3.5 3.5h-3.5v2h3.5c3.037 0 5.5-2.463 5.5-5.5 0-2.702-1.951-4.945-4.521-5.408z" />
                     </svg>
-                    <p>Upload another image</p>
+                    <p>Завантажити інше зображення</p>
                   </button>
                 )}
               </CloudinaryUploadWidget>
@@ -382,7 +638,10 @@ export default function SiteSettings() {
                 <BlurImage
                   alt="Cover Photo"
                   blurDataURL={data.imageBlurhash || placeholderBlurhash}
-                  className="rounded-md w-full object-cover"
+                  className={css`
+                    object-fit: cover; 
+                    width: 100%; 
+                    border-radius: 0.375rem; `}
                   height={500}
                   placeholder="blur"
                   src={data.image}
@@ -390,44 +649,120 @@ export default function SiteSettings() {
                 />
               )}
             </div>
-            <div className="w-full h-10" />
-            <div className="flex flex-col space-y-6 max-w-lg">
-              <h2 className="font-cal text-2xl">Delete Site</h2>
+            <div className={css`width: 100%; height: 2.5rem;`} />
+            <div className={css`
+              display: flex; 
+              margin-top: 1.5rem; 
+              flex-direction: column; 
+              max-width: 32rem; `}>
+              <h2 className={css`
+              font-size: 1.5rem;
+              line-height: 2rem; 
+            `}>
+                Видалення сайту</h2>
               <p>
-                Permanently delete your site and all of its contents from our
-                platform. This action is not reversible – please continue with
-                caution.
+                Назавжди видалити ваш сайт і весь його вміст. Цю дію неможливо відмінити – будьте обережні.
               </p>
               <button
                 onClick={() => {
                   setShowDeleteModal(true);
                 }}
-                className="bg-red-500 text-white border-red-500 hover:text-red-500 hover:bg-white px-5 py-3 max-w-max font-cal border-solid border rounded-md focus:outline-none transition-all ease-in-out duration-150"
-              >
-                Delete Site
+                className={css`
+                  padding-top: 0.75rem;
+                  padding-bottom: 0.75rem; 
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem; 
+                  background-color: #EF4444; 
+                  transition-property: all; 
+                  transition-duration: 150ms; 
+                  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); 
+                  color: #ffffff; 
+                  max-width: max-content; 
+                  border-radius: 0.375rem; 
+                  border-width: 1px; 
+                  border-color: #EF4444; 
+                  border-style: solid; 
+
+                  :focus {
+                    outline:none;
+                  }
+                  :hover {
+                  background-color: #ffffff; 
+                  color: #EF4444; 
+                  }`}>
+                Видалити
               </button>
             </div>
           </div>
         </div>
       </div>
+
       <Modal showModal={showDeleteModal} setShowModal={setShowDeleteModal}>
         <form
           onSubmit={async (event) => {
             event.preventDefault();
             await deleteSite(siteId as string);
           }}
-          className="inline-block w-full max-w-md pt-8 overflow-hidden text-center align-middle transition-all bg-white shadow-xl rounded-lg"
-        >
-          <h2 className="font-cal text-2xl mb-6">Delete Site</h2>
-          <div className="grid gap-y-5 w-5/6 mx-auto">
-            <p className="text-gray-600 mb-3">
-              Are you sure you want to delete your site? This action is not
-              reversible. Type in the full name of your site (<b>{data.name}</b>
-              ) to confirm.
+          className={css`
+              display: inline-block;
+              overflow: hidden;
+              padding-top: 2rem;
+              background-color: #ffffff;
+              transition-property: all;
+              text-align: center;
+              vertical-align: middle;
+              width: 100%;
+              max-width: 28rem;
+              border-radius: 0.5rem;
+              box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            `}>
+          <h2 className={css`
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            line-height: 2rem;
+          `}>
+            Видалення сайту</h2>
+          <div className={css`
+                display: grid;
+                margin-left: auto;
+                margin-right: auto;
+                width: 83.333333%;
+                row-gap: 1.25rem;
+              `}>
+            <p className={css`
+              margin-bottom: 0.75rem;
+              color: #4B5563;
+            `}>
+              Ви впевнені, що бажаєте видалити свій сайт? Ця дія незворотня. Введіть повне ім&apos;я вашого сайту (<b>{data.name}</b>
+              ) для підтвердження.
             </p>
-            <div className="border border-gray-700 rounded-lg flex flex-start items-center overflow-hidden">
+            <div className={css`
+              display: flex; 
+              overflow: hidden; 
+              align-items: center; 
+              border-radius: 0.5rem; 
+              border-width: 1px; 
+              border-color: #374151; `}>
               <input
-                className="w-full px-5 py-3 text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none rounded-r-lg placeholder-gray-400"
+                className={css`
+                  padding-top: 0.75rem;
+                  padding-bottom: 0.75rem; 
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem; 
+                  background-color: #ffffff; 
+                  color: #374151; 
+                  color: #9CA3AF; 
+                  width: 100%; 
+                  border-radius: 0; 
+                  border-top-right-radius: 0.5rem;
+                  border-bottom-right-radius: 0.5rem; 
+                  border-style: none;
+                  
+                  :focus {
+                    outline: none;
+                  }
+                  `}
                 type="text"
                 name="name"
                 placeholder={data.name ?? ""}
@@ -435,42 +770,133 @@ export default function SiteSettings() {
               />
             </div>
           </div>
-          <div className="flex justify-between items-center mt-10 w-full">
+
+          <div className={css`
+                display: flex;
+                margin-top: 2.5rem;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+              `}>
             <button
               type="button"
-              className="w-full px-5 py-5 text-sm text-gray-400 hover:text-black border-t border-gray-300 rounded-bl focus:outline-none focus:ring-0 transition-all ease-in-out duration-150"
-              onClick={() => setShowDeleteModal(false)}
-            >
-              CANCEL
+              className={css`
+                  padding-top: 1.25rem;
+                  padding-bottom: 1.25rem;
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem;
+                  transition-property: all;
+                  transition-duration: 150ms;
+                  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                  color: #9ca3af;
+                  font-size: 0.875rem;
+                  line-height: 1.25rem;
+                  width: 100%;
+                  border-bottom-left-radius: 0.25rem;
+                  border-top-width: 1px;
+                  border-color: #d1d5db;
+
+                  :focus-visible {
+                    box-shadow: 0 0 3px 1px #000000;
+                    border-right-width: 1px;
+                  }
+                  :focus {
+                    outline: none;
+                  }
+
+                  :hover {
+                    color: #000000;
+                  }
+                `}
+              onClick={() => setShowDeleteModal(false)}>
+              ВІДМІНА
             </button>
 
             <button
               type="submit"
               disabled={deletingSite}
-              className={`${deletingSite
-                  ? "cursor-not-allowed text-gray-400 bg-gray-50"
-                  : "bg-white text-gray-600 hover:text-black"
-                } w-full px-5 py-5 text-sm border-t border-l border-gray-300 rounded-br focus:outline-none focus:ring-0 transition-all ease-in-out duration-150`}
-            >
-              {deletingSite ? <LoadingDots /> : "DELETE SITE"}
+              className={css`
+                  padding-top: 1.25rem;
+                  padding-bottom: 1.25rem;
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem;
+                  transition-property: all;
+                  transition-duration: 150ms;
+                  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                  font-size: 0.875rem;
+                  line-height: 1.25rem;
+                  width: 100%;
+                  border-bottom-right-radius: 0.25rem;
+                  border-top-width: 1px;
+                  border-left-width: 1px;
+                  border-color: #d1d5db;
+                  :focus-visible {
+                    box-shadow: 0 0 3px 1px #ef4444;
+                  }
+                  :focus {
+                    outline: none;
+                  }
+                  ${deletingSite
+                  ? "background-color: #F9FAFB;color: #9CA3AF;cursor: not-allowed;"
+                  : "background-color: #ffffff;color: #ef4444;:hover {color: #000000;}"}
+                `}>
+              {deletingSite ? <LoadingDots /> : "ВИДАЛИТИ"}
             </button>
           </div>
         </form>
       </Modal>
 
-      <footer className="h-20 z-20 fixed bottom-0 inset-x-0 border-solid border-t border-gray-500 bg-white">
-        <div className="max-w-screen-xl mx-auto px-10 sm:px-20 h-full flex justify-end items-center">
+      <footer
+        className={css`
+            position: fixed;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 20;
+            background-color: #ffffff;
+            height: 4rem;
+            border-top-width: 1px;
+            border-color: #6b7280;
+            border-style: solid;
+          `}>
+        <div className={css`
+              display: flex;
+              padding-left: 2.5rem;
+              padding-right: 2.5rem;
+              margin-left: auto;
+              margin-right: auto;
+              justify-content: flex-end;
+              align-items: center;
+              max-width: 1280px;
+              height: 100%;
+
+              @media (min-width: 640px) {
+                padding-left: 5rem;
+                padding-right: 5rem;
+              }
+            `}>
           <button
             onClick={() => {
               saveSiteSettings(data);
             }}
             disabled={saving || subdomainError !== null}
-            className={`${saving || subdomainError
-                ? "cursor-not-allowed bg-gray-300 border-gray-300"
-                : "bg-black hover:bg-white hover:text-black border-black"
-              } mx-2 rounded-md w-36 h-12 text-lg text-white border-2 focus:outline-none transition-all ease-in-out duration-150`}
-          >
-            {saving ? <LoadingDots /> : "Save Changes"}
+            className={css`
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+                transition-property: all;
+                transition-duration: 150ms;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                color: #ffffff;
+                height: 2.5rem;
+                padding-left: 1rem;
+                padding-right: 1rem; 
+                border-width: 2px;
+                ${saving || subdomainError
+                ? "background-color: #D1D5DB;border-color: #D1D5DB;cursor: not-allowed;"
+                : "background-color: #42cc00;border-color: #42cc00;:hover {background-color: #ffffff;color:#42cc00;}"
+              }
+              `}>
+            {saving ? <LoadingDots /> : "Зберегти зміни"}
           </button>
         </div>
       </footer>

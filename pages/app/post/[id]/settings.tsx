@@ -17,9 +17,7 @@ import type { ChangeEvent } from "react";
 import type { WithSitePost } from "@/types";
 import { placeholderBlurhash } from "@/lib/util";
 import { css } from '@emotion/css';
-
-import { Tooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
+import { Hint } from "@/components/app/Hint";
 
 interface SettingsData {
   slug: string;
@@ -125,7 +123,6 @@ export default function PostSettings() {
   return (
     <>
       <Layout siteId={settings?.site?.id}>
-        <Tooltip id="question" />
 
         <Toaster
           position="top-right"
@@ -148,15 +145,13 @@ export default function PostSettings() {
               padding-left: 5rem;
               padding-right: 5rem;
             }
-          `}
-        >
+          `}>
           <h1
             className={css`
               margin-bottom: 3rem;
               font-size: 3rem;
               line-height: 1;
-            `}
-          >
+            `}>
             Настройки посту
           </h1>
           <div
@@ -165,20 +160,17 @@ export default function PostSettings() {
               margin-bottom: 7rem;
               margin-top: 3rem;
               flex-direction: column;
-            `}
-          >
+            `}>
             <div //* slug
               className={css`
                 margin-top: 1.5rem;
-              `}
-            >
+              `}>
               <h2
                 className={css`
                   font-size: 1.5rem;
                   line-height: 2rem;
                   margin-bottom: 1rem;
-                `}
-              >
+                `}>
                 Slug посту{" "}
                 <Hint text="Вигляд в адресному рядку браузера - латиниця, цифри, риски" />
               </h2>
@@ -191,8 +183,7 @@ export default function PostSettings() {
                   border-radius: 0.5rem;
                   border-width: 1px;
                   border-color: #374151;
-                `}
-              >
+                `}>
                 <span
                   className={css`
                     padding-left: 1.25rem;
@@ -202,8 +193,7 @@ export default function PostSettings() {
                     border-bottom-left-radius: 0.5rem;
                     border-right-width: 1px;
                     border-color: #4b5563;
-                  `}
-                >
+                  `}>
                   {settings?.site?.subdomain}.{process.env.NEXT_PUBLIC_SITE_URL}
                   /
                 </span>
@@ -235,14 +225,12 @@ export default function PostSettings() {
             <div //* thumb
               className={css`
                 margin-top: 1.5rem;
-              `}
-            >
+              `}>
               <h2
                 className={css`
                   font-size: 1.5rem;
                   line-height: 2rem;
-                `}
-              >
+                `}>
                 Зображення посту{" "}
                 <Hint text="Відображається на картках в списках постів" />
               </h2>
@@ -260,16 +248,14 @@ export default function PostSettings() {
                   border-style: dashed;
                   ${!data.image &&
                   "background-color: #D1D5DB; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;@keyframes pulse {0%, 100% {opacity: 1;}50% {opacity: .5;}}; "}
-                `}
-              >
+                `}>
                 <CloudinaryUploadWidget
                   callback={(e) =>
                     setData({
                       ...data,
                       image: e.secure_url,
                     })
-                  }
-                >
+                  }>
                   {({ open }) => (
                     <button
                       onClick={open}
@@ -292,8 +278,7 @@ export default function PostSettings() {
                         :hover {
                           opacity: 1;
                         }
-                      `}
-                    >
+                      `}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="100"
@@ -341,14 +326,12 @@ export default function PostSettings() {
                   flex-direction: column;
                   max-width: 32rem;
                   gap: 1.5rem;
-                `}
-              >
+                `}>
                 <h2
                   className={css`
                     font-size: 1.5rem;
                     line-height: 2rem;
-                  `}
-                >
+                  `}>
                   Видалення посту
                 </h2>
                 <p>
@@ -379,8 +362,7 @@ export default function PostSettings() {
                     :focus {
                       outline: none;
                     }
-                  `}
-                >
+                  `}>
                   Видалити Пост
                 </button>
               </div>
@@ -406,15 +388,13 @@ export default function PostSettings() {
               border-radius: 0.5rem;
               box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
                 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            `}
-          >
+            `}>
             <h2
               className={css`
                 margin-bottom: 1.5rem;
                 font-size: 1.5rem;
                 line-height: 2rem;
-              `}
-            >
+              `}>
               Видалення посту
             </h2>
             <div
@@ -424,9 +404,11 @@ export default function PostSettings() {
                 margin-right: auto;
                 width: 83.333333%;
                 row-gap: 1.25rem;
-              `}
-            >
-              <p className="text-gray-600 mb-3">
+              `}>
+              <p className={css`
+                margin-bottom: 0.75rem;
+                color: #4B5563;
+              `}>
                 Ви впевнені, що хочете видалити свою публікацію? Цю дію не можна
                 відмінити.
               </p>
@@ -438,8 +420,7 @@ export default function PostSettings() {
                 justify-content: space-between;
                 align-items: center;
                 width: 100%;
-              `}
-            >
+              `}>
               <button
                 type="button"
                 className={css`
@@ -470,8 +451,7 @@ export default function PostSettings() {
                     color: #000000;
                   }
                 `}
-                onClick={() => setShowDeleteModal(false)}
-              >
+                onClick={() => setShowDeleteModal(false)}>
                 ВІДМІНА
               </button>
 
@@ -502,8 +482,7 @@ export default function PostSettings() {
                   ${deletingPost
                     ? "background-color: #F9FAFB;color: #9CA3AF;cursor: not-allowed;"
                     : "background-color: #ffffff;color: #ef4444;:hover {color: #000000;}"}
-                `}
-              >
+                `}>
                 {deletingPost ? <LoadingDots /> : "ВИДАЛИТИ"}
               </button>
             </div>
@@ -522,8 +501,7 @@ export default function PostSettings() {
             border-top-width: 1px;
             border-color: #6b7280;
             border-style: solid;
-          `}
-        >
+          `}>
           <div
             className={css`
               display: flex;
@@ -540,8 +518,7 @@ export default function PostSettings() {
                 padding-left: 5rem;
                 padding-right: 5rem;
               }
-            `}
-          >
+            `}>
             <button
               onClick={() => {
                 savePostSettings(data);
@@ -562,8 +539,7 @@ export default function PostSettings() {
                   ? "background-color: #D1D5DB;border-color: #D1D5DB;cursor: not-allowed;"
                   : "background-color: #42cc00;border-color: #42cc00;:hover {background-color: #ffffff;color:#42cc00;}"
                 }
-              `}
-            >
+              `}>
               {saving ? <LoadingDots /> : "Зберегти зміни"}
             </button>
           </div>
@@ -573,19 +549,3 @@ export default function PostSettings() {
   );
 }
 
-export const Hint = ({text}:{text:string}) => {
-  return (
-    <sup
-      className={css`
-        background: #000;
-        border-radius: 50%;
-        font-size: 10px;
-        cursor: pointer;
-      `}
-      data-tooltip-id="question"
-      data-tooltip-content={text}
-    >
-      ❔
-    </sup>
-  );
-}
