@@ -13,6 +13,7 @@ import { HttpMethod } from "@/types";
 
 import type { FormEvent } from "react";
 import type { Site } from "@prisma/client";
+import { css } from '@emotion/css';
 
 export default function AppIndex() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -163,8 +164,33 @@ export default function AppIndex() {
           <h1 className="font-cal text-5xl">Мої сайти</h1>
           <button
             onClick={() => setShowModal(true)}
-            className="font-cal text-lg w-3/4 sm:w-48 tracking-wide text-white bg-black border-black border-2 px-5 py-3 hover:bg-white hover:text-black transition-all ease-in-out duration-150"
-          >
+            className={css`
+              padding-top: 0.5rem;
+              padding-bottom: 0.5rem; 
+              padding-left: 1rem;
+              padding-right: 1rem; 
+              background-color: #42cc00; 
+              transition-property: all; 
+              transition-duration: 150ms; 
+              transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); 
+              color: #ffffff; 
+              font-size: 1.125rem;
+              line-height: 1.75rem; 
+              letter-spacing: 0.025em; 
+              width: 75%; 
+              border-width: 2px; 
+              border-color: #42cc00;
+              border-radius: 5px; 
+
+              :hover {
+                background-color: #ffffff; 
+                color: #42cc00; 
+              }
+
+              @media (min-width: 640px) { 
+                width: 12rem; 
+              }
+            `}>
             Новий Сайт <span className="ml-2">＋</span>
           </button>
         </div>

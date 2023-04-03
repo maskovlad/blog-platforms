@@ -204,18 +204,23 @@ export default function Post() {
       </Head>
       <Layout siteId={post?.site?.id}>
         <div className={css`
-            position: relative;
+          padding-left: 1.5rem;
+          padding-right: 1.5rem; 
+          padding-top: 5rem;
+          padding-bottom: 5rem; 
+          margin-left: auto;
+          margin-right: auto; 
+          max-width: 1280px; 
+
+          @media (min-width: 412px) { 
             padding-left: 2.5rem;
             padding-right: 2.5rem;
-            margin-top: 2.5rem;
-            margin-bottom: 4rem;
-            max-width: 1280px;
 
-            @media (min-width: 640px) {
-              padding-left: 5rem;
-              padding-right: 5rem;
-            }
-          `}>
+          @media (min-width: 640px) { 
+            padding-left: 5rem;
+            padding-right: 5rem; 
+          }
+        `}>
           <button
             onClick={async () => {
               await publish();
@@ -238,6 +243,7 @@ export default function Post() {
               color: #ffffff;
               height: 2.5rem;
               border-width: 2px;
+              border-radius: 5px;
 
               background-color: ${disabled ? "#D1D5DB" : "#42cc00"};
               border-color: ${disabled ? "#D1D5DB" : "#42cc00"};
@@ -275,6 +281,10 @@ export default function Post() {
 
               :focus {
                 outline: none;
+              }
+
+              @media (max-width: 640px) {
+                font-size: 2rem;
               }
             `}
             placeholder="Заголовок посту"

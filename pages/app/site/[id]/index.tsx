@@ -11,6 +11,7 @@ import { HttpMethod } from "@/types";
 
 import type { Post, Site } from "@prisma/client";
 import { css } from "@emotion/css";
+import { CardLoader, CardPlaceholder } from "@/components/CardPlaceholderLoader";
 
 interface SitePostData {
   posts: Array<Post>;
@@ -53,22 +54,24 @@ export default function SiteIndex() {
 
   return (
     <Layout>
-      <div
-        className={css`
+      <div className={css`
+        padding-left: 1.5rem;
+        padding-right: 1.5rem; 
+        padding-top: 5rem;
+        padding-bottom: 5rem; 
+        margin-left: auto;
+        margin-right: auto; 
+        max-width: 1280px; 
+
+        @media (min-width: 412px) { 
           padding-left: 2.5rem;
           padding-right: 2.5rem;
-          padding-top: 5rem;
-          padding-bottom: 5rem;
-          margin-left: auto;
-          margin-right: auto;
-          max-width: 1280px;
 
-          @media (min-width: 640px) {
-            padding-left: 5rem;
-            padding-right: 5rem;
-          }
-        `}
-      >
+        @media (min-width: 640px) { 
+          padding-left: 5rem;
+          padding-right: 5rem; 
+        }
+        `}>
         <div
           className={css`
             display: flex;
@@ -81,8 +84,7 @@ export default function SiteIndex() {
               margin-top: 0;
               flex-direction: row;
             }
-          `}
-        >
+          `}>
           <h1
             className={css`
               font-size: 3rem;
@@ -108,6 +110,7 @@ export default function SiteIndex() {
               letter-spacing: 0.025em;
               width: 75%;
               border-width: 2px;
+              border-radius: 5px;
 
               @media (min-width: 640px) {
                 width: 12rem;
@@ -141,63 +144,49 @@ export default function SiteIndex() {
             margin-top: 2.5rem;
             margin-bottom: 2.5rem;
             row-gap: 2.5rem;
-          `}
-        >
+          `}>
           {data ? (
             data.posts.length > 0 ? (
               data.posts.map((post) => (
                 <div
                   key={post.id}
                   className={css`
-                    display: block;
+                    display: flex;
+                    overflow: hidden;
+                    flex-direction: column;
+                    border-radius: 0.5rem;
+                    border-width: 1px;
+                    border-color: #e5e7eb;
 
                     @media (min-width: 768px) {
-                      display: grid;
-                      grid-template-columns: repeat(
-                        auto-fit,
-                        minmax(325px, 1fr)
-                      );
+                      flex-direction: row;
                     }
-                  `}
-                >
-                  <Link href={`/post/${post.id}`}>
-                    <div
-                      className={css`
-                        display: flex;
-                        overflow: hidden;
-                        flex-direction: column;
-                        border-radius: 0.5rem;
-
-                        @media (min-width: 768px) {
-                          flex-direction: row;
-                        }
-                      `}
-                    >
-                      <div
-                        className={css`
+                  `}>
+                  <div className={css`
                           position: relative;
                           width: 100%;
+                          height: 15.75rem;
 
                           @media (min-width: 768px) {
                             flex: none;
-                            height: auto;
+                            width: 33%;
                           }
-                        `}
-                      >
-                        {post.image ? (
-                          <BlurImage
-                            alt={post.title ?? "Unknown Thumbnail"}
-                            width={500}
-                            height={400}
-                            className={css`
+                        `}>
+                    <Link href={`/post/${post.id}`}>
+                      {post.image ? (
+                        <BlurImage
+                          alt={post.title ?? "Unknown Thumbnail"}
+                          fill
+                          sizes="(min-width: 768px) 100vw,
+                              33vw"
+                          className={css`
                               object-fit: cover;
                               height: 100%;
                             `}
-                            src={post.image}
-                          />
-                        ) : (
-                          <div
-                            className={css`
+                          src={post.image}
+                        />
+                      ) : (
+                        <div className={css`
                               display: flex;
                               position: absolute;
                               background-color: #f3f4f6;
@@ -208,21 +197,17 @@ export default function SiteIndex() {
                               align-items: center;
                               width: 100%;
                               height: 100%;
-                            `}
-                          >
-                            ?
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </Link>
+                            `}>
+                          ?
+                        </div>
+                      )}
+                    </Link>
+                  </div>
 
-                  <div
-                    className={css`
+                  <div className={css`
                       position: relative;
                       padding: 2.5rem;
-                    `}
-                  >
+                    `}>
                     <Link href={`/post/${post.id}`}>
                       <h2
                         className={css`
@@ -266,84 +251,15 @@ export default function SiteIndex() {
                       Переглянути ↗
                     </a>
                   </div>
+
                 </div>
               ))
             ) : (
               <>
-                <div
-                  className={css`
-                    display: flex;
-                    overflow: hidden;
-                    flex-direction: column;
-                    border-radius: 0.5rem;
-                    border-width: 1px;
-                    border-color: #e5e7eb;
-
-                    @media (min-width: 768px) {
-                      flex-direction: row;
-                    }
-                  `}
-                >
-                  <div
-                    className={css`
-                      position: relative;
-                      background-color: #d1d5db;
-                      width: 100%;
-
-                      @media (min-width: 768px) {
-                        flex: none;
-                        width: 33.333333%;
-                        height: auto;
-                      }
-                    `}
-                  />
-                  <div
-                    className={css`
-                      display: grid;
-                      position: relative;
-                      padding: 2.5rem;
-                      gap: 1.25rem;
-                    `}
-                  >
-                    <div
-                      className={css`
-                        background-color: #d1d5db;
-                        width: 7rem;
-                        height: 2.5rem;
-                        border-radius: 0.375rem;
-                      `}
-                    />
-                    <div
-                      className={css`
-                        background-color: #d1d5db;
-                        width: 12rem;
-                        height: 1.5rem;
-                        border-radius: 0.375rem;
-                      `}
-                    />
-                    <div
-                      className={css`
-                        background-color: #d1d5db;
-                        width: 12rem;
-                        height: 1.5rem;
-                        border-radius: 0.375rem;
-                      `}
-                    />
-                    <div
-                      className={css`
-                        background-color: #d1d5db;
-                        width: 12rem;
-                        height: 1.5rem;
-                        border-radius: 0.375rem;
-                      `}
-                    />
-                  </div>
-                </div>
-                <div
-                  className={css`
+                <CardPlaceholder />
+                <div className={css`
                     text-align: center;
-                  `}
-                >
+                  `}>
                   <p
                     className={css`
                       color: #4b5563;
@@ -351,140 +267,14 @@ export default function SiteIndex() {
                       line-height: 2rem;
                     `}
                   >
-                    Ви ще не маєте постів &quot;Новий Пост&quot; щоб додати
+                    Ви ще не маєте постів. Натисніть &quot;Новий Пост&quot; щоб додати
                     його.
                   </p>
                 </div>
               </>
             )
           ) : (
-            [0, 1].map((i) => (
-              <div
-                key={i}
-                className={css`
-                  display: flex;
-                  overflow: hidden;
-                  flex-direction: column;
-                  border-radius: 0.5rem;
-                  border-width: 1px;
-                  border-color: #e5e7eb;
-
-                  @media (min-width: 768px) {
-                    flex-direction: row;
-                  }
-                `}
-              >
-                <div
-                  className={css`
-                    position: relative;
-                    background-color: #d1d5db;
-                    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-
-                    @keyframes pulse {
-                      0%,
-                      100% {
-                        opacity: 1;
-                      }
-                      50% {
-                        opacity: 0.5;
-                      }
-                    }
-                    width: 100%;
-
-                    @media (min-width: 768px) {
-                      flex: none;
-                      width: 33.333333%;
-                      height: auto;
-                    }
-                  `}
-                />
-                <div
-                  className={css`
-                    display: grid;
-                    position: relative;
-                    padding: 2.5rem;
-                    gap: 1.25rem;
-                  `}
-                >
-                  <div
-                    className={css`
-                      background-color: #d1d5db;
-                      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-
-                      @keyframes pulse {
-                        0%,
-                        100% {
-                          opacity: 1;
-                        }
-                        50% {
-                          opacity: 0.5;
-                        }
-                      }
-                      width: 7rem;
-                      height: 2.5rem;
-                      border-radius: 0.375rem;
-                    `}
-                  />
-                  <div
-                    className={css`
-                      background-color: #d1d5db;
-                      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-
-                      @keyframes pulse {
-                        0%,
-                        100% {
-                          opacity: 1;
-                        }
-                        50% {
-                          opacity: 0.5;
-                        }
-                      }
-                      width: 12rem;
-                      height: 1.5rem;
-                      border-radius: 0.375rem;
-                    `}
-                  />
-                  <div
-                    className={css`
-                      background-color: #d1d5db;
-                      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-
-                      @keyframes pulse {
-                        0%,
-                        100% {
-                          opacity: 1;
-                        }
-                        50% {
-                          opacity: 0.5;
-                        }
-                      }
-                      width: 12rem;
-                      height: 1.5rem;
-                      border-radius: 0.375rem;
-                    `}
-                  />
-                  <div
-                    className={css`
-                      background-color: #d1d5db;
-                      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-
-                      @keyframes pulse {
-                        0%,
-                        100% {
-                          opacity: 1;
-                        }
-                        50% {
-                          opacity: 0.5;
-                        }
-                      }
-                      width: 12rem;
-                      height: 1.5rem;
-                      border-radius: 0.375rem;
-                    `}
-                  />
-                </div>
-              </div>
-            ))
+            <CardLoader />
           )}
         </div>
       </div>
