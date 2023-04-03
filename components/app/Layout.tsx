@@ -8,15 +8,15 @@ import Loader from "./Loader";
 import useRequireAuth from "../../lib/useRequireAuth";
 
 import type { WithChildren } from "@/types";
+import { css } from "@emotion/css";
 
 interface LayoutProps extends WithChildren {
   siteId?: string;
 }
 
 export default function Layout({ siteId, children }: LayoutProps) {
-  const title = "Platforms on Vercel";
-  const description =
-    "Create a fullstack application with multi-tenancy and custom domains support using Next.js, Prisma, and PostgreSQL";
+  const title = "Українська Блогова Платформа - Свій.Site";
+  const description = "Створи власний повноцінний сайт-блог. Розвивай, просувай і заробляй з найшвидшою і найнадійнішою хмарною платформою Свій.Site";
   const logo = "/favicon.ico";
   const router = useRouter();
   const sitePage = router.pathname.startsWith("/app/site/[id]");
@@ -32,7 +32,6 @@ export default function Layout({ siteId, children }: LayoutProps) {
   return (
     <>
       <div>
-
         <Head>
           <title>{title}</title>
           <link rel="icon" href={logo} />
@@ -60,34 +59,128 @@ export default function Layout({ siteId, children }: LayoutProps) {
           <meta name="twitter:image" content={logo} />
         </Head>
 
-        <div className="absolute left-0 right-0 h-16 border-b bg-white border-gray-200">
-          <div className="flex justify-between items-center h-full max-w-screen-xl mx-auto px-10 sm:px-20">
-            <div className="flex space-x-4">
-              <Link href="/" className="flex justify-center items-center">
+        <div
+          className={css`
+            position: absolute;
+            right: 0;
+            left: 0;
+            background-color: #ffffff;
+            height: 4rem;
+            border-bottom-width: 1px;
+            border-color: #e5e7eb;
+          `}
+        >
+          <div
+            className={css`
+              display: flex;
+              padding-left: 5rem;
+              padding-right: 5rem;
+              margin-left: auto;
+              margin-right: auto;
+              justify-content: space-between;
+              align-items: center;
+              max-width: 1280px;
+              height: 100%;
+
+              @media (max-width: 640px) {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+              }
+            `}
+          >
+            <div
+              className={css`
+                display: flex;
+                gap: 1rem;
+              `}
+            >
+              <Link
+                href="/"
+                className={css`
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                `}
+              >
                 {session.user && session.user.image && (
-                  <div className="h-8 w-8 inline-block rounded-full overflow-hidden align-middle">
+                  <div
+                    className={css`
+                      display: inline-block;
+                      overflow: hidden;
+                      vertical-align: middle;
+                      width: 2rem;
+                      height: 2rem;
+                      border-radius: 9999px;
+                    `}
+                  >
                     <Image
                       src={session.user.image}
-                      width={40}
-                      height={40}
+                      width={32}
+                      height={32}
                       alt={session.user.name ?? "User avatar"}
                     />
                   </div>
                 )}
-                <span className="sm:block inline-block ml-3 font-medium truncate">
+                <span
+                  className={css`
+                    display: inline-block;
+                    margin-left: 0.75rem;
+                    font-weight: 500;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+
+                    @media (min-width: 640px) {
+                      display: block;
+                    }
+                  `}
+                >
                   {session.user?.name}
                 </span>
               </Link>
-              <div className="h-8 border border-gray-300" />
+              <div
+                className={css`
+                  height: 2rem;
+                  border-width: 1px;
+                  border-color: #d1d5db;
+                `}
+              />
               <button
-                className="text-gray-500 hover:text-gray-700 transition-all ease-in-out duration-150"
+                className={css`
+                  transition-property: all;
+                  transition-duration: 150ms;
+                  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                  color: #6b7280;
+
+                  :hover {
+                    color: #374151;
+                  }
+                `}
                 onClick={() => signOut()}
               >
                 Вийти
               </button>
             </div>
             <a
-              className="font-cal flex items-center space-x-2 text-gray-700 px-5 py-3 sm:hover:text-black sm:hover:bg-white transition-all ease-in-out duration-150"
+              className={css`
+                display: flex;
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+                margin-left: 0.5rem;
+                transition-property: all;
+                transition-duration: 150ms;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                color: #374151;
+                align-items: center;
+
+                @media (min-width: 640px) {
+                  :hover {
+                    background-color: #ffffff;
+                  }
+                }
+              `}
               href="https://github.com/vercel/platforms"
               rel="noreferrer"
               target="_blank"
@@ -107,20 +200,47 @@ export default function Layout({ siteId, children }: LayoutProps) {
         </div>
 
         {rootPage && (
-          <div className="absolute left-0 right-0 top-16 flex justify-center items-center font-cal space-x-16 border-b bg-white border-gray-200">
+          <div
+            className={css`
+              display: flex;
+              position: absolute;
+              right: 0;
+              left: 0;
+              top: 4rem;
+              background-color: #ffffff;
+              justify-content: center;
+              align-items: center;
+              border-bottom-width: 1px;
+              border-color: #e5e7eb;
+              font-weight: 500;
+              padding-left: 10%;
+              padding-right: 10%;
+              gap: 10%;
+            `}
+          >
             <Link
               href="/"
-              className={`border-b-2 ${
-                tab == "" ? "border-black" : "border-transparent"
-              } py-3`}
+              className={css`
+                border-bottom-width: 2px;
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+                ${tab == ""
+                  ? "border-color: #000000;"
+                  : "border-color: transparent;"}
+              `}
             >
               Мої сайти
             </Link>
             <Link
               href="/settings"
-              className={`border-b-2 ${
-                tab == "settings" ? "border-black" : "border-transparent"
-              } py-3`}
+              className={css`
+                border-bottom-width: 2px;
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+                ${tab == "settings"
+                  ? "border-color: #000000;"
+                  : "border-color: transparent;"}
+              `}
             >
               Налаштування
             </Link>
@@ -128,72 +248,210 @@ export default function Layout({ siteId, children }: LayoutProps) {
         )}
 
         {sitePage && (
-          <div className="absolute left-0 right-0 top-16 font-cal border-b bg-white border-gray-200">
-            <div className="flex justify-between items-center space-x-16 max-w-screen-xl mx-auto px-10 sm:px-20">
-              <Link href="/" className="md:inline-block ml-3 hidden">
-                ← All Sites
+          <div
+            className={css`
+              position: absolute;
+              right: 0;
+              left: 0;
+              top: 4rem;
+              background-color: #ffffff;
+              border-bottom-width: 1px;
+              border-color: #e5e7eb;
+            `}
+          >
+            <div
+              className={css`
+                display: flex;
+                padding-left: 10%;
+                padding-right: 10%;
+                margin-left: auto;
+                margin-right: auto;
+                justify-content: flex-start;
+                font-weight: 500;
+                align-items: center;
+                max-width: 1280px;
+
+                @media (max-width: 640px) {
+                  justify-content: center;
+                }
+                @media (max-width: 425px) {
+                  justify-content: center;
+                  padding-left: 5%;
+                  padding-right: 5%;
+                }
+              `}
+            >
+              <Link
+                href="/"
+                className={css`
+                  display: inline-block;
+                  margin-right: 20%;
+                  margin-left: 0.75rem;
+                  white-space: nowrap;
+
+                  @media (max-width: 768px) {
+                    display: none;
+                  }
+                `}
+              >
+                ← Усі Сайти
               </Link>
-              <div className="flex justify-between items-center space-x-10 md:space-x-16">
+              <div
+                className={css`
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  width: 100%;
+
+                  @media (min-width: 768px) {
+                  }
+                `}
+              >
                 <Link
                   href={`/site/${router.query.id}`}
-                  className={`border-b-2 ${
-                    !tab ? "border-black" : "border-transparent"
-                  } py-3`}
+                  className={css`
+                    border-bottom-width: 2px;
+                    padding-top: 0.75rem;
+                    padding-bottom: 0.75rem;
+                    ${!tab
+                      ? "border-color: #000000;"
+                      : "border-color: transparent;"}
+                  `}
                 >
                   Пости
                 </Link>
                 <Link
                   href={`/site/${router.query.id}/drafts`}
-                  className={`border-b-2 ${
-                    tab == "drafts" ? "border-black" : "border-transparent"
-                  } py-3`}
+                  className={css`
+                    border-bottom-width: 2px;
+                    padding-top: 0.75rem;
+                    padding-bottom: 0.75rem;
+                    ${tab == "drafts"
+                      ? "border-color: #000000;"
+                      : "border-color: transparent;"}
+                  `}
                 >
-                  Чорновики
+                  Чернетки
                 </Link>
                 <Link
                   href={`/site/${router.query.id}/settings`}
-                  className={`border-b-2 ${
-                    tab == "settings" ? "border-black" : "border-transparent"
-                  } py-3`}
+                  className={css`
+                    border-bottom-width: 2px;
+                    padding-top: 0.75rem;
+                    padding-bottom: 0.75rem;
+                    ${tab == "settings"
+                      ? "border-color: #000000;"
+                      : "border-color: transparent;"}
+                  `}
                 >
                   Налаштування
                 </Link>
               </div>
-              <div />
             </div>
           </div>
         )}
 
         {postPage && (
-          <div className="absolute left-0 right-0 top-16 font-cal border-b bg-white border-gray-200">
-            <div className="flex justify-between items-center space-x-16 max-w-screen-xl mx-auto px-10 sm:px-20">
+          <div
+            className={css`
+              position: absolute;
+              right: 0;
+              left: 0;
+              top: 4rem;
+              background-color: #ffffff;
+              border-bottom-width: 1px;
+              border-color: #e5e7eb;
+            `}
+          >
+            <div
+              className={css`
+                display: flex;
+                padding-left: 10%;
+                padding-right: 10%;
+                margin-left: auto;
+                margin-right: auto;
+                justify-content: flex-start;
+                font-weight: 500;
+                align-items: center;
+                max-width: 1280px;
+
+                @media (max-width: 640px) {
+                  justify-content: center;
+                }
+                @media (max-width: 425px) {
+                  justify-content: center;
+                  padding-left: 5%;
+                  padding-right: 5%;
+                }
+              `}
+            >
               {siteId ? (
                 <Link
                   href={`/site/${siteId}`}
-                  className="md:inline-block ml-3 hidden"
+                  className={css`
+                    display: none;
+                    margin-left: 0.75rem;
+
+                    @media (min-width: 768px) {
+                      display: inline-block;
+                    }
+                  `}
                 >
                   ← Всі Пости
                 </Link>
               ) : (
                 <div>
-                  ←<p className="md:inline-block ml-3 hidden">Всі Пости</p>
+                  ←
+                  <p
+                    className={css`
+                      display: none;
+                      margin-left: 0.75rem;
+
+                      @media (min-width: 768px) {
+                        display: inline-block;
+                      }
+                    `}
+                  >
+                    Усі Пости
+                  </p>
                 </div>
               )}
 
-              <div className="flex justify-between items-center space-x-10 md:space-x-16">
+              <div
+                className={css`
+                  display: flex;
+                  margin-left: 2.5rem;
+                  justify-content: space-between;
+                  align-items: center;
+
+                  @media (min-width: 768px) {
+                    margin-left: 4rem;
+                  }
+                `}
+              >
                 <Link
                   href={`/post/${router.query.id}`}
-                  className={`border-b-2 ${
-                    !tab ? "border-black" : "border-transparent"
-                  } py-3`}
+                  className={css`
+                    border-bottom-width: 2px;
+                    padding-top: 0.75rem;
+                    padding-bottom: 0.75rem;
+                    ${!tab
+                      ? "border-color: #000000;"
+                      : "border-color: transparent;"}
+                  `}
                 >
                   Редактор
                 </Link>
                 <Link
                   href={`/post/${router.query.id}/settings`}
-                  className={`border-b-2 ${
-                    tab == "settings" ? "border-black" : "border-transparent"
-                  } py-3`}
+                  className={css`
+                    border-bottom-width: 2px;
+                    padding-top: 0.75rem;
+                    padding-bottom: 0.75rem;
+                    ${tab == "settings"
+                      ? "border-color: #000000;"
+                      : "border-color: transparent;"}
+                  `}
                 >
                   Налаштування
                 </Link>
@@ -202,8 +460,14 @@ export default function Layout({ siteId, children }: LayoutProps) {
             </div>
           </div>
         )}
-        
-        <div className="pt-28">{children}</div>
+
+        <div
+          className={css`
+            padding-top: 7rem;
+          `}
+        >
+          {children}
+        </div>
       </div>
     </>
   );
