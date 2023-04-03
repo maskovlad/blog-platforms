@@ -20,7 +20,7 @@ a {
 [type=reset],
 [type=submit],
 button {
-  -webkit-appearance: button;
+  /* -webkit-appearance: button; */
   background-color: transparent;
   background-image: none;
 }
@@ -53,6 +53,37 @@ input,
 textarea {
   font-family: inherit;
 }
+
+.btn-green {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: #42cc00;
+  transition-property: all;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  color: #ffffff;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  letter-spacing: 0.025em;
+  width: 12rem;
+  border-width: 2px;
+  border-color: #42cc00;
+  border-radius: 5px;
+}
+
+.btn-green:hover {
+  background-color: #ffffff;
+  color: #42cc00;
+}
+
+@media (max-width: 640px) {
+  .btn-green {
+    width: 75%;
+  }
+}
+
 
 @media (prefers-color-scheme: dark) {
   html {

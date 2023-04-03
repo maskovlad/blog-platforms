@@ -14,6 +14,8 @@ import { HttpMethod } from "@/types";
 import type { FormEvent } from "react";
 import type { Site } from "@prisma/client";
 import { css } from '@emotion/css';
+import { CardPlaceholder } from '@/components/CardPlaceholderLoader';
+import { CardLoader } from '@/components/CardPlaceholderLoader';
 
 export default function AppIndex() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -86,14 +88,74 @@ export default function AppIndex() {
             setCreatingSite(true);
             createSite(event);
           }}
-          className="inline-block w-full max-w-md pt-8 overflow-hidden text-center align-middle transition-all bg-white shadow-xl rounded-lg"
+          className={css`
+            display: inline-block;
+            overflow: hidden;
+            padding-top: 2rem;
+            background-color: #ffffff;
+            transition-property: all;
+            text-align: center;
+            vertical-align: middle;
+            width: 100%;
+            max-width: 28rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+              0 10px 10px -5px rgba(0, 0, 0, 0.04);
+          `}
         >
-          <h2 className="font-cal text-2xl mb-6">Створення нового сайту</h2>
-          <div className="grid gap-y-5 w-5/6 mx-auto">
-            <div className="border border-gray-700 rounded-lg flex flex-start items-center">
-              <span className="pl-5 pr-1">📌</span>
+          <h2
+            className={css`
+              margin-bottom: 1.5rem;
+              font-size: 1.5rem;
+              line-height: 2rem;
+            `}
+          >
+            Створення нового сайту
+          </h2>
+          <div
+            className={css`
+              display: grid;
+              margin-left: auto;
+              margin-right: auto;
+              width: 83.333333%;
+              row-gap: 1.25rem;
+            `}
+          >
+            <div
+              className={css`
+                display: flex;
+                align-items: center;
+                border-radius: 0.5rem;
+                border-width: 1px;
+                border-color: #374151;
+              `}
+            >
+              <span
+                className={css`
+                  padding-right: 0.25rem;
+                  padding-left: 1.25rem;
+                `}
+              >
+                📌
+              </span>
               <input
-                className="w-full px-5 py-3 text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none rounded-r-lg placeholder-gray-400"
+                className={css`
+                  padding-top: 0.75rem;
+                  padding-bottom: 0.75rem;
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem;
+                  background-color: #ffffff;
+                  color: #374151;
+                  width: 100%;
+                  border-radius: 0;
+                  border-top-right-radius: 0.5rem;
+                  border-bottom-right-radius: 0.5rem;
+                  border-style: none;
+
+                  :focus {
+                    outline: none;
+                  }
+                `}
                 name="name"
                 required
                 placeholder="Site Name"
@@ -101,29 +163,112 @@ export default function AppIndex() {
                 type="text"
               />
             </div>
-            <div className="border border-gray-700 rounded-lg flex flex-start items-center">
-              <span className="pl-5 pr-1">🪧</span>
+            <div
+              className={css`
+                display: flex;
+                align-items: center;
+                border-radius: 0.5rem;
+                border-width: 1px;
+                border-color: #374151;
+              `}
+            >
+              <span
+                className={css`
+                  padding-right: 0.25rem;
+                  padding-left: 1.25rem;
+                `}
+              >
+                🪧
+              </span>
               <input
-                className="w-full px-5 py-3 text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none rounded-l-lg placeholder-gray-400"
+                className={css`
+                  padding-top: 0.75rem;
+                  padding-bottom: 0.75rem;
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem;
+                  background-color: #ffffff;
+                  color: #374151;
+                  width: 100%;
+                  border-radius: 0;
+                  border-top-left-radius: 0.5rem;
+                  border-bottom-left-radius: 0.5rem;
+                  border-style: none;
+
+                  :focus {
+                    outline: none;
+                  }
+                `}
                 name="subdomain"
                 onInput={() => setSubdomain(siteSubdomainRef.current!.value)}
                 placeholder="Subdomain"
                 ref={siteSubdomainRef}
                 type="text"
               />
-              <span className="px-5 bg-gray-100 h-full flex items-center rounded-r-lg border-l border-gray-600">
+              <span
+                className={css`
+                  display: flex;
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem;
+                  background-color: #f3f4f6;
+                  align-items: center;
+                  height: 100%;
+                  border-top-right-radius: 0.5rem;
+                  border-bottom-right-radius: 0.5rem;
+                  border-left-width: 1px;
+                  border-color: #4b5563;
+                `}
+              >
                 .{process.env.NEXT_PUBLIC_SITE_URL}
               </span>
             </div>
             {error && (
-              <p className="px-5 text-left text-red-500">
-                <b>{error}</b> вже зайнятий. Спробуйте, будь ласка інший субдомен.
+              <p
+                className={css`
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem;
+                  color: #ef4444;
+                  text-align: left;
+                `}
+              >
+                <b>{error}</b> вже зайнятий. Спробуйте, будь ласка інший
+                субдомен.
               </p>
             )}
-            <div className="border border-gray-700 rounded-lg flex flex-start items-top">
-              <span className="pl-5 pr-1 mt-3">✍️</span>
+            <div
+              className={css`
+                display: flex;
+                border-radius: 0.5rem;
+                border-width: 1px;
+                border-color: #374151;
+              `}
+            >
+              <span
+                className={css`
+                  padding-right: 0.25rem;
+                  padding-left: 1.25rem;
+                  margin-top: 0.75rem;
+                `}
+              >
+                ✍️
+              </span>
               <textarea
-                className="w-full px-5 py-3 text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none rounded-r-lg placeholder-gray-400"
+                className={css`
+                  padding-top: 0.75rem;
+                  padding-bottom: 0.75rem;
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem;
+                  background-color: #ffffff;
+                  color: #374151;
+                  width: 100%;
+                  border-radius: 0;
+                  border-top-right-radius: 0.5rem;
+                  border-bottom-right-radius: 0.5rem;
+                  border-style: none;
+
+                  :focus {
+                    outline: none;
+                  }
+                `}
                 name="description"
                 placeholder="Description"
                 ref={siteDescriptionRef}
@@ -132,10 +277,40 @@ export default function AppIndex() {
               />
             </div>
           </div>
-          <div className="flex justify-between items-center mt-10 w-full">
+          <div
+            className={css`
+              display: flex;
+              margin-top: 2.5rem;
+              justify-content: space-between;
+              align-items: center;
+              width: 100%;
+            `}
+          >
             <button
               type="button"
-              className="w-full px-5 py-5 text-sm text-gray-600 hover:text-black border-t border-gray-300 rounded-bl focus:outline-none focus:ring-0 transition-all ease-in-out duration-150"
+              className={css`
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+                transition-property: all;
+                transition-duration: 150ms;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                color: #4b5563;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                width: 100%;
+                border-bottom-left-radius: 0.25rem;
+                border-top-width: 1px;
+                border-color: #d1d5db;
+
+                :hover {
+                  color: #000000;
+                }
+                :focus {
+                  outline: none;
+                }
+              `}
               onClick={() => {
                 setError(null);
                 setShowModal(false);
@@ -147,72 +322,163 @@ export default function AppIndex() {
             <button
               type="submit"
               disabled={creatingSite || error !== null}
-              className={`${creatingSite || error
-                ? "cursor-not-allowed text-gray-400 bg-gray-50"
-                : "bg-white text-gray-600 hover:text-black"
-                } w-full px-5 py-5 text-sm border-t border-l border-gray-300 rounded-br focus:outline-none focus:ring-0 transition-all ease-in-out duration-150`}
+              className={css`
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+                transition-property: all;
+                transition-duration: 150ms;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                width: 100%;
+                border-bottom-right-radius: 0.25rem;
+                border-top-width: 1px;
+                border-left-width: 1px;
+                border-color: #d1d5db;
+
+                :focus {
+                  outline: none;
+                }
+
+                ${creatingSite || error
+                  ? "background-color: #F9FAFB;color: #9CA3AF;cursor: not-allowed;"
+                  : "background-color: #ffffff;color: #4B5563;:hover {color: #000000; }"}
+              `}
             >
-              {creatingSite ? <LoadingDots /> : "CREATE SITE"}
+              {creatingSite ? <LoadingDots /> : "СТВОРИТИ"}
             </button>
           </div>
         </form>
       </Modal>
 
-      {/* Усі сайти */}
-      <div className="py-20 max-w-screen-xl mx-auto px-10 sm:px-20">
-        <div className="flex flex-col sm:flex-row space-y-5 sm:space-y-0 justify-between items-center">
-          <h1 className="font-cal text-5xl">Мої сайти</h1>
-          <button
-            onClick={() => setShowModal(true)}
+      {/* Список сайтів */}
+      <div
+        className={css`
+          padding-left: 2.5rem;
+          padding-right: 2.5rem;
+          padding-top: 5rem;
+          padding-bottom: 5rem;
+          margin-left: auto;
+          margin-right: auto;
+          max-width: 1280px;
+
+          @media (min-width: 640px) {
+            padding-left: 5rem;
+            padding-right: 5rem;
+          }
+        `}
+      >
+        <div
+          className={css`
+            display: flex;
+            margin-top: 1.25rem;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+
+            @media (min-width: 640px) {
+              margin-top: 0;
+              flex-direction: row;
+            }
+          `}
+        >
+          <h1
             className={css`
-              padding-top: 0.5rem;
-              padding-bottom: 0.5rem; 
-              padding-left: 1rem;
-              padding-right: 1rem; 
-              background-color: #42cc00; 
-              transition-property: all; 
-              transition-duration: 150ms; 
-              transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); 
-              color: #ffffff; 
-              font-size: 1.125rem;
-              line-height: 1.75rem; 
-              letter-spacing: 0.025em; 
-              width: 75%; 
-              border-width: 2px; 
-              border-color: #42cc00;
-              border-radius: 5px; 
-
-              :hover {
-                background-color: #ffffff; 
-                color: #42cc00; 
-              }
-
-              @media (min-width: 640px) { 
-                width: 12rem; 
-              }
-            `}>
-            Новий Сайт <span className="ml-2">＋</span>
+              font-size: 3rem;
+              line-height: 1;
+            `}
+          >
+            Мої сайти
+          </h1>
+          <button onClick={() => setShowModal(true)} className="btn-green">
+            Новий Сайт{" "}
+            <span
+              className={css`
+                margin-left: 0.5rem;
+              `}
+            >
+              ＋
+            </span>
           </button>
         </div>
-        <div className="my-10 grid gap-y-10">
+        
+        <div
+          className={css`
+            display: grid;
+            margin-top: 2.5rem;
+            margin-bottom: 2.5rem;
+            row-gap: 2.5rem;
+          `}
+        >
           {sites ? (
             sites.length > 0 ? (
               sites.map((site) => (
-                <div key={site.id} className='block md:grid grid-cols-[repeat(auto-fit,minmax(325px,1fr))]'>
+                <div
+                  key={site.id}
+                  className={css`
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
 
+                    @media (max-width: 768px) {
+                      display: block;
+                    }
+                  `}
+                >
                   <Link href={`/site/${site.id}`}>
-                    <div className="flex flex-col md:flex-row md:h-60 rounded-lg overflow-hidden">
-                      <div className="relative w-full h-60 md:h-auto md:flex-none">
+                    <div
+                      className={css`
+                        display: flex;
+                        overflow: hidden;
+                        flex-direction: column;
+                        border-radius: 0.5rem;
+
+                        @media (min-width: 768px) {
+                          flex-direction: row;
+                        }
+                      `}
+                    >
+                      <div
+                        className={css`
+                          position: relative;
+                          width: 100%;
+                          height: 15rem;
+
+                          @media (min-width: 768px) {
+                            height: auto;
+                            flex: none;
+                          }
+                        `}
+                      >
                         {site.image ? (
                           <BlurImage
                             src={site.image}
                             width={500}
                             height={400}
-                            className="h-full object-cover cursor-pointer"
+                            className={css`
+                              object-fit: cover;
+                              height: 100%;
+                              cursor: pointer;
+                            `}
                             alt={site.name ?? "Site thumbnail"}
                           />
                         ) : (
-                          <div className="absolute flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-4xl select-none">
+                          <div
+                            className={css`
+                              display: flex;
+                              position: absolute;
+                              background-color: #f3f4f6;
+                              color: #6b7280;
+                              font-size: 2.25rem;
+                              line-height: 2.5rem;
+                              justify-content: center;
+                              align-items: center;
+                              width: 100%;
+                              height: 100%;
+                              user-select: none;
+                            `}
+                          >
                             ?
                           </div>
                         )}
@@ -220,15 +486,48 @@ export default function AppIndex() {
                     </div>
                   </Link>
 
-                  <div className="relative p-10">
-                    <Link href={`/site/${site.id}`} >
-                      <h2 className="font-cal text-3xl cursor-pointer">{site.name}</h2>
+                  <div
+                    className={css`
+                      position: relative;
+                      padding: 2.5rem;
+                    `}
+                  >
+                    <Link href={`/site/${site.id}`}>
+                      <h2
+                        className={css`
+                          font-size: 1.875rem;
+                          line-height: 2.25rem;
+                          cursor: pointer;
+                        `}
+                      >
+                        {site.name}
+                      </h2>
                     </Link>
-                    <p className="text-base my-5 line-clamp-3">
+                    <p
+                      className={css`
+                        margin-top: 1.25rem;
+                        margin-bottom: 1.25rem;
+                        font-size: 1rem;
+                        line-height: 1.5rem;
+                      `}
+                    >
                       {site.description}
                     </p>
                     <a
-                      className="font-cal px-3 py-1 tracking-wide rounded bg-gray-200 text-gray-600 absolute bottom-5 left-10 whitespace-nowrap"
+                      className={css`
+                        position: absolute;
+                        bottom: 1.25rem;
+                        left: 2.5rem;
+                        padding-top: 0.25rem;
+                        padding-bottom: 0.25rem;
+                        padding-left: 0.75rem;
+                        padding-right: 0.75rem;
+                        background-color: #e5e7eb;
+                        color: #4b5563;
+                        letter-spacing: 0.025em;
+                        white-space: nowrap;
+                        border-radius: 0.25rem;
+                      `}
                       href={`${process.env.NEXT_PUBLIC_SITE_PROTOCOL}${site.subdomain}.${process.env.NEXT_PUBLIC_SITE_URL}`}
                       onClick={(e) => e.stopPropagation()}
                       rel="noreferrer"
@@ -237,42 +536,31 @@ export default function AppIndex() {
                       Переглянути ↗
                     </a>
                   </div>
-
                 </div>
               ))
             ) : (
               <>
-                <div className="flex flex-col md:flex-row md:h-60 rounded-lg overflow-hidden border border-gray-200">
-                  <div className="relative w-full h-60 md:h-auto md:w-1/3 md:flex-none bg-gray-300" />
-                  <div className="relative p-10 grid gap-5">
-                    <div className="w-28 h-10 rounded-md bg-gray-300" />
-                    <div className="w-48 h-6 rounded-md bg-gray-300" />
-                    <div className="w-48 h-6 rounded-md bg-gray-300" />
-                    <div className="w-48 h-6 rounded-md bg-gray-300" />
-                  </div>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl font-cal text-gray-600">
-                    У Вас ще немає сайтів. Натисніть &quot;Новий Сайт&quot; щоб створити його.
+                <CardPlaceholder />
+                <div
+                  className={css`
+                    text-align: center;
+                  `}
+                >
+                  <p
+                    className={css`
+                      color: #4b5563;
+                      font-size: 1.5rem;
+                      line-height: 2rem;
+                    `}
+                  >
+                    У Вас ще немає сайтів. Натисніть &quot;Новий Сайт&quot; щоб
+                    створити його.
                   </p>
                 </div>
               </>
             )
           ) : (
-            [0, 1].map((i) => (
-              <div
-                key={i}
-                className="flex flex-col md:flex-row md:h-60 rounded-lg overflow-hidden border border-gray-200"
-              >
-                <div className="relative w-full h-60 md:h-auto md:w-1/3 md:flex-none bg-gray-300 animate-pulse" />
-                <div className="relative p-10 grid gap-5">
-                  <div className="w-28 h-10 rounded-md bg-gray-300 animate-pulse" />
-                  <div className="w-48 h-6 rounded-md bg-gray-300 animate-pulse" />
-                  <div className="w-48 h-6 rounded-md bg-gray-300 animate-pulse" />
-                  <div className="w-48 h-6 rounded-md bg-gray-300 animate-pulse" />
-                </div>
-              </div>
-            ))
+            <CardLoader />
           )}
         </div>
       </div>
