@@ -1,6 +1,9 @@
 /* @tailwind base;
 @tailwind components;
 @tailwind utilities; */
+:root {
+  --color-green: #42cc00;
+}
 
 html,
 body {
@@ -54,12 +57,20 @@ textarea {
   font-family: inherit;
 }
 
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
 .btn-green {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  background-color: #42cc00;
+  background-color: var(--color-green);
   transition-property: all;
   transition-duration: 150ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -69,19 +80,37 @@ textarea {
   letter-spacing: 0.025em;
   width: 12rem;
   border-width: 2px;
-  border-color: #42cc00;
+  border-color: var(--color-green);
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .btn-green:hover {
   background-color: #ffffff;
-  color: #42cc00;
+  color: var(--color-green);
+}
+
+.app_menu {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 4rem;
+  background-color: #ffffff;
+  border-bottom-width: 1px;
+  border-color: #e5e7eb;
 }
 
 @media (max-width: 640px) {
   .btn-green {
     width: 75%;
   }
+    h1 {
+      font-size: 2rem;
+    }
+  
+    h2 {
+      font-size: 1.3rem;
+    }
 }
 
 

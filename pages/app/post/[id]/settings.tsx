@@ -537,7 +537,7 @@ export default function PostSettings() {
                 border-width: 2px;
                 ${saving
                   ? "background-color: #D1D5DB;border-color: #D1D5DB;cursor: not-allowed;"
-                  : "background-color: #42cc00;border-color: #42cc00;:hover {background-color: #ffffff;color:#42cc00;}"
+                  : "background-color: var(--color-green);border-color: var(--color-green);:hover {background-color: #ffffff;color:var(--color-green);}"
                 }
               `}>
               {saving ? <LoadingDots /> : "Зберегти зміни"}

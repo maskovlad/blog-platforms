@@ -13,9 +13,9 @@ import { HttpMethod } from "@/types";
 
 import type { FormEvent } from "react";
 import type { Site } from "@prisma/client";
-import { css } from '@emotion/css';
-import { CardPlaceholder } from '@/components/CardPlaceholderLoader';
-import { CardLoader } from '@/components/CardPlaceholderLoader';
+import { css } from "@emotion/css";
+import { CardPlaceholder } from "@/components/CardPlaceholderLoader";
+import { CardLoader } from "@/components/CardPlaceholderLoader";
 
 export default function AppIndex() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -377,6 +377,7 @@ export default function AppIndex() {
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
+            gap:2rem;
 
             @media (min-width: 640px) {
               margin-top: 0;
@@ -388,6 +389,10 @@ export default function AppIndex() {
             className={css`
               font-size: 3rem;
               line-height: 1;
+
+              @media (max-width: 640px) {
+                font-size: 2rem;
+              }
             `}
           >
             Мої сайти
@@ -403,7 +408,7 @@ export default function AppIndex() {
             </span>
           </button>
         </div>
-        
+
         <div
           className={css`
             display: grid;
@@ -418,73 +423,65 @@ export default function AppIndex() {
                 <div
                   key={site.id}
                   className={css`
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
+                    display: flex;
+                    overflow: hidden;
+                    flex-direction: column;
+                    border-radius: 0.5rem;
+                    border-width: 1px;
+                    border-color: #e5e7eb;
 
-                    @media (max-width: 768px) {
-                      display: block;
+                    @media (min-width: 768px) {
+                      flex-direction: row;
                     }
                   `}
                 >
-                  <Link href={`/site/${site.id}`}>
-                    <div
-                      className={css`
-                        display: flex;
-                        overflow: hidden;
-                        flex-direction: column;
-                        border-radius: 0.5rem;
+                  <div
+                    className={css`
+                      position: relative;
+                      width: 100%;
+                      height: 15.75rem;
 
-                        @media (min-width: 768px) {
-                          flex-direction: row;
-                        }
-                      `}
-                    >
-                      <div
-                        className={css`
-                          position: relative;
-                          width: 100%;
-                          height: 15rem;
-
-                          @media (min-width: 768px) {
-                            height: auto;
-                            flex: none;
-                          }
-                        `}
-                      >
-                        {site.image ? (
-                          <BlurImage
-                            src={site.image}
-                            width={500}
-                            height={400}
-                            className={css`
-                              object-fit: cover;
-                              height: 100%;
-                              cursor: pointer;
-                            `}
-                            alt={site.name ?? "Site thumbnail"}
-                          />
-                        ) : (
-                          <div
-                            className={css`
-                              display: flex;
-                              position: absolute;
-                              background-color: #f3f4f6;
-                              color: #6b7280;
-                              font-size: 2.25rem;
-                              line-height: 2.5rem;
-                              justify-content: center;
-                              align-items: center;
-                              width: 100%;
-                              height: 100%;
-                              user-select: none;
-                            `}
-                          >
-                            ?
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </Link>
+                      @media (min-width: 768px) {
+                        flex: none;
+                        width: 33%;
+                      }
+                    `}
+                  >
+                    <Link href={`/site/${site.id}`}>
+                      {site.image ? (
+                        <BlurImage
+                          src={site.image}
+                          fill
+                          sizes="(min-width: 768px) 100vw,
+                              33vw"
+                          className={css`
+                            object-fit: cover;
+                            height: 100%;
+                            cursor: pointer;
+                          `}
+                          alt={site.name ?? "Site thumbnail"}
+                        />
+                      ) : (
+                        <div
+                          className={css`
+                            display: flex;
+                            position: absolute;
+                            background-color: #f3f4f6;
+                            color: #6b7280;
+                            font-size: 2.25rem;
+                            line-height: 2.5rem;
+                            justify-content: center;
+                            align-items: center;
+                            width: 100%;
+                            height: 100%;
+                            user-select: none;
+                          `}
+                        >
+                          ?
+                        </div>
+                      )}
+                    </Link>
+                  </div>
 
                   <div
                     className={css`

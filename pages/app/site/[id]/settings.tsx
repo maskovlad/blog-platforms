@@ -176,7 +176,6 @@ export default function SiteSettings() {
 
   return (
     <Layout>
-
       <Toaster
         position="top-right"
         toastOptions={{
@@ -184,53 +183,66 @@ export default function SiteSettings() {
         }}
       />
 
-      <div className={css`
-        padding-left: 2.5rem;
-        padding-right: 2.5rem; 
-        margin-left: auto;
-        margin-right: auto; 
-        margin-bottom: 4rem; 
-        margin-top: 5rem; 
-        max-width: 1280px; 
+      <div
+        className={css`
+          padding-left: 2.5rem;
+          padding-right: 2.5rem;
+          margin-left: auto;
+          margin-right: auto;
+          margin-bottom: 4rem;
+          margin-top: 5rem;
+          max-width: 1280px;
 
-        @media (min-width: 640px) { 
-          padding-left: 5rem;
-        padding-right: 5rem; 
-        }
-      `}>
+          @media (min-width: 640px) {
+            padding-left: 5rem;
+            padding-right: 5rem;
+          }
+        `}
+      >
+        <h1
+          className={css`
+            margin-bottom: 3rem;
+            font-size: 3rem;
+            line-height: 1;
+          `}
+        >
+          Настройки сайту
+        </h1>
 
-        <h1 className={css`
-          margin-bottom: 3rem; 
-          font-size: 3rem;
-          line-height: 1; 
-        `}>
-          Настройки сайту</h1>
-
-        <div className={css`
-          display: flex; 
-          margin-bottom: 7rem; 
-          margin-top: 3rem; 
-          flex-direction: column; 
-        `}>
-          <div className={css`
-            display: flex; 
-            margin-top: 1.5rem; 
-            flex-direction: column; 
-          `}>
-            <h2 className={css`
-              font-size: 1.5rem;
-              line-height: 2rem; 
-            `}>
-              Назва</h2>
-            <div className={css`
-              display: flex; 
-              overflow: hidden; 
-              align-items: center; 
-              max-width: 32rem; 
-              border-radius: 0.5rem; 
-              border-width: 1px; 
-              border-color: #374151; 
-            `}>
+        <div
+          className={css`
+            display: flex;
+            margin-bottom: 7rem;
+            margin-top: 3rem;
+            flex-direction: column;
+          `}
+        >
+          <div
+            className={css`
+              display: flex;
+              margin-top: 1.5rem;
+              flex-direction: column;
+            `}
+          >
+            <h2
+              className={css`
+                font-size: 1.5rem;
+                line-height: 2rem;
+              `}
+            >
+              Назва
+            </h2>
+            <div
+              className={css`
+                display: flex;
+                overflow: hidden;
+                align-items: center;
+                max-width: 32rem;
+                border-radius: 0.5rem;
+                border-width: 1px;
+                border-color: #374151;
+              `}
+            >
               <input
                 className={css`
                   padding-top: 0.75rem;
@@ -260,24 +272,32 @@ export default function SiteSettings() {
             </div>
           </div>
 
-          <div className={css`
-            display: flex; 
-            margin-top: 1.5rem; 
-            flex-direction: column; 
-          `}>
-            <h2 className={css`
-              font-size: 1.5rem;
-              line-height: 2rem; 
-            `}>
-              Опис</h2>
-            <div className={css`
-              display: flex; 
-              overflow: hidden; 
-              align-items: center; 
-              max-width: 32rem; 
-              border-radius: 0.5rem; 
-              border-width: 1px; 
-              border-color: #374151; `}>
+          <div
+            className={css`
+              display: flex;
+              margin-top: 1.5rem;
+              flex-direction: column;
+            `}
+          >
+            <h2
+              className={css`
+                font-size: 1.5rem;
+                line-height: 2rem;
+              `}
+            >
+              Опис
+            </h2>
+            <div
+              className={css`
+                display: flex;
+                overflow: hidden;
+                align-items: center;
+                max-width: 32rem;
+                border-radius: 0.5rem;
+                border-width: 1px;
+                border-color: #374151;
+              `}
+            >
               <textarea
                 className={css`
                   padding-top: 0.75rem;
@@ -307,24 +327,32 @@ export default function SiteSettings() {
             </div>
           </div>
 
-          <div className={css`
-            display: flex; 
-            margin-top: 1.5rem; 
-            flex-direction: column; `}>
-            <h2 className={css`
-              font-size: 1.5rem;
-              line-height: 2rem; 
-            `}>
-              Шрифт</h2>
-            <div className={css`
-              display: flex; 
-              overflow: hidden; 
-              align-items: center; 
-              max-width: 32rem; 
-              border-radius: 0.5rem; 
-              border-width: 1px; 
-              border-color: #374151; 
-            `}>
+          <div
+            className={css`
+              display: flex;
+              margin-top: 1.5rem;
+              flex-direction: column;
+            `}
+          >
+            <h2
+              className={css`
+                font-size: 1.5rem;
+                line-height: 2rem;
+              `}
+            >
+              Шрифт
+            </h2>
+            <div
+              className={css`
+                display: flex;
+                overflow: hidden;
+                align-items: center;
+                max-width: 32rem;
+                border-radius: 0.5rem;
+                border-width: 1px;
+                border-color: #374151;
+              `}
+            >
               <select
                 onChange={(e) =>
                   setData((data) => ({
@@ -335,15 +363,16 @@ export default function SiteSettings() {
                 value={data?.font || "font-cal"}
                 className={css`
                   padding-top: 0.75rem;
-                  padding-bottom: 0.75rem; 
+                  padding-bottom: 0.75rem;
                   padding-left: 1.25rem;
-                  padding-right: 1.25rem; 
-                  background-color: #ffffff; 
-                  color: #374151; 
-                  width: 100%; 
-                  border-radius: 0; 
-                  border-style: none; 
-                `}>
+                  padding-right: 1.25rem;
+                  background-color: #ffffff;
+                  color: #374151;
+                  width: 100%;
+                  border-radius: 0;
+                  border-style: none;
+                `}
+              >
                 <option value="font-cal">Cal Sans</option>
                 <option value="font-lora">Lora</option>
                 <option value="font-work">Work Sans</option>
@@ -351,24 +380,31 @@ export default function SiteSettings() {
             </div>
           </div>
 
-          <div className={css`
-            display: flex; 
-            margin-top: 1.5rem; 
-            flex-direction: column; 
-          `}>
-            <h2 className={css`
-              font-size: 1.5rem;
-              line-height: 2rem; 
-            `}>
-              Субдомен</h2>
-            <div className={css`
-              display: flex; 
-              align-items: center; 
-              max-width: 32rem; 
-              border-radius: 0.5rem; 
-              border-width: 1px; 
-              border-color: #374151; 
-            `}>
+          <div
+            className={css`
+              display: flex;
+              margin-top: 1.5rem;
+              flex-direction: column;
+            `}
+          >
+            <h2
+              className={css`
+                font-size: 1.5rem;
+                line-height: 2rem;
+              `}
+            >
+              Субдомен
+            </h2>
+            <div
+              className={css`
+                display: flex;
+                align-items: center;
+                max-width: 32rem;
+                border-radius: 0.5rem;
+                border-width: 1px;
+                border-color: #374151;
+              `}
+            >
               <input
                 className={css`
                   padding-top: 0.75rem;
@@ -397,42 +433,53 @@ export default function SiteSettings() {
                 type="text"
                 value={data.subdomain || ""}
               />
-              <div className={css`
-                display: flex; 
-                background-color: #F3F4F6; 
-                justify-content: center; 
-                align-items: center; 
-                width: 50%; 
-                height: 3rem; 
-                border-top-right-radius: 0.5rem;
-                border-bottom-right-radius: 0.5rem; 
-                border-left-width: 1px; 
-                border-color: #4B5563; 
-              `}>
+              <div
+                className={css`
+                  display: flex;
+                  background-color: #f3f4f6;
+                  justify-content: center;
+                  align-items: center;
+                  width: 50%;
+                  height: 3rem;
+                  border-top-right-radius: 0.5rem;
+                  border-bottom-right-radius: 0.5rem;
+                  border-left-width: 1px;
+                  border-color: #4b5563;
+                `}
+              >
                 sviy.site
               </div>
             </div>
             {subdomainError && (
-              <p className={css`
-                padding-left: 1.25rem;
-                padding-right: 1.25rem; 
-                color: #EF4444; 
-                text-align: left; 
-              `}>
-                <b>{subdomainError}</b> зайнято. Виберіть будь ласка інший субдомен.
+              <p
+                className={css`
+                  padding-left: 1.25rem;
+                  padding-right: 1.25rem;
+                  color: #ef4444;
+                  text-align: left;
+                `}
+              >
+                <b>{subdomainError}</b> зайнято. Виберіть будь ласка інший
+                субдомен.
               </p>
             )}
           </div>
-          
-          <div className={css`
-            display: flex; 
-            margin-top: 1.5rem; 
-            flex-direction: column; `}>
-            <h2 className={css`
-              font-size: 1.5rem;
-              line-height: 2rem; 
-            `}>
-              Власний домен</h2>
+
+          <div
+            className={css`
+              display: flex;
+              margin-top: 1.5rem;
+              flex-direction: column;
+            `}
+          >
+            <h2
+              className={css`
+                font-size: 1.5rem;
+                line-height: 2rem;
+              `}
+            >
+              Власний домен
+            </h2>
             {settings?.customDomain ? (
               <DomainCard data={data} />
             ) : (
@@ -442,33 +489,38 @@ export default function SiteSettings() {
                   await handleCustomDomain();
                 }}
                 className={css`
-                  display: flex; 
-                  justify-content: flex-start; 
-                  align-items: center; 
-                  max-width: 32rem; 
-                `}>
-                <div className={css`
-                  overflow: hidden; 
-                  flex: 1 1 auto; 
-                  border-radius: 0.5rem; 
-                  border-width: 1px; 
-                  border-color: #374151; `}>
+                  display: flex;
+                  justify-content: flex-start;
+                  align-items: center;
+                  max-width: 32rem;
+                `}
+              >
+                <div
+                  className={css`
+                    overflow: hidden;
+                    flex: 1 1 auto;
+                    border-radius: 0.5rem;
+                    border-width: 1px;
+                    border-color: #374151;
+                  `}
+                >
                   <input
                     autoComplete="off"
-                    className={css`padding-top: 0.75rem;
-                        padding-bottom: 0.75rem; 
-                        padding-left: 1.25rem;
-                        padding-right: 1.25rem; 
-                        background-color: #ffffff; 
-                        color: #374151; 
-                        width: 100%; 
-                        border-radius: 0; 
-                        border-style: none; 
+                    className={css`
+                      padding-top: 0.75rem;
+                      padding-bottom: 0.75rem;
+                      padding-left: 1.25rem;
+                      padding-right: 1.25rem;
+                      background-color: #ffffff;
+                      color: #374151;
+                      width: 100%;
+                      border-radius: 0;
+                      border-style: none;
 
-                        :focus {
-                          outline: none;
-                        }
-                      `}
+                      :focus {
+                        outline: none;
+                      }
+                    `}
                     name="customDomain"
                     onInput={(e) => {
                       setData((data) => ({
@@ -486,37 +538,42 @@ export default function SiteSettings() {
                   type="submit"
                   className={css`
                     margin-left: 1rem;
-                    padding: 0.75rem 1.25rem; 
-                    background-color: #3258d9; 
-                    transition-property: all; 
-                    transition-duration: 150ms; 
-                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); 
-                    color: #ffffff; 
-                    border-radius: 0.375rem; 
-                    border-width: 1px; 
-                    border-color: #3258d9; 
-                    border-style: solid; 
+                    padding: 0.75rem 1.25rem;
+                    background-color: #3258d9;
+                    transition-property: all;
+                    transition-duration: 150ms;
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    color: #ffffff;
+                    border-radius: 0.375rem;
+                    border-width: 1px;
+                    border-color: #3258d9;
+                    border-style: solid;
 
                     :hover {
-                    background-color: #ffffff; 
-                    color: #3258d9; 
-                  }`}>
+                      background-color: #ffffff;
+                      color: #3258d9;
+                    }
+                  `}
+                >
                   {adding ? <LoadingDots /> : "Додати"}
                 </button>
               </form>
             )}
             {error && (
-              <div className={css`
-                display: flex; 
-                margin-top: 1.25rem; 
-                margin-left: 0.5rem; 
-                color: #EF4444; 
-                font-size: 0.875rem;
-                line-height: 1.25rem; 
-                text-align: left; 
-                align-items: center; 
-                width: 100%; 
-                max-width: 42rem; `}>
+              <div
+                className={css`
+                  display: flex;
+                  margin-top: 1.25rem;
+                  margin-left: 0.5rem;
+                  color: #ef4444;
+                  font-size: 0.875rem;
+                  line-height: 1.25rem;
+                  text-align: left;
+                  align-items: center;
+                  width: 100%;
+                  max-width: 42rem;
+                `}
+              >
                 <svg
                   viewBox="0 0 24 24"
                   width="20"
@@ -527,16 +584,20 @@ export default function SiteSettings() {
                   strokeLinejoin="round"
                   fill="none"
                   shapeRendering="geometricPrecision"
-                  style={{ color: "#f44336" }}>
+                  style={{ color: "#f44336" }}
+                >
                   <circle cx="12" cy="12" r="10" fill="white" />
                   <path d="M12 8v4" stroke="#f44336" />
                   <path d="M12 16h.01" stroke="#f44336" />
                 </svg>
                 {error.code == 403 ? (
                   <p>
-                    <b>{error.domain}</b> - це ім&apos;я зайнято, спробуйте, будь ласка інше, або запросіть делегування.
+                    <b>{error.domain}</b> - це ім&apos;я зайнято, спробуйте,
+                    будь ласка інше, або запросіть делегування.
                     <button
-                      className={css`margin-left: 0.25rem; `}
+                      className={css`
+                        margin-left: 0.25rem;
+                      `}
                       onClick={async (e) => {
                         e.preventDefault();
                         await fetch(
@@ -552,32 +613,37 @@ export default function SiteSettings() {
                             );
                           }
                         });
-                      }}>
+                      }}
+                    >
                       <u>Натисніть тут для запросу.</u>
                     </button>
                   </p>
                 ) : (
                   <p>
-                    Неможливо додати <b>{error.domain}</b>, тому що він пов'язаний з іншим проєктом.
+                    Неможливо додати <b>{error.domain}</b>, тому що він
+                    пов'язаний з іншим проєктом.
                   </p>
                 )}
               </div>
             )}
           </div>
 
-          <div className={`
+          <div
+            className={`
             display: flex; 
             position: relative; 
             margin-top: 1.5rem; 
             flex-direction: column; 
-          `}>
-            <h2 className={css`
-              font-size: 1.5rem;
-              line-height: 2rem; 
-            `}>
-              Зображення сайту{" "}
-              <Hint text="Imagetest" />
-              </h2>
+          `}
+          >
+            <h2
+              className={css`
+                font-size: 1.5rem;
+                line-height: 2rem;
+              `}
+            >
+              Зображення сайту <Hint text="Imagetest" />
+            </h2>
             <div
               className={css`
                 position: relative;
@@ -585,42 +651,45 @@ export default function SiteSettings() {
                 width: 100%;
                 border-radius: 0.375rem;
                 border-width: 2px;
-                border-color: #1F2937;
-                border-style: dashed; 
-                ${data.image 
-                  ? "" 
-                  : "background-color:#D1D5DB;animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;@keyframes pulse {0%,100%{opacity: 1;}50%{opacity:0.5;}};"
-                }
-                `}>
+                border-color: #1f2937;
+                border-style: dashed;
+                ${data.image
+                  ? ""
+                  : "background-color:#D1D5DB;animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;@keyframes pulse {0%,100%{opacity: 1;}50%{opacity:0.5;}};"}
+              `}
+            >
               <CloudinaryUploadWidget
                 callback={(e) =>
                   setData({
                     ...data,
                     image: e.secure_url,
                   })
-                }>
+                }
+              >
                 {({ open }) => (
                   <button
                     onClick={open}
                     className={css`
-                      display: flex; 
-                      position: absolute; 
-                      z-index: 10; 
-                      background-color: #E5E7EB; 
-                      transition-property: all; 
-                      transition-duration: 200ms; 
-                      transition-timing-function: linear; 
-                      flex-direction: column; 
-                      justify-content: center; 
-                      align-items: center; 
-                      width: 100%; 
-                      height: 100%; 
-                      border-radius: 0.375rem; 
-                      opacity: 0; 
+                      display: flex;
+                      position: absolute;
+                      z-index: 10;
+                      background-color: #e5e7eb;
+                      transition-property: all;
+                      transition-duration: 200ms;
+                      transition-timing-function: linear;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: center;
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 0.375rem;
+                      opacity: 0;
 
                       :hover {
-                      opacity: 1; 
-                      }`}>
+                        opacity: 1;
+                      }
+                    `}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="100"
@@ -639,9 +708,10 @@ export default function SiteSettings() {
                   alt="Cover Photo"
                   blurDataURL={data.imageBlurhash || placeholderBlurhash}
                   className={css`
-                    object-fit: cover; 
-                    width: 100%; 
-                    border-radius: 0.375rem; `}
+                    object-fit: cover;
+                    width: 100%;
+                    border-radius: 0.375rem;
+                  `}
                   height={500}
                   placeholder="blur"
                   src={data.image}
@@ -649,19 +719,31 @@ export default function SiteSettings() {
                 />
               )}
             </div>
-            <div className={css`width: 100%; height: 2.5rem;`} />
-            <div className={css`
-              display: flex; 
-              margin-top: 1.5rem; 
-              flex-direction: column; 
-              max-width: 32rem; `}>
-              <h2 className={css`
-              font-size: 1.5rem;
-              line-height: 2rem; 
-            `}>
-                Видалення сайту</h2>
+            <div
+              className={css`
+                width: 100%;
+                height: 2.5rem;
+              `}
+            />
+            <div
+              className={css`
+                display: flex;
+                margin-top: 1.5rem;
+                flex-direction: column;
+                max-width: 32rem;
+              `}
+            >
+              <h2
+                className={css`
+                  font-size: 1.5rem;
+                  line-height: 2rem;
+                `}
+              >
+                Видалення сайту
+              </h2>
               <p>
-                Назавжди видалити ваш сайт і весь його вміст. Цю дію неможливо відмінити – будьте обережні.
+                Назавжди видалити ваш сайт і весь його вміст. Цю дію неможливо
+                відмінити – будьте обережні.
               </p>
               <button
                 onClick={() => {
@@ -669,27 +751,29 @@ export default function SiteSettings() {
                 }}
                 className={css`
                   padding-top: 0.75rem;
-                  padding-bottom: 0.75rem; 
+                  padding-bottom: 0.75rem;
                   padding-left: 1.25rem;
-                  padding-right: 1.25rem; 
-                  background-color: #EF4444; 
-                  transition-property: all; 
-                  transition-duration: 150ms; 
-                  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); 
-                  color: #ffffff; 
-                  max-width: max-content; 
-                  border-radius: 0.375rem; 
-                  border-width: 1px; 
-                  border-color: #EF4444; 
-                  border-style: solid; 
+                  padding-right: 1.25rem;
+                  background-color: #ef4444;
+                  transition-property: all;
+                  transition-duration: 150ms;
+                  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                  color: #ffffff;
+                  max-width: max-content;
+                  border-radius: 0.375rem;
+                  border-width: 1px;
+                  border-color: #ef4444;
+                  border-style: solid;
 
                   :focus {
-                    outline:none;
+                    outline: none;
                   }
                   :hover {
-                  background-color: #ffffff; 
-                  color: #EF4444; 
-                  }`}>
+                    background-color: #ffffff;
+                    color: #ef4444;
+                  }
+                `}
+              >
                 Видалити
               </button>
             </div>
@@ -704,65 +788,77 @@ export default function SiteSettings() {
             await deleteSite(siteId as string);
           }}
           className={css`
-              display: inline-block;
-              overflow: hidden;
-              padding-top: 2rem;
-              background-color: #ffffff;
-              transition-property: all;
-              text-align: center;
-              vertical-align: middle;
-              width: 100%;
-              max-width: 28rem;
-              border-radius: 0.5rem;
-              box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-                0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            `}>
-          <h2 className={css`
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            line-height: 2rem;
-          `}>
-            Видалення сайту</h2>
-          <div className={css`
-                display: grid;
-                margin-left: auto;
-                margin-right: auto;
-                width: 83.333333%;
-                row-gap: 1.25rem;
-              `}>
-            <p className={css`
-              margin-bottom: 0.75rem;
-              color: #4B5563;
-            `}>
-              Ви впевнені, що бажаєте видалити свій сайт? Ця дія незворотня. Введіть повне ім&apos;я вашого сайту (<b>{data.name}</b>
-              ) для підтвердження.
+            display: inline-block;
+            overflow: hidden;
+            padding-top: 2rem;
+            background-color: #ffffff;
+            transition-property: all;
+            text-align: center;
+            vertical-align: middle;
+            width: 100%;
+            max-width: 28rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+              0 10px 10px -5px rgba(0, 0, 0, 0.04);
+          `}
+        >
+          <h2
+            className={css`
+              margin-bottom: 1.5rem;
+              font-size: 1.5rem;
+              line-height: 2rem;
+            `}
+          >
+            Видалення сайту
+          </h2>
+          <div
+            className={css`
+              display: grid;
+              margin-left: auto;
+              margin-right: auto;
+              width: 83.333333%;
+              row-gap: 1.25rem;
+            `}
+          >
+            <p
+              className={css`
+                margin-bottom: 0.75rem;
+                color: #4b5563;
+              `}
+            >
+              Ви впевнені, що бажаєте видалити свій сайт? Ця дія незворотня.
+              Введіть повне ім&apos;я вашого сайту (<b>{data.name}</b>) для
+              підтвердження.
             </p>
-            <div className={css`
-              display: flex; 
-              overflow: hidden; 
-              align-items: center; 
-              border-radius: 0.5rem; 
-              border-width: 1px; 
-              border-color: #374151; `}>
+            <div
+              className={css`
+                display: flex;
+                overflow: hidden;
+                align-items: center;
+                border-radius: 0.5rem;
+                border-width: 1px;
+                border-color: #374151;
+              `}
+            >
               <input
                 className={css`
                   padding-top: 0.75rem;
-                  padding-bottom: 0.75rem; 
+                  padding-bottom: 0.75rem;
                   padding-left: 1.25rem;
-                  padding-right: 1.25rem; 
-                  background-color: #ffffff; 
-                  color: #374151; 
-                  color: #9CA3AF; 
-                  width: 100%; 
-                  border-radius: 0; 
+                  padding-right: 1.25rem;
+                  background-color: #ffffff;
+                  color: #374151;
+                  color: #9ca3af;
+                  width: 100%;
+                  border-radius: 0;
                   border-top-right-radius: 0.5rem;
-                  border-bottom-right-radius: 0.5rem; 
+                  border-bottom-right-radius: 0.5rem;
                   border-style: none;
-                  
+
                   :focus {
                     outline: none;
                   }
-                  `}
+                `}
                 type="text"
                 name="name"
                 placeholder={data.name ?? ""}
@@ -771,44 +867,47 @@ export default function SiteSettings() {
             </div>
           </div>
 
-          <div className={css`
-                display: flex;
-                margin-top: 2.5rem;
-                justify-content: space-between;
-                align-items: center;
-                width: 100%;
-              `}>
+          <div
+            className={css`
+              display: flex;
+              margin-top: 2.5rem;
+              justify-content: space-between;
+              align-items: center;
+              width: 100%;
+            `}
+          >
             <button
               type="button"
               className={css`
-                  padding-top: 1.25rem;
-                  padding-bottom: 1.25rem;
-                  padding-left: 1.25rem;
-                  padding-right: 1.25rem;
-                  transition-property: all;
-                  transition-duration: 150ms;
-                  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                  color: #9ca3af;
-                  font-size: 0.875rem;
-                  line-height: 1.25rem;
-                  width: 100%;
-                  border-bottom-left-radius: 0.25rem;
-                  border-top-width: 1px;
-                  border-color: #d1d5db;
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+                transition-property: all;
+                transition-duration: 150ms;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                color: #9ca3af;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                width: 100%;
+                border-bottom-left-radius: 0.25rem;
+                border-top-width: 1px;
+                border-color: #d1d5db;
 
-                  :focus-visible {
-                    box-shadow: 0 0 3px 1px #000000;
-                    border-right-width: 1px;
-                  }
-                  :focus {
-                    outline: none;
-                  }
+                :focus-visible {
+                  box-shadow: 0 0 3px 1px #000000;
+                  border-right-width: 1px;
+                }
+                :focus {
+                  outline: none;
+                }
 
-                  :hover {
-                    color: #000000;
-                  }
-                `}
-              onClick={() => setShowDeleteModal(false)}>
+                :hover {
+                  color: #000000;
+                }
+              `}
+              onClick={() => setShowDeleteModal(false)}
+            >
               ВІДМІНА
             </button>
 
@@ -816,30 +915,31 @@ export default function SiteSettings() {
               type="submit"
               disabled={deletingSite}
               className={css`
-                  padding-top: 1.25rem;
-                  padding-bottom: 1.25rem;
-                  padding-left: 1.25rem;
-                  padding-right: 1.25rem;
-                  transition-property: all;
-                  transition-duration: 150ms;
-                  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                  font-size: 0.875rem;
-                  line-height: 1.25rem;
-                  width: 100%;
-                  border-bottom-right-radius: 0.25rem;
-                  border-top-width: 1px;
-                  border-left-width: 1px;
-                  border-color: #d1d5db;
-                  :focus-visible {
-                    box-shadow: 0 0 3px 1px #ef4444;
-                  }
-                  :focus {
-                    outline: none;
-                  }
-                  ${deletingSite
+                padding-top: 1.25rem;
+                padding-bottom: 1.25rem;
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+                transition-property: all;
+                transition-duration: 150ms;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                width: 100%;
+                border-bottom-right-radius: 0.25rem;
+                border-top-width: 1px;
+                border-left-width: 1px;
+                border-color: #d1d5db;
+                :focus-visible {
+                  box-shadow: 0 0 3px 1px #ef4444;
+                }
+                :focus {
+                  outline: none;
+                }
+                ${deletingSite
                   ? "background-color: #F9FAFB;color: #9CA3AF;cursor: not-allowed;"
                   : "background-color: #ffffff;color: #ef4444;:hover {color: #000000;}"}
-                `}>
+              `}
+            >
               {deletingSite ? <LoadingDots /> : "ВИДАЛИТИ"}
             </button>
           </div>
@@ -848,54 +948,58 @@ export default function SiteSettings() {
 
       <footer
         className={css`
-            position: fixed;
-            right: 0;
-            left: 0;
-            bottom: 0;
-            z-index: 20;
-            background-color: #ffffff;
-            height: 4rem;
-            border-top-width: 1px;
-            border-color: #6b7280;
-            border-style: solid;
-          `}>
-        <div className={css`
-              display: flex;
-              padding-left: 2.5rem;
-              padding-right: 2.5rem;
-              margin-left: auto;
-              margin-right: auto;
-              justify-content: flex-end;
-              align-items: center;
-              max-width: 1280px;
-              height: 100%;
+          position: fixed;
+          right: 0;
+          left: 0;
+          bottom: 0;
+          z-index: 20;
+          background-color: #ffffff;
+          height: 4rem;
+          border-top-width: 1px;
+          border-color: #6b7280;
+          border-style: solid;
+        `}
+      >
+        <div
+          className={css`
+            display: flex;
+            padding-left: 2.5rem;
+            padding-right: 2.5rem;
+            margin-left: auto;
+            margin-right: auto;
+            justify-content: flex-end;
+            align-items: center;
+            max-width: 1280px;
+            height: 100%;
 
-              @media (min-width: 640px) {
-                padding-left: 5rem;
-                padding-right: 5rem;
-              }
-            `}>
+            @media (min-width: 640px) {
+              padding-left: 5rem;
+              padding-right: 5rem;
+            }
+          `}
+        >
           <button
             onClick={() => {
               saveSiteSettings(data);
             }}
             disabled={saving || subdomainError !== null}
             className={css`
-                margin-left: 0.5rem;
-                margin-right: 0.5rem;
-                transition-property: all;
-                transition-duration: 150ms;
-                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                color: #ffffff;
-                height: 2.5rem;
-                padding-left: 1rem;
-                padding-right: 1rem; 
-                border-width: 2px;
-                ${saving || subdomainError
+              margin-left: 0.5rem;
+              margin-right: 0.5rem;
+              transition-property: all;
+              transition-duration: 150ms;
+              transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+              color: #ffffff;
+              height: 2.5rem;
+              padding-left: 1rem;
+              padding-right: 1rem;
+              border-width: 2px;
+              border-radius: 5px;
+              ${saving || subdomainError
                 ? "background-color: #D1D5DB;border-color: #D1D5DB;cursor: not-allowed;"
-                : "background-color: #42cc00;border-color: #42cc00;:hover {background-color: #ffffff;color:#42cc00;}"
-              }
-              `}>
+                : "background-color: var(--color-green);border-color: var(--color-green);:hover {background-color: #ffffff;color:var(--color-green);}"}
+            `}
+          >
             {saving ? <LoadingDots /> : "Зберегти зміни"}
           </button>
         </div>

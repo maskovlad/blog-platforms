@@ -54,7 +54,8 @@ export default function SiteDrafts() {
 
   return (
     <Layout>
-      <div className={css`
+      <div
+        className={css`
         padding-left: 1.5rem;
         padding-right: 1.5rem; 
         padding-top: 5rem;
@@ -71,21 +72,27 @@ export default function SiteDrafts() {
           padding-left: 5rem;
           padding-right: 5rem; 
         }
-      `}>
+      `}
+      >
+        <div
+          className={css`
+            display: flex;
+            margin-top: 1.25rem;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
 
-        <div className={css`
-        display: flex; 
-        margin-top: 1.25rem; 
-        flex-direction: column; 
-        justify-content: space-between; 
-        align-items: center; 
-
-        @media (min-width: 640px) { 
-          margin-top: 0; 
-        flex-direction: row; 
-        }
-        `}>
-          <h1 className={css`font-size: 3rem;`}>
+            @media (min-width: 640px) {
+              margin-top: 0;
+              flex-direction: row;
+            }
+          `}
+        >
+          <h1
+            className={css`
+              font-size: 3rem;
+            `}
+          >
             {" "}
             Чернетки для {data ? data?.site?.name : "..."}
           </h1>
@@ -96,45 +103,62 @@ export default function SiteDrafts() {
               createPost(siteId as string);
             }}
             className={css`
-              padding: 1rem; 
-              transition-property: all; 
-              transition-duration: 150ms; 
-              transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); 
+              padding-top: 0.5rem;
+              padding-bottom: 0.5rem;
+              padding-left: 1rem;
+              padding-right: 1rem;
+              transition-property: all;
+              transition-duration: 150ms;
+              transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
               font-size: 1.125rem;
-              line-height: 1.75rem; 
-              letter-spacing: 0.025em; 
-              border-width: 2px; 
+              line-height: 1.75rem;
+              letter-spacing: 0.025em;
+              width: 75%;
+              border-width: 2px;
+              border-radius: 5px;
+              cursor: pointer;
+
+              @media (min-width: 640px) {
+                width: 13rem;
+              }
 
               ${creatingPost
                 ? "background-color: #D1D5DB;border-color: #D1D5DB;cursor: not-allowed;"
-                : "background-color: #42cc00;color: #ffffff;border-color: #42cc00;:hover {background - color: #ffffff;color: #42cc00;}"
-              }
-              `}
+                : "background-color: var(--color-green);color: #ffffff;border-color: var(--color-green);:hover {background-color: #ffffff;color: var(--color-green);}"}
+            `}
           >
             {creatingPost ? (
               <LoadingDots />
             ) : (
               <>
-                Нова Чернетка <span className={css`margin-left: 2rem`}>＋</span>
+                Нова Чернетка
+                <span
+                  className={css`
+                    margin-left: 1rem;
+                  `}
+                >
+                  ＋
+                </span>
               </>
             )}
           </button>
         </div>
 
-
-        <div className={css`
-          display: grid; 
-          margin-top: 2.5rem;
-          margin-bottom: 2.5rem; 
-          row-gap: 2.5rem; 
-        `}>
-
+        <div
+          className={css`
+            display: grid;
+            margin-top: 2.5rem;
+            margin-bottom: 2.5rem;
+            row-gap: 2.5rem;
+          `}
+        >
           {/* список постів */}
-            {data ? (
-              data.posts.length > 0 ? (
-                data.posts.map((post) => (
-                  <div key={post.id}
-                    className={css`
+          {data ? (
+            data.posts.length > 0 ? (
+              data.posts.map((post) => (
+                <div
+                  key={post.id}
+                  className={css`
                     display: flex;
                     overflow: hidden;
                     flex-direction: column;
@@ -145,74 +169,81 @@ export default function SiteDrafts() {
                     @media (min-width: 768px) {
                       flex-direction: row;
                     }
-                  `}>
-                    <div className={css`
-                          position: relative;
-                          width: 100%;
-                          height: 15.75rem;
+                  `}
+                >
+                  <div
+                    className={css`
+                      position: relative;
+                      width: 100%;
+                      height: 15.75rem;
 
-                          @media (min-width: 768px) {
-                            flex: none;
-                            width: 33%;
-                          }
-                        `}>
-                      <Link href={`/post/${post.id}`}>
-                        {post.image ? (
-                          <BlurImage
-                            alt={post.title ?? "Unknown Thumbnail"}
-                            fill
-                            sizes="(min-width: 768px) 100vw, 33vw"
-                            className={css`
-                              object-fit: cover;
-                              height: 100%;
-                            `}
-                            src={post.image}
-                          />
-                        ) : (
-                          <div className={css`
-                              display: flex;
-                              position: absolute;
-                              background-color: #f3f4f6;
-                              color: #6b7280;
-                              font-size: 2.25rem;
-                              line-height: 2.5rem;
-                              justify-content: center;
-                              align-items: center;
-                              width: 100%;
-                              height: 100%;
-                            `}>
-                            ?
-                          </div>
-                        )}
-                      </Link>
-                    </div>
+                      @media (min-width: 768px) {
+                        flex: none;
+                        width: 33%;
+                      }
+                    `}
+                  >
+                    <Link href={`/post/${post.id}`}>
+                      {post.image ? (
+                        <BlurImage
+                          alt={post.title ?? "Unknown Thumbnail"}
+                          fill
+                          sizes="(min-width: 768px) 100vw, 33vw"
+                          className={css`
+                            object-fit: cover;
+                            height: 100%;
+                          `}
+                          src={post.image}
+                        />
+                      ) : (
+                        <div
+                          className={css`
+                            display: flex;
+                            position: absolute;
+                            background-color: #f3f4f6;
+                            color: #6b7280;
+                            font-size: 2.25rem;
+                            line-height: 2.5rem;
+                            justify-content: center;
+                            align-items: center;
+                            width: 100%;
+                            height: 100%;
+                          `}
+                        >
+                          ?
+                        </div>
+                      )}
+                    </Link>
+                  </div>
 
-                    <div className={css`
+                  <div
+                    className={css`
                       position: relative;
                       padding: 2.5rem;
-                    `}>
-                      <Link href={`/post/${post.id}`}>
-                        <h2
-                          className={css`
+                    `}
+                  >
+                    <Link href={`/post/${post.id}`}>
+                      <h2
+                        className={css`
                           font-size: 1.875rem;
                           line-height: 2.25rem;
                         `}
-                        >
-                          {post.title}
-                        </h2>
-                      </Link>
-                      <p
-                        className={css`
+                      >
+                        {post.title}
+                      </h2>
+                    </Link>
+                    <p
+                      className={css`
                         margin-top: 1.25rem;
                         margin-bottom: 1.25rem;
                         font-size: 1rem;
                         line-height: 1.5rem;
                       `}
-                      >
-                        {post.description}
-                      </p>
-                      <a
-                        className={css`
+                    >
+                      {post.description}
+                    </p>
+                    <a
+                      className={css`
                         position: absolute;
                         bottom: 1.25rem;
                         left: 2.5rem;
@@ -226,40 +257,40 @@ export default function SiteDrafts() {
                         white-space: nowrap;
                         border-radius: 0.25rem;
                       `}
-                        href={`${process.env.NEXT_PUBLIC_SITE_PROTOCOL}${data.site?.subdomain}.${process.env.NEXT_PUBLIC_SITE_URL}/${post.slug}`}
-                        onClick={(e) => e.stopPropagation()}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        Переглянути ↗
-                      </a>
-                    </div>
-
+                      href={`${process.env.NEXT_PUBLIC_SITE_PROTOCOL}${data.site?.subdomain}.${process.env.NEXT_PUBLIC_SITE_URL}/${post.slug}`}
+                      onClick={(e) => e.stopPropagation()}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      Переглянути ↗
+                    </a>
                   </div>
-                ))
-              ) : (
-                <>
-                  <CardPlaceholder />
-                  <div className={css`
+                </div>
+              ))
+            ) : (
+              <>
+                <CardPlaceholder />
+                <div
+                  className={css`
                     text-align: center;
-                  `}>
-                    <p
-                      className={css`
+                  `}
+                >
+                  <p
+                    className={css`
                       color: #4b5563;
                       font-size: 1.5rem;
                       line-height: 2rem;
                     `}
-                    >
-                      Ви ще не маєте постів. Натисніть &quot;Новий Пост&quot; щоб додати
-                      його.
-                    </p>
-                  </div>
-                </>
-              )
-            ) : (
-              <CardLoader />
-            )}
-
+                  >
+                    Ви ще не маєте постів. Натисніть &quot;Новий Пост&quot; щоб
+                    додати його.
+                  </p>
+                </div>
+              </>
+            )
+          ) : (
+            <CardLoader />
+          )}
         </div>
       </div>
     </Layout>

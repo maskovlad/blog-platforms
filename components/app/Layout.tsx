@@ -248,17 +248,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
         )}
 
         {sitePage && (
-          <div
-            className={css`
-              position: absolute;
-              right: 0;
-              left: 0;
-              top: 4rem;
-              background-color: #ffffff;
-              border-bottom-width: 1px;
-              border-color: #e5e7eb;
-            `}
-          >
+          <div className="app_menu">
             <div
               className={css`
                 display: flex;
@@ -285,8 +275,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
                 href="/"
                 className={css`
                   display: inline-block;
-                  margin-right: 20%;
-                  margin-left: 0.75rem;
+                  flex: 1;
                   white-space: nowrap;
 
                   @media (max-width: 768px) {
@@ -296,15 +285,13 @@ export default function Layout({ siteId, children }: LayoutProps) {
               >
                 ← Усі Сайти
               </Link>
+
               <div
                 className={css`
                   display: flex;
-                  justify-content: space-between;
+                  justify-content: space-around;
                   align-items: center;
-                  width: 100%;
-
-                  @media (min-width: 768px) {
-                  }
+                  flex: 2;
                 `}
               >
                 <Link
@@ -347,22 +334,22 @@ export default function Layout({ siteId, children }: LayoutProps) {
                   Налаштування
                 </Link>
               </div>
+
+              <div
+                className={css`
+                  flex: 1;
+
+                  @media (max-width: 768px) {
+                    display: none;
+                  }
+                `}
+              />
             </div>
           </div>
         )}
 
         {postPage && (
-          <div
-            className={css`
-              position: absolute;
-              right: 0;
-              left: 0;
-              top: 4rem;
-              background-color: #ffffff;
-              border-bottom-width: 1px;
-              border-color: #e5e7eb;
-            `}
-          >
+          <div className="app_menu">
             <div
               className={css`
                 display: flex;
@@ -385,15 +372,16 @@ export default function Layout({ siteId, children }: LayoutProps) {
                 }
               `}
             >
-              {siteId ? (
+              {siteId ? ( //? непонятно
                 <Link
                   href={`/site/${siteId}`}
                   className={css`
-                    display: none;
-                    margin-left: 0.75rem;
+                    display: inline-block;
+                    flex: 1;
+                    white-space: nowrap;
 
-                    @media (min-width: 768px) {
-                      display: inline-block;
+                    @media (max-width: 768px) {
+                      display: none;
                     }
                   `}
                 >
@@ -420,13 +408,9 @@ export default function Layout({ siteId, children }: LayoutProps) {
               <div
                 className={css`
                   display: flex;
-                  margin-left: 2.5rem;
-                  justify-content: space-between;
+                  justify-content: space-around;
                   align-items: center;
-
-                  @media (min-width: 768px) {
-                    margin-left: 4rem;
-                  }
+                  flex: 2;
                 `}
               >
                 <Link
@@ -456,7 +440,16 @@ export default function Layout({ siteId, children }: LayoutProps) {
                   Налаштування
                 </Link>
               </div>
-              <div />
+              
+              <div
+                className={css`
+                  flex: 1;
+
+                  @media (max-width: 768px) {
+                    display: none;
+                  }
+                `}
+              />
             </div>
           </div>
         )}

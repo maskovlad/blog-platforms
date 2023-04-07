@@ -54,7 +54,8 @@ export default function SiteIndex() {
 
   return (
     <Layout>
-      <div className={css`
+      <div
+        className={css`
         padding-left: 1.5rem;
         padding-right: 1.5rem; 
         padding-top: 5rem;
@@ -71,7 +72,8 @@ export default function SiteIndex() {
           padding-left: 5rem;
           padding-right: 5rem; 
         }
-        `}>
+        `}
+      >
         <div
           className={css`
             display: flex;
@@ -84,7 +86,8 @@ export default function SiteIndex() {
               margin-top: 0;
               flex-direction: row;
             }
-          `}>
+          `}
+        >
           <h1
             className={css`
               font-size: 3rem;
@@ -111,13 +114,14 @@ export default function SiteIndex() {
               width: 75%;
               border-width: 2px;
               border-radius: 5px;
+              cursor: pointer;
 
               @media (min-width: 640px) {
                 width: 12rem;
               }
               ${creatingPost
                 ? "background-color: #D1D5DB;border-color: #D1D5DB;cursor: not-allowed;"
-                : "background-color: #42cc00;color: #ffffff;border-color: #42cc00;:hover{background-color: #ffffff; color: #42cc00;}"}
+                : "background-color: var(--color-green);color: #ffffff;border-color: var(--color-green);:hover{background-color: #ffffff; color: var(--color-green);}"}
             `}
           >
             {creatingPost ? (
@@ -144,7 +148,8 @@ export default function SiteIndex() {
             margin-top: 2.5rem;
             margin-bottom: 2.5rem;
             row-gap: 2.5rem;
-          `}>
+          `}
+        >
           {data ? (
             data.posts.length > 0 ? (
               data.posts.map((post) => (
@@ -161,17 +166,20 @@ export default function SiteIndex() {
                     @media (min-width: 768px) {
                       flex-direction: row;
                     }
-                  `}>
-                  <div className={css`
-                          position: relative;
-                          width: 100%;
-                          height: 15.75rem;
+                  `}
+                >
+                  <div
+                    className={css`
+                      position: relative;
+                      width: 100%;
+                      height: 15.75rem;
 
-                          @media (min-width: 768px) {
-                            flex: none;
-                            width: 33%;
-                          }
-                        `}>
+                      @media (min-width: 768px) {
+                        flex: none;
+                        width: 33%;
+                      }
+                    `}
+                  >
                     <Link href={`/post/${post.id}`}>
                       {post.image ? (
                         <BlurImage
@@ -180,39 +188,45 @@ export default function SiteIndex() {
                           sizes="(min-width: 768px) 100vw,
                               33vw"
                           className={css`
-                              object-fit: cover;
-                              height: 100%;
-                            `}
+                            object-fit: cover;
+                            height: 100%;
+                            cursor: pointer;
+                          `}
                           src={post.image}
                         />
                       ) : (
-                        <div className={css`
-                              display: flex;
-                              position: absolute;
-                              background-color: #f3f4f6;
-                              color: #6b7280;
-                              font-size: 2.25rem;
-                              line-height: 2.5rem;
-                              justify-content: center;
-                              align-items: center;
-                              width: 100%;
-                              height: 100%;
-                            `}>
+                        <div
+                          className={css`
+                            display: flex;
+                            position: absolute;
+                            background-color: #f3f4f6;
+                            color: #6b7280;
+                            font-size: 2.25rem;
+                            line-height: 2.5rem;
+                            justify-content: center;
+                            align-items: center;
+                            width: 100%;
+                            height: 100%;
+                          `}
+                        >
                           ?
                         </div>
                       )}
                     </Link>
                   </div>
 
-                  <div className={css`
+                  <div
+                    className={css`
                       position: relative;
                       padding: 2.5rem;
-                    `}>
+                    `}
+                  >
                     <Link href={`/post/${post.id}`}>
                       <h2
                         className={css`
                           font-size: 1.875rem;
                           line-height: 2.25rem;
+                          cursor: pointer;
                         `}
                       >
                         {post.title}
@@ -251,15 +265,16 @@ export default function SiteIndex() {
                       Переглянути ↗
                     </a>
                   </div>
-
                 </div>
               ))
             ) : (
               <>
                 <CardPlaceholder />
-                <div className={css`
+                <div
+                  className={css`
                     text-align: center;
-                  `}>
+                  `}
+                >
                   <p
                     className={css`
                       color: #4b5563;
@@ -267,8 +282,8 @@ export default function SiteIndex() {
                       line-height: 2rem;
                     `}
                   >
-                    Ви ще не маєте постів. Натисніть &quot;Новий Пост&quot; щоб додати
-                    його.
+                    Ви ще не маєте постів. Натисніть &quot;Новий Пост&quot; щоб
+                    додати його.
                   </p>
                 </div>
               </>

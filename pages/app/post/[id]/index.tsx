@@ -203,7 +203,8 @@ export default function Post() {
         />
       </Head>
       <Layout siteId={post?.site?.id}>
-        <div className={css`
+        <div
+          className={css`
           padding-left: 1.5rem;
           padding-right: 1.5rem; 
           padding-top: 5rem;
@@ -220,7 +221,8 @@ export default function Post() {
             padding-left: 5rem;
             padding-right: 5rem; 
           }
-        `}>
+        `}
+        >
           <button
             onClick={async () => {
               await publish();
@@ -245,13 +247,13 @@ export default function Post() {
               border-width: 2px;
               border-radius: 5px;
 
-              background-color: ${disabled ? "#D1D5DB" : "#42cc00"};
-              border-color: ${disabled ? "#D1D5DB" : "#42cc00"};
+              background-color: ${disabled ? "#D1D5DB" : "var(--color-green)"};
+              border-color: ${disabled ? "#D1D5DB" : "var(--color-green)"};
               cursor: ${disabled ? "not-allowed" : "pointer"};
 
               :hover {
                 background-color: #ffffff;
-                color: #42cc00;
+                color: var(--color-green);
               }
             `}
           >
@@ -328,7 +330,8 @@ export default function Post() {
           )}
         </div>
 
-        <footer  className={css`
+        <footer
+          className={css`
             position: fixed;
             right: 0;
             left: 0;
@@ -338,8 +341,10 @@ export default function Post() {
             border-top-width: 1px;
             border-color: #d6d6d6;
             border-style: solid;
-          `}>
-          <div className={css`
+          `}
+        >
+          <div
+            className={css`
               display: flex;
               padding-left: 2.5rem;
               padding-right: 2.5rem;
@@ -356,13 +361,16 @@ export default function Post() {
                 padding-left: 5rem;
                 padding-right: 5rem;
               }
-            `}>
-            <div className={css`
+            `}
+          >
+            <div
+              className={css`
                 font-size: 0.875rem;
                 line-height: 1.25rem;
                 width: 300px;
-              `}>
-              <strong>{post?.published ? "Опубліковано" : "Чорновик"}</strong> |{" "}
+              `}
+            >
+              <strong>{post?.published ? "Опубліковано" : "Чернетка"}</strong> |{" "}
               {savedState}
             </div>
           </div>
