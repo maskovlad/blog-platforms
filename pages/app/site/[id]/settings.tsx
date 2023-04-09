@@ -15,8 +15,8 @@ import { fetcher } from "@/lib/fetcher";
 import { HttpMethod } from "@/types";
 
 import type { Site } from "@prisma/client";
-import { placeholderBlurhash } from '@/lib/util';
-import { css } from '@emotion/css';
+import { placeholderBlurhash } from "@/lib/util";
+import { css } from "@emotion/css";
 import { Hint } from "@/components/app/Hint";
 
 interface SettingsData
@@ -30,7 +30,7 @@ interface SettingsData
     | "customDomain"
     | "image"
     | "imageBlurhash"
-  > { }
+  > {}
 
 export default function SiteSettings() {
   const router = useRouter();
@@ -199,15 +199,7 @@ export default function SiteSettings() {
           }
         `}
       >
-        <h1
-          className={css`
-            margin-bottom: 3rem;
-            font-size: 3rem;
-            line-height: 1;
-          `}
-        >
-          Настройки сайту
-        </h1>
+        <h1>Настройки сайту</h1>
 
         <div
           className={css`
@@ -217,47 +209,11 @@ export default function SiteSettings() {
             flex-direction: column;
           `}
         >
-          <div
-            className={css`
-              display: flex;
-              margin-top: 1.5rem;
-              flex-direction: column;
-            `}
-          >
-            <h2
-              className={css`
-                font-size: 1.5rem;
-                line-height: 2rem;
-              `}
-            >
-              Назва
-            </h2>
-            <div
-              className={css`
-                display: flex;
-                overflow: hidden;
-                align-items: center;
-                max-width: 32rem;
-                border-radius: 0.5rem;
-                border-width: 1px;
-                border-color: #374151;
-              `}
-            >
+          <div className="setting-wrap">
+            <h2>Назва</h2>
+            <div className="setting-input-wrap">
               <input
-                className={css`
-                  padding-top: 0.75rem;
-                  padding-bottom: 0.75rem; 
-                  padding-left: 1.25rem;
-                  padding-right: 1.25rem; 
-                  background-color: #ffffff; 
-                  color: #374151; 
-                  width: 100%; 
-                  border-radius: 0; 
-                  border-style: none; 
-
-                  :focus {
-                    outline: none;
-                `}
+                className="setting-input"
                 name="name"
                 onInput={(e) =>
                   setData((data) => ({
@@ -272,47 +228,11 @@ export default function SiteSettings() {
             </div>
           </div>
 
-          <div
-            className={css`
-              display: flex;
-              margin-top: 1.5rem;
-              flex-direction: column;
-            `}
-          >
-            <h2
-              className={css`
-                font-size: 1.5rem;
-                line-height: 2rem;
-              `}
-            >
-              Опис
-            </h2>
-            <div
-              className={css`
-                display: flex;
-                overflow: hidden;
-                align-items: center;
-                max-width: 32rem;
-                border-radius: 0.5rem;
-                border-width: 1px;
-                border-color: #374151;
-              `}
-            >
+          <div className="setting-wrap">
+            <h2> Опис</h2>
+            <div className="setting-input-wrap">
               <textarea
-                className={css`
-                  padding-top: 0.75rem;
-                  padding-bottom: 0.75rem; 
-                  padding-left: 1.25rem;
-                  padding-right: 1.25rem; 
-                  background-color: #ffffff; 
-                  color: #374151; 
-                  width: 100%; 
-                  border-radius: 0; 
-                  border-style: none; 
-
-                  :focus {
-                    outline: none;
-                `}
+                className="setting-input"
                 name="description"
                 onInput={(e) =>
                   setData((data) => ({
@@ -327,32 +247,9 @@ export default function SiteSettings() {
             </div>
           </div>
 
-          <div
-            className={css`
-              display: flex;
-              margin-top: 1.5rem;
-              flex-direction: column;
-            `}
-          >
-            <h2
-              className={css`
-                font-size: 1.5rem;
-                line-height: 2rem;
-              `}
-            >
-              Шрифт
-            </h2>
-            <div
-              className={css`
-                display: flex;
-                overflow: hidden;
-                align-items: center;
-                max-width: 32rem;
-                border-radius: 0.5rem;
-                border-width: 1px;
-                border-color: #374151;
-              `}
-            >
+          <div className="setting-wrap">
+            <h2> Шрифт</h2>
+            <div className="setting-input-wrap">
               <select
                 onChange={(e) =>
                   setData((data) => ({
@@ -361,17 +258,7 @@ export default function SiteSettings() {
                   }))
                 }
                 value={data?.font || "font-cal"}
-                className={css`
-                  padding-top: 0.75rem;
-                  padding-bottom: 0.75rem;
-                  padding-left: 1.25rem;
-                  padding-right: 1.25rem;
-                  background-color: #ffffff;
-                  color: #374151;
-                  width: 100%;
-                  border-radius: 0;
-                  border-style: none;
-                `}
+                className="setting-input"
               >
                 <option value="font-cal">Cal Sans</option>
                 <option value="font-lora">Lora</option>
@@ -380,21 +267,8 @@ export default function SiteSettings() {
             </div>
           </div>
 
-          <div
-            className={css`
-              display: flex;
-              margin-top: 1.5rem;
-              flex-direction: column;
-            `}
-          >
-            <h2
-              className={css`
-                font-size: 1.5rem;
-                line-height: 2rem;
-              `}
-            >
-              Субдомен
-            </h2>
+          <div className="setting-wrap">
+            <h2> Субдомен</h2>
             <div
               className={css`
                 display: flex;
@@ -408,20 +282,21 @@ export default function SiteSettings() {
               <input
                 className={css`
                   padding-top: 0.75rem;
-                  padding-bottom: 0.75rem; 
+                  padding-bottom: 0.75rem;
                   padding-left: 1.25rem;
-                  padding-right: 1.25rem; 
-                  background-color: #ffffff; 
-                  color: #374151; 
-                  width: 50%; 
-                  border-radius: 0; 
+                  padding-right: 1.25rem;
+                  background-color: #ffffff;
+                  color: #374151;
+                  width: 50%;
+                  border-radius: 0;
                   border-top-left-radius: 0.5rem;
-                  border-bottom-left-radius: 0.5rem; 
-                  border-style: none;                 
+                  border-bottom-left-radius: 0.5rem;
+                  border-style: none;
 
                   :focus {
                     outline: none;
-               `}
+                  }
+                `}
                 name="subdomain"
                 onInput={(e) =>
                   setData((data) => ({
@@ -465,21 +340,8 @@ export default function SiteSettings() {
             )}
           </div>
 
-          <div
-            className={css`
-              display: flex;
-              margin-top: 1.5rem;
-              flex-direction: column;
-            `}
-          >
-            <h2
-              className={css`
-                font-size: 1.5rem;
-                line-height: 2rem;
-              `}
-            >
-              Власний домен
-            </h2>
+          <div className="setting-wrap">
+            <h2> Власний домен</h2>
             {settings?.customDomain ? (
               <DomainCard data={data} />
             ) : (
@@ -506,21 +368,7 @@ export default function SiteSettings() {
                 >
                   <input
                     autoComplete="off"
-                    className={css`
-                      padding-top: 0.75rem;
-                      padding-bottom: 0.75rem;
-                      padding-left: 1.25rem;
-                      padding-right: 1.25rem;
-                      background-color: #ffffff;
-                      color: #374151;
-                      width: 100%;
-                      border-radius: 0;
-                      border-style: none;
-
-                      :focus {
-                        outline: none;
-                      }
-                    `}
+                    className="setting-input"
                     name="customDomain"
                     onInput={(e) => {
                       setData((data) => ({
@@ -628,26 +476,14 @@ export default function SiteSettings() {
             )}
           </div>
 
-          <div
-            className={`
-            display: flex; 
-            position: relative; 
-            margin-top: 1.5rem; 
-            flex-direction: column; 
-          `}
-          >
-            <h2
-              className={css`
-                font-size: 1.5rem;
-                line-height: 2rem;
-              `}
-            >
-              Зображення сайту <Hint text="Imagetest" />
+          <div className="setting-wrap" style={{ position: "relative" }}>
+            <h2>
+              {" "}
+              Зображення сайту <Hint text="Зображення на головній сторінці" />
             </h2>
             <div
               className={css`
                 position: relative;
-                margin-top: 1.25rem;
                 width: 100%;
                 border-radius: 0.375rem;
                 border-width: 2px;
@@ -719,23 +555,16 @@ export default function SiteSettings() {
                 />
               )}
             </div>
+
             <div
               className={css`
                 width: 100%;
                 height: 2.5rem;
               `}
             />
-            <div
-              className={css`
-                display: flex;
-                margin-top: 1.5rem;
-                flex-direction: column;
-                max-width: 32rem;
-              `}
-            >
-              <h2>
-                Видалення сайту
-              </h2>
+
+            <div className="setting-wrap" style={{ maxWidth: "32rem" }}>
+              <h2>Видалення сайту</h2>
               <p>
                 Назавжди видалити ваш сайт і весь його вміст. Цю дію неможливо
                 відмінити – будьте обережні.
