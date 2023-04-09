@@ -733,12 +733,7 @@ export default function SiteSettings() {
                 max-width: 32rem;
               `}
             >
-              <h2
-                className={css`
-                  font-size: 1.5rem;
-                  line-height: 2rem;
-                `}
-              >
+              <h2>
                 Видалення сайту
               </h2>
               <p>
@@ -991,6 +986,7 @@ export default function SiteSettings() {
               transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
               color: #ffffff;
               height: 2.5rem;
+              width: 10rem;
               padding-left: 1rem;
               padding-right: 1rem;
               border-width: 2px;

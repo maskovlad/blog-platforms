@@ -90,7 +90,7 @@ export default function SiteIndex() {
         >
           <h1
             className={css`
-              font-size: 3rem;
+              margin-bottom: 3rem;
             `}
           >
             Пости для {data ? data?.site?.name : "..."}
