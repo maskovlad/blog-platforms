@@ -127,7 +127,7 @@ export default function AppIndex() {
                 align-items: center;
                 border-radius: 0.5rem;
                 border-width: 1px;
-                border-color: #374151;
+                border-color: var(--c-grey);
               `}
             >
               <span
@@ -145,7 +145,7 @@ export default function AppIndex() {
                   padding-left: 1.25rem;
                   padding-right: 1.25rem;
                   background-color: #ffffff;
-                  color: #374151;
+                  color: var(--c-grey);
                   width: 100%;
                   border-radius: 0;
                   border-top-right-radius: 0.5rem;
@@ -169,7 +169,7 @@ export default function AppIndex() {
                 align-items: center;
                 border-radius: 0.5rem;
                 border-width: 1px;
-                border-color: #374151;
+                border-color: var(--c-grey);
               `}
             >
               <span
@@ -187,7 +187,7 @@ export default function AppIndex() {
                   padding-left: 1.25rem;
                   padding-right: 1.25rem;
                   background-color: #ffffff;
-                  color: #374151;
+                  color: var(--c-grey);
                   width: 100%;
                   border-radius: 0;
                   border-top-left-radius: 0.5rem;
@@ -226,7 +226,7 @@ export default function AppIndex() {
                 className={css`
                   padding-left: 1.25rem;
                   padding-right: 1.25rem;
-                  color: #ef4444;
+                  color: var(--c-red);
                   text-align: left;
                 `}
               >
@@ -239,7 +239,7 @@ export default function AppIndex() {
                 display: flex;
                 border-radius: 0.5rem;
                 border-width: 1px;
-                border-color: #374151;
+                border-color: var(--c-grey);
               `}
             >
               <span
@@ -258,7 +258,7 @@ export default function AppIndex() {
                   padding-left: 1.25rem;
                   padding-right: 1.25rem;
                   background-color: #ffffff;
-                  color: #374151;
+                  color: var(--c-grey);
                   width: 100%;
                   border-radius: 0;
                   border-top-right-radius: 0.5rem;
@@ -302,7 +302,7 @@ export default function AppIndex() {
                 width: 100%;
                 border-bottom-left-radius: 0.25rem;
                 border-top-width: 1px;
-                border-color: #d1d5db;
+                border-color: var(--c-lightgrey);
 
                 :hover {
                   color: #000000;
@@ -336,7 +336,7 @@ export default function AppIndex() {
                 border-bottom-right-radius: 0.25rem;
                 border-top-width: 1px;
                 border-left-width: 1px;
-                border-color: #d1d5db;
+                border-color: var(--c-lightgrey);
 
                 :focus {
                   outline: none;

@@ -16,8 +16,10 @@ import { HttpMethod } from "@/types";
 
 import type { Site } from "@prisma/client";
 import { placeholderBlurhash } from "@/lib/util";
-import { css } from "@emotion/css";
+import { css, cx } from "@emotion/css";
 import { Hint } from "@/components/app/Hint";
+
+//** додавання настройки: input -> data state -> interface SettingsData -> model Site -> prisma generate */ 
 
 interface SettingsData
   extends Pick<
@@ -90,10 +92,10 @@ export default function SiteSettings() {
       if (response.ok) {
         setSaving(false);
         mutate(`/api/site?siteId=${siteId}`);
-        toast.success(`Changes Saved`);
+        toast.success(`Зміни збережено`);
       }
     } catch (error) {
-      toast.error("Failed to save settings");
+      toast.error("Помилка збереження змін");
       console.error(error);
     } finally {
       setSaving(false);
@@ -122,7 +124,7 @@ export default function SiteSettings() {
 
   // перевірка доступності субдомену
   useEffect(() => {
-    async function checkSubdomain() {
+    async function checkSubdomain(): Promise<void> {
       try {
         const response = await fetch(
           `/api/domain/check?domain=${debouncedSubdomain}&subdomain=1`
@@ -131,7 +133,7 @@ export default function SiteSettings() {
         const available = await response.json();
 
         setSubdomainError(
-          available ? null : `${debouncedSubdomain}.vercel.pub`
+          available ? null : `${debouncedSubdomain}.sviy.site`
         );
       } catch (error) {
         console.error(error);
@@ -201,33 +203,31 @@ export default function SiteSettings() {
       >
         <h1>Настройки сайту</h1>
 
-        <div
-          className={css`
+        <div className={css`
             display: flex;
             margin-bottom: 7rem;
             margin-top: 3rem;
             flex-direction: column;
           `}
         >
+          {/* TITLE */}
           <div className="setting-wrap">
             <h2>Назва</h2>
             <div className="setting-input-wrap">
               <input
                 className="setting-input"
                 name="name"
-                onInput={(e) =>
-                  setData((data) => ({
-                    ...data,
-                    name: (e.target as HTMLTextAreaElement).value,
-                  }))
-                }
+                onInput={(e) => setData((data) => ({
+                  ...data,
+                  name: (e.target as HTMLTextAreaElement).value,
+                }))}
                 placeholder="Без назви"
                 type="text"
                 value={data.name || ""}
               />
             </div>
           </div>
-
+          {/* DESCRIPTION */}
           <div className="setting-wrap">
             <h2> Опис</h2>
             <div className="setting-input-wrap">
@@ -246,7 +246,7 @@ export default function SiteSettings() {
               />
             </div>
           </div>
-
+          {/* FONT */}
           <div className="setting-wrap">
             <h2> Шрифт</h2>
             <div className="setting-input-wrap">
@@ -266,7 +266,7 @@ export default function SiteSettings() {
               </select>
             </div>
           </div>
-
+          {/* SUBDOMAIN */}
           <div className="setting-wrap">
             <h2> Субдомен</h2>
             <div
@@ -276,7 +276,7 @@ export default function SiteSettings() {
                 max-width: 32rem;
                 border-radius: 0.5rem;
                 border-width: 1px;
-                border-color: #374151;
+                border-color: var(--c-grey);
               `}
             >
               <input
@@ -286,7 +286,7 @@ export default function SiteSettings() {
                   padding-left: 1.25rem;
                   padding-right: 1.25rem;
                   background-color: #ffffff;
-                  color: #374151;
+                  color: var(--c-grey);
                   width: 50%;
                   border-radius: 0;
                   border-top-left-radius: 0.5rem;
@@ -330,16 +330,15 @@ export default function SiteSettings() {
                 className={css`
                   padding-left: 1.25rem;
                   padding-right: 1.25rem;
-                  color: #ef4444;
+                  color: var(--c-red);
                   text-align: left;
                 `}
               >
-                <b>{subdomainError}</b> зайнято. Виберіть будь ласка інший
-                субдомен.
+                <b>{subdomainError}</b> вже зайнято. Виберіть будь ласка інше ім&apos;я.
               </p>
             )}
           </div>
-
+          {/* CUSTOM DOMAIN */}
           <div className="setting-wrap">
             <h2> Власний домен</h2>
             {settings?.customDomain ? (
@@ -363,7 +362,7 @@ export default function SiteSettings() {
                     flex: 1 1 auto;
                     border-radius: 0.5rem;
                     border-width: 1px;
-                    border-color: #374151;
+                    border-color: var(--c-grey);
                   `}
                 >
                   <input
@@ -384,25 +383,7 @@ export default function SiteSettings() {
                 </div>
                 <button
                   type="submit"
-                  className={css`
-                    margin-left: 1rem;
-                    padding: 0.75rem 1.25rem;
-                    background-color: #3258d9;
-                    transition-property: all;
-                    transition-duration: 150ms;
-                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                    color: #ffffff;
-                    border-radius: 0.375rem;
-                    border-width: 1px;
-                    border-color: #3258d9;
-                    border-style: solid;
-
-                    :hover {
-                      background-color: #ffffff;
-                      color: #3258d9;
-                    }
-                  `}
-                >
+                  className={cx("btn","btn-blue",css`margin-left: 1rem;`)}>
                   {adding ? <LoadingDots /> : "Додати"}
                 </button>
               </form>
@@ -413,7 +394,7 @@ export default function SiteSettings() {
                   display: flex;
                   margin-top: 1.25rem;
                   margin-left: 0.5rem;
-                  color: #ef4444;
+                  color: var(--c-red);
                   font-size: 0.875rem;
                   line-height: 1.25rem;
                   text-align: left;
@@ -432,11 +413,11 @@ export default function SiteSettings() {
                   strokeLinejoin="round"
                   fill="none"
                   shapeRendering="geometricPrecision"
-                  style={{ color: "#f44336" }}
+                  style={{ color: "#F82222" }}
                 >
                   <circle cx="12" cy="12" r="10" fill="white" />
-                  <path d="M12 8v4" stroke="#f44336" />
-                  <path d="M12 16h.01" stroke="#f44336" />
+                  <path d="M12 8v4" stroke="var(--c-red)" />
+                  <path d="M12 16h.01" stroke="var(--c-red)" />
                 </svg>
                 {error.code == 403 ? (
                   <p>
@@ -475,7 +456,7 @@ export default function SiteSettings() {
               </div>
             )}
           </div>
-
+          {/* MAIN IMAGE */}
           <div className="setting-wrap" style={{ position: "relative" }}>
             <h2>
               {" "}
@@ -491,7 +472,7 @@ export default function SiteSettings() {
                 border-style: dashed;
                 ${data.image
                   ? ""
-                  : "background-color:#D1D5DB;animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;@keyframes pulse {0%,100%{opacity: 1;}50%{opacity:0.5;}};"}
+                  : "background-color:var(--c-lightgrey);animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;@keyframes pulse {0%,100%{opacity: 1;}50%{opacity:0.5;}};"}
               `}
             >
               <CloudinaryUploadWidget
@@ -578,7 +559,7 @@ export default function SiteSettings() {
                   padding-bottom: 0.75rem;
                   padding-left: 1.25rem;
                   padding-right: 1.25rem;
-                  background-color: #ef4444;
+                  background-color: var(--c-red);
                   transition-property: all;
                   transition-duration: 150ms;
                   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -586,7 +567,7 @@ export default function SiteSettings() {
                   max-width: max-content;
                   border-radius: 0.375rem;
                   border-width: 1px;
-                  border-color: #ef4444;
+                  border-color: var(--c-red);
                   border-style: solid;
 
                   :focus {
@@ -594,7 +575,7 @@ export default function SiteSettings() {
                   }
                   :hover {
                     background-color: #ffffff;
-                    color: #ef4444;
+                    color: var(--c-red);
                   }
                 `}
               >
@@ -661,7 +642,7 @@ export default function SiteSettings() {
                 align-items: center;
                 border-radius: 0.5rem;
                 border-width: 1px;
-                border-color: #374151;
+                border-color: var(--c-grey);
               `}
             >
               <input
@@ -671,7 +652,7 @@ export default function SiteSettings() {
                   padding-left: 1.25rem;
                   padding-right: 1.25rem;
                   background-color: #ffffff;
-                  color: #374151;
+                  color: var(--c-grey);
                   color: #9ca3af;
                   width: 100%;
                   border-radius: 0;
@@ -716,7 +697,7 @@ export default function SiteSettings() {
                 width: 100%;
                 border-bottom-left-radius: 0.25rem;
                 border-top-width: 1px;
-                border-color: #d1d5db;
+                border-color: var(--c-lightgrey);
 
                 :focus-visible {
                   box-shadow: 0 0 3px 1px #000000;
@@ -752,16 +733,16 @@ export default function SiteSettings() {
                 border-bottom-right-radius: 0.25rem;
                 border-top-width: 1px;
                 border-left-width: 1px;
-                border-color: #d1d5db;
+                border-color: var(--c-lightgrey);
                 :focus-visible {
-                  box-shadow: 0 0 3px 1px #ef4444;
+                  box-shadow: 0 0 3px 1px var(--c-red);
                 }
                 :focus {
                   outline: none;
                 }
                 ${deletingSite
                   ? "background-color: #F9FAFB;color: #9CA3AF;cursor: not-allowed;"
-                  : "background-color: #ffffff;color: #ef4444;:hover {color: #000000;}"}
+                  : "background-color: #ffffff;color: var(--c-red);:hover {color: #000000;}"}
               `}
             >
               {deletingSite ? <LoadingDots /> : "ВИДАЛИТИ"}
@@ -821,8 +802,8 @@ export default function SiteSettings() {
               border-width: 2px;
               border-radius: 5px;
               ${saving || subdomainError
-                ? "background-color: #D1D5DB;border-color: #D1D5DB;cursor: not-allowed;"
-                : "background-color: var(--color-green);border-color: var(--color-green);:hover {background-color: #ffffff;color:var(--color-green);}"}
+                ? "background-color: var(--c-lightgrey);border-color: var(--c-lightgrey);cursor: not-allowed;"
+                : "background-color: var(--c-green);border-color: var(--c-green);:hover {background-color: #ffffff;color:var(--c-green);}"}
             `}
           >
             {saving ? <LoadingDots /> : "Зберегти зміни"}

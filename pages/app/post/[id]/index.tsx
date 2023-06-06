@@ -247,13 +247,13 @@ export default function Post() {
               border-width: 2px;
               border-radius: 5px;
 
-              background-color: ${disabled ? "#D1D5DB" : "var(--color-green)"};
-              border-color: ${disabled ? "#D1D5DB" : "var(--color-green)"};
+              background-color: ${disabled ? "var(--c-lightgrey)" : "var(--c-green)"};
+              border-color: ${disabled ? "var(--c-lightgrey)" : "var(--c-green)"};
               cursor: ${disabled ? "not-allowed" : "pointer"};
 
               :hover {
                 background-color: #ffffff;
-                color: var(--color-green);
+                color: var(--c-green);
               }
             `}
           >

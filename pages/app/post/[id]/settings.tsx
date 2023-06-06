@@ -186,7 +186,7 @@ export default function PostSettings() {
                   max-width: 32rem;
                   border-radius: 0.5rem;
                   border-width: 1px;
-                  border-color: #374151;
+                  border-color: var(--c-grey);
                 `}
               >
                 <span
@@ -210,7 +210,7 @@ export default function PostSettings() {
                     padding-left: 1.25rem;
                     padding-right: 1.25rem;
                     background-color: #ffffff;
-                    color: #374151;
+                    color: var(--c-grey);
                     width: 100%;
                     border-radius: 0;
                     border-top-right-radius: 0.5rem;
@@ -255,7 +255,7 @@ export default function PostSettings() {
                   border-color: #1f2937;
                   border-style: dashed;
                   ${!data.image &&
-                  "background-color: #D1D5DB; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;@keyframes pulse {0%, 100% {opacity: 1;}50% {opacity: .5;}}; "}
+                  "background-color: var(--c-lightgrey); animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;@keyframes pulse {0%, 100% {opacity: 1;}50% {opacity: .5;}}; "}
                 `}
               >
                 <CloudinaryUploadWidget
@@ -357,7 +357,7 @@ export default function PostSettings() {
                   }}
                   className={css`
                     padding: 0.75rem 1.25rem;
-                    background-color: #ef4444;
+                    background-color: var(--c-red);
                     transition-property: all;
                     transition-duration: 150ms;
                     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -365,12 +365,12 @@ export default function PostSettings() {
                     max-width: max-content;
                     border-radius: 0.375rem;
                     border-width: 1px;
-                    border-color: #ef4444;
+                    border-color: var(--c-red);
                     border-style: solid;
 
                     :hover {
                       background-color: #ffffff;
-                      color: #ef4444;
+                      color: var(--c-red);
                     }
                     :focus {
                       outline: none;
@@ -458,7 +458,7 @@ export default function PostSettings() {
                   width: 100%;
                   border-bottom-left-radius: 0.25rem;
                   border-top-width: 1px;
-                  border-color: #d1d5db;
+                  border-color: var(--c-lightgrey);
 
                   :focus-visible {
                     box-shadow: 0 0 3px 1px #000000;
@@ -494,16 +494,16 @@ export default function PostSettings() {
                   border-bottom-right-radius: 0.25rem;
                   border-top-width: 1px;
                   border-left-width: 1px;
-                  border-color: #d1d5db;
+                  border-color: var(--c-lightgrey);
                   :focus-visible {
-                    box-shadow: 0 0 3px 1px #ef4444;
+                    box-shadow: 0 0 3px 1px var(--c-red);
                   }
                   :focus {
                     outline: none;
                   }
                   ${deletingPost
                     ? "background-color: #F9FAFB;color: #9CA3AF;cursor: not-allowed;"
-                    : "background-color: #ffffff;color: #ef4444;:hover {color: #000000;}"}
+                    : "background-color: #ffffff;color: var(--c-red);:hover {color: #000000;}"}
                 `}
               >
                 {deletingPost ? <LoadingDots /> : "ВИДАЛИТИ"}
@@ -563,8 +563,8 @@ export default function PostSettings() {
                 border-width: 2px;
                 border-radius: 5px;
                 ${saving
-                  ? "background-color: #D1D5DB;border-color: #D1D5DB;cursor: not-allowed;"
-                  : "background-color: var(--color-green);border-color: var(--color-green);:hover {background-color: #ffffff;color:var(--color-green);}"}
+                  ? "background-color: var(--c-lightgrey);border-color: var(--c-lightgrey);cursor: not-allowed;"
+                  : "background-color: var(--c-green);border-color: var(--c-green);:hover {background-color: #ffffff;color:var(--c-green);}"}
               `}
             >
               {saving ? <LoadingDots /> : "Зберегти зміни"}

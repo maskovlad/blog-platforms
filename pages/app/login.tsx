@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import LoadingDots from "@/components/app/loading-dots";
 import toast, { Toaster } from "react-hot-toast";
+import { css } from "@emotion/css";
 
 const pageTitle = "Login";
 const logo = "/favicon.ico";
@@ -24,7 +25,26 @@ export default function Login() {
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className={css`
+        display: flex; 
+        padding-top: 3rem;
+        padding-bottom: 3rem; 
+        background-color: #F3F4F6; 
+        flex-direction: column; 
+        justify-content: center; 
+        min-height: 100vh; 
+
+        @media (min-width: 640px) { 
+          padding-left: 1.5rem;
+          padding-right: 1.5rem; 
+        }
+
+        @media (min-width: 1024px) { 
+          padding-left: 2rem;
+          padding-right: 2rem; 
+        }
+    `}>
+
       <Head>
         <title>{pageTitle}</title>
         <link rel="icon" href={logo} />
@@ -51,47 +71,100 @@ export default function Login() {
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={logo} />
       </Head>
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+
+      <div className={css`
+        @media (min-width: 640px) { 
+          margin-left: auto;
+          margin-right: auto; 
+          width: 100%; 
+          max-width: 28rem; 
+          text-align: center;
+        }
+      `}>
         <Image
           alt="Platforms Starter Kit"
           width={100}
           height={100}
-          className="relative mx-auto h-12 w-auto"
-          src="/logo.png"
+          className={css`
+            position: relative; 
+            margin-left: auto;
+            margin-right: auto; 
+            width: auto; 
+            height: 3rem; 
+          `}
+          src="/favicon_bird.png"
         />
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Platforms Starter Kit
+        <h2 className={css`
+          margin-top: 1.5rem; 
+          color: #111827; 
+          font-size: 1.875rem;
+          line-height: 2.25rem; 
+          font-weight: 800; 
+          text-align: center; 
+        `}>
+          Українська Блогова Платформа Sviy.Site
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Build multi-tenant applications with custom domains. <br /> Read the{" "}
-          <a
-            className="font-medium text-black hover:text-gray-800"
-            href="https://demo.vercel.pub/platforms-starter-kit"
-            rel="noreferrer"
-            target="_blank"
-          >
-            blog post
-          </a>
+        <p className={css`
+          margin-top: 0.5rem; 
+          color: #4B5563; 
+          font-size: 0.875rem;
+          line-height: 1.25rem; 
+          text-align: center; 
+        `}>
+          Увійдіть або зареєструйтеся за допомогою:
         </p>
       </div>
 
-      <div className="mt-8 mx-auto sm:w-full w-11/12 sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow-md sm:rounded-lg sm:px-10">
+      <div className={css`
+        margin-left: auto;
+        margin-right: auto; 
+        margin-top: 2rem; 
+        width: 91.666667%; 
+
+        @media (min-width: 640px) { 
+          width: 100%; 
+          max-width: 28rem; 
+          text-align: center;
+        }
+      `}>
+        <div className={css`
+          padding-left: 1rem;
+          padding-right: 1rem; 
+          padding-top: 2rem;
+          padding-bottom: 2rem; 
+          background-color: #ffffff; 
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+
+          @media (min-width: 640px) { 
+            padding-left: 2.5rem;
+          padding-right: 2.5rem; 
+          border-radius: 0.5rem; 
+          }
+        `}>
           <button
             disabled={loading}
             onClick={() => {
               setLoading(true);
               signIn("github");
             }}
-            className={`${
-              loading ? "cursor-not-allowed bg-gray-600" : "bg-black"
-            } group flex justify-center items-center space-x-5 w-full sm:px-4 h-16 my-2 rounded-md focus:outline-none`}
-          >
+            className={css`
+                display: flex; 
+                margin: 0.5rem 0; 
+                justify-content: center; 
+                align-items: center; 
+                width: 100%; 
+                height: 4rem; 
+                border-radius: 0.375rem; 
+                cursor: pointer; 
+                ${loading ? "background-color: #6B7280; cursor: not-allowed;" : "background-color: #000;"}
+              `}>
             {loading ? (
               <LoadingDots color="#fff" />
             ) : (
-              <svg
-                className="w-8 h-8 group-hover:animate-wiggle"
+              <svg className={css`
+                width: 2rem; 
+                height: 2rem; 
+              `}
                 aria-hidden="true"
                 fill="white"
                 viewBox="0 0 24 24"

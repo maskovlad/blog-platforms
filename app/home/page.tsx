@@ -1,6 +1,8 @@
 import Image from "next/image";
 import type { Metadata } from 'next'
 
+//^ SVIY SITE HOME PAGE
+
 export const metadata: Metadata = {
   title: 'Home',
   description: 'Welcome to Next.js',

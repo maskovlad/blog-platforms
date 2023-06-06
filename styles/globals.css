@@ -2,7 +2,14 @@
 @tailwind components;
 @tailwind utilities; */
 :root {
-  --color-green: #42cc00;
+  --c-black: #070707;
+  --c-white: #F7F7F7;
+  --c-green: #42cc00;
+  --c-blue: #3258D9;
+  --c-red: #F82222;
+  --c-grey: #6B7280;
+  --c-cyan: #9CA3AF;
+  --c-lightgrey: #D1D5DB;
 }
 
 html,
@@ -19,14 +26,14 @@ a {
   text-decoration: none;
 }
 
-[type=button],
+/* [type=button],
 [type=reset],
 [type=submit],
 button {
-  /* -webkit-appearance: button; */
+  -webkit-appearance: button;
   background-color: transparent;
   background-image: none;
-}
+} */
 
 button,
 input,
@@ -65,30 +72,40 @@ h2 {
   font-size: 1.5rem;
 }
 
-.btn-green {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  background-color: var(--color-green);
-  transition-property: all;
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+.btn {
+  padding: 0.5rem 1rem;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
   color: #ffffff;
   font-size: 1.125rem;
   line-height: 1.75rem;
   letter-spacing: 0.025em;
   width: 12rem;
   border-width: 2px;
-  border-color: var(--color-green);
   border-radius: 5px;
   cursor: pointer;
 }
 
+.btn-green {
+  background-color: var(--c-green);
+  border-color: var(--c-green);
+}
+
 .btn-green:hover {
   background-color: #ffffff;
-  color: var(--color-green);
+  color: var(--c-green);
 }
+
+.btn-blue {
+  background-color: var(--c-blue);
+  border-color: var(--c-blue);
+}
+
+.btn-blue:hover {
+  background-color: #ffffff;
+  color: var(--c-blue);
+}
+
+
 
 .app_menu {
   position: absolute;
@@ -116,7 +133,7 @@ h2 {
   max-width: 32rem;
   border-radius: 0.5rem;
   border-width: 1px;
-  border-color: #374151;
+  border-color: var(--c-grey);
 }
 
 .setting-input {
@@ -125,7 +142,7 @@ h2 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   background-color: #ffffff;
-  color: #374151;
+  color: var(--c-grey);
   width: 100%;
   border-radius: 0;
   border-style: none;

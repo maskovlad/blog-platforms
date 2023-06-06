@@ -120,8 +120,8 @@ export default function SiteIndex() {
                 width: 12rem;
               }
               ${creatingPost
-                ? "background-color: #D1D5DB;border-color: #D1D5DB;cursor: not-allowed;"
-                : "background-color: var(--color-green);color: #ffffff;border-color: var(--color-green);:hover{background-color: #ffffff; color: var(--color-green);}"}
+                ? "background-color: var(--c-lightgrey);border-color: var(--c-lightgrey);cursor: not-allowed;"
+                : "background-color: var(--c-green);color: #ffffff;border-color: var(--c-green);:hover{background-color: #ffffff; color: var(--c-green);}"}
             `}
           >
             {creatingPost ? (

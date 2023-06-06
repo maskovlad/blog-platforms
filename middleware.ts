@@ -14,7 +14,7 @@ export const config = {
   ],
 };
 
-export default function middleware(req:NextRequest){
+export default function middleware(req: NextRequest) {
   const url = req.nextUrl
 
   const hostname = req.headers.get("host") || "sviy.site"
@@ -22,11 +22,11 @@ export default function middleware(req:NextRequest){
   const currentHost =
     process.env.NODE_ENV === "production" && process.env.VERCEL === "1"
       ? hostname
-          .replace('.sviy.site', "")
-     : hostname.replace(/\.localhost:\d+/, "");
-    //  console.log({currentHost})
-  
-     // rewrites for app pages
+        .replace('.sviy.site', "")
+      : hostname.replace(/\.localhost:\d+/, "");
+  //  console.log({currentHost})
+
+  // rewrites for app pages
   if (currentHost == "app") {
     if (
       url.pathname === "/login" &&
@@ -41,12 +41,12 @@ export default function middleware(req:NextRequest){
     return NextResponse.rewrite(url);
   }
 
-    // rewrite root application to `/home` folder
-  if (hostname.startsWith("localhost:") || hostname === "platformize.vercel.app") {
+  // rewrite root application to `/home` folder
+  if (hostname === "sviy.site" || hostname.startsWith("localhost:")) {
     url.pathname = `/home${url.pathname}`;
     return NextResponse.rewrite(url);
   }
-  
+
   // rewrite everything else to `/_sites/[site] dynamic route
   url.pathname = `/_sites/${currentHost}${url.pathname}`;
   return NextResponse.rewrite(url);

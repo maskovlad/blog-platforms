@@ -6,6 +6,9 @@ import Highlight from 'react-highlight'
 import type { AdjacentPost, Meta, _SiteSlugData } from "@/types";
 import { placeholderBlurhash } from "@/lib/util";
 import { getPostData } from "@/lib/fetchers";
+import { css } from "@emotion/css";
+
+//^ SINGLE POST
 
 export async function generateStaticParams() {
   const posts = await prisma.post.findMany({

@@ -142,7 +142,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
                 className={css`
                   height: 2rem;
                   border-width: 1px;
-                  border-color: #d1d5db;
+                  border-color: var(--c-lightgrey);
                 `}
               />
               <button
@@ -153,7 +153,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
                   color: #6b7280;
 
                   :hover {
-                    color: #374151;
+                    color: var(--c-grey);
                   }
                 `}
                 onClick={() => signOut()}
@@ -172,7 +172,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
                 transition-property: all;
                 transition-duration: 150ms;
                 transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                color: #374151;
+                color: var(--c-grey);
                 align-items: center;
 
                 @media (min-width: 640px) {

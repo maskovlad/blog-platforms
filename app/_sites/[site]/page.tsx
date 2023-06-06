@@ -6,6 +6,8 @@ import { placeholderBlurhash } from "@/lib/util";
 import { getSiteData } from "@/lib/fetchers";
 import Link from "next/link";
 
+//^ USER'S SITE INDEX PAGE
+
 export async function generateStaticParams() {
   const [subdomains, customDomains] = await Promise.all([
     prisma.site.findMany({

@@ -3,7 +3,7 @@ import { css } from '@emotion/css';
 const widthImagePlaceholder = '33.333333%'
 const widthTitlePlaceholder = '7rem'
 const widthDescriptionPlaceholder = '12rem'
-const backgroundColor = '#d1d5db' 
+const backgroundColor = 'var(--c-lightgrey)' 
 
 export const CardPlaceholder = () => {
   

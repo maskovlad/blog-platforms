@@ -92,7 +92,7 @@ export default function AppSettings() {
                   max-width: 32rem;
                   border-radius: 0.5rem;
                   border-width: 1px;
-                  border-color: #374151;
+                  border-color: var(--c-grey);
                   margin-top: 1rem;
                 `}
               >
@@ -103,7 +103,7 @@ export default function AppSettings() {
                     padding-left: 1.25rem;
                     padding-right: 1.25rem;
                     background-color: #ffffff;
-                    color: #374151;
+                    color: var(--c-grey);
                     width: 100%;
                     border-radius: 0.5rem;
                     border-style: none;
@@ -140,7 +140,7 @@ export default function AppSettings() {
                   max-width: 32rem;
                   border-radius: 0.5rem;
                   border-width: 1px;
-                  border-color: #374151;
+                  border-color: var(--c-grey);
                   margin-top: 1rem;
                 `}
               >
@@ -151,7 +151,7 @@ export default function AppSettings() {
                     padding-left: 1.25rem;
                     padding-right: 1.25rem;
                     background-color: #ffffff;
-                    color: #374151;
+                    color: var(--c-grey);
                     width: 100%;
                     border-radius: 0.5rem;
                     border-style: none;
@@ -192,7 +192,7 @@ export default function AppSettings() {
 
                   ${data?.image
                     ? ""
-                    : "background-color: #D1D5DB; animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;@keyframes pulse {0%, 100% {opacity: 1;}50% { opacity: .5;}}; "}
+                    : "background-color: var(--c-lightgrey); animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;@keyframes pulse {0%, 100% {opacity: 1;}50% { opacity: .5;}}; "}
                 `}
               >
                 <CloudinaryUploadWidget
@@ -308,8 +308,8 @@ export default function AppSettings() {
                 border-width: 2px;
                 border-radius: 5px;
                 ${saving
-                  ? "background-color: #D1D5DB;border-color: #D1D5DB;cursor: not-allowed;"
-                  : "background-color: var(--color-green);border-color: var(--color-green);:hover {background-color: #ffffff;color:var(--color-green);}"}
+                  ? "background-color: var(--c-lightgrey);border-color: var(--c-lightgrey);cursor: not-allowed;"
+                  : "background-color: var(--c-green);border-color: var(--c-green);:hover {background-color: #ffffff;color:var(--c-green);}"}
               `}
             >
               {saving ? <LoadingDots /> : "Зберегти зміни"}

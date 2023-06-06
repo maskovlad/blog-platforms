@@ -13,6 +13,7 @@ export const Hint = ({ text }: { text: string }) => {
           border-radius: 50%;
           font-size: 10px;
           cursor: pointer;
+          padding: 2px 1px;
         `}
         data-tooltip-id="question"
         data-tooltip-content={text}
