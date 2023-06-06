@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 //^ SVIY SITE HOME PAGE
 
 export const metadata: Metadata = {
-  title: 'Home',
+  title: 'Українська блогова платформа - Sviy.Site',
   description: 'Welcome to Next.js',
 };
 
