@@ -11,17 +11,17 @@ export const metadata: Metadata = {
 export default async function Page({ params }: { params: { site: string } }) {
 
   return (
-    <div className="flex h-screen bg-black">
+    <article className="flex h-screen bg-black">
       <div className="m-auto w-48">
-        <h1 className="text-white">Platforms on Vercel</h1>
+        <h1 className="text-white">Українська блогова платформа - Sviy.Site</h1>
         <Image
           width={512}
           height={512}
           src="/logo.png"
-          alt="Platforms on Vercel"
+          alt="Українська блогова платформа - Sviy.Site"
         />
       </div>
-    </div>
+    </article>
   )
 
 }

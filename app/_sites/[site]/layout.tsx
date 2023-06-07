@@ -1,10 +1,15 @@
 import { ReactNode } from "react";
 import { getSiteData } from '../../../lib/fetchers';
 import type { Meta } from "@/types";
+import { Montserrat } from 'next/font/google';
+import { Roboto } from 'next/font/google';
+
+let font: string;
 
 export async function generateMetadata({ params }: { params: { site: string } }): Promise<Meta> {
   const { site } = params;
   const data = await getSiteData(site);
+  font = data.font
   return {
     title: data.name,
     description: data.description,
@@ -71,12 +76,37 @@ export async function generateMetadata({ params }: { params: { site: string } })
   } as Meta
 }
 
-export default function Layout({
+const montserrat = Montserrat({
+  subsets: ['latin', 'cyrillic-ext'],
+  display: 'swap',
+})
+
+const roboto = Roboto({
+  subsets: ['latin', 'cyrillic-ext'],
+  display: 'swap',
+  weight: ["300", "500"]
+})
+
+
+
+export default async function Layout({
   children,
 }: {
   children: ReactNode;
 }) {
-  return (
-    <div className="mt-20">{children}</div>
+
+  if (!font) return 'Loading...'
+  return await (
+    <>
+      <header></header>
+      {/* {font && font === "font-cal"
+        ? (<main className={montserrat.className}>{children}</main>)
+        : font && font === "font-lora"
+          ? (<main className={roboto.className}>{children}</main>)
+          : null
+      } */}
+      <main className={montserrat.className}>{children}</main>
+      <footer></footer>
+    </>
   )
 }

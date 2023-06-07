@@ -1,12 +1,24 @@
 import { ReactNode } from "react";
 import type { Meta } from "@/types";
 
+import { Montserrat } from 'next/font/google';
+
+// глобальні шрифти
+const montserrat = Montserrat({
+  subsets: ['latin', 'cyrillic-ext'],
+  display: 'swap',
+})
+
 export default function Layout({
   children,
 }: {
   children: ReactNode;
 }) {
   return (
-    <div className="mt-20">{children}</div>
+    <>
+      <header></header>
+      <main className={`${montserrat.className}`}>{children}</main>
+      <footer></footer>
+    </>
   )
 }

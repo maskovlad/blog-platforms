@@ -43,7 +43,7 @@ export default async function Page({ params }: { params: { site: string } }) {
   const data = await getSiteData(site);
 
   return (
-    <div className="md:mb-28">
+    <article className="md:mb-28">
       {data.posts.length > 0 ? (
         <div>
           <Link href={`/${data.posts[0].slug}`}>
@@ -131,7 +131,7 @@ export default async function Page({ params }: { params: { site: string } }) {
           </div>
         </div>
       )}
-    </div>
+    </article>
   );
 }
 
