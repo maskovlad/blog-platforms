@@ -120,10 +120,10 @@ export default function DomainCard({ data }: DomainCardProps) {
               width: 6rem; 
               border-radius: 0.375rem; 
               border-width: 1px; 
-              border-color: #E5E7EB; 
+              border-color: var(--c-lightgrey2); 
               border-style: solid; 
               ${isValidating
-                ? "background-color: #F3F4F6;cursor: not-allowed;"
+                ? "background-color: var(--c-white);cursor: not-allowed;"
                 : "background-color: #ffffff;:hover {color: #000000;border-color: #000000;}"}
             `}
           >

@@ -14,7 +14,7 @@ export const CardPlaceholder = () => {
                       flex-direction: column;
                       border-radius: 0.5rem;
                       border-width: 1px;
-                      border-color: #e5e7eb;
+                      border-color: var(--c-lightgrey2);
 
                       @media (min-width: 768px) {
                         flex-direction: row;
@@ -75,7 +75,7 @@ export const CardLoader = () => {
                   flex-direction: column; 
                   border-radius: 0.5rem; 
                   border-width: 1px; 
-                  border-color: #E5E7EB; 
+                  border-color: var(--c-lightgrey2); 
 
                   @media (min-width: 768px) { 
                     flex-direction: row; 

@@ -29,7 +29,7 @@ export default function Login() {
         display: flex; 
         padding-top: 3rem;
         padding-bottom: 3rem; 
-        background-color: #F3F4F6; 
+        background-color: var(--c-white); 
         flex-direction: column; 
         justify-content: center; 
         min-height: 100vh; 
@@ -106,7 +106,7 @@ export default function Login() {
         </h2>
         <p className={css`
           margin-top: 0.5rem; 
-          color: #4B5563; 
+          color: var(--c-darkgrey); 
           font-size: 0.875rem;
           line-height: 1.25rem; 
           text-align: center; 
@@ -156,7 +156,7 @@ export default function Login() {
                 height: 4rem; 
                 border-radius: 0.375rem; 
                 cursor: pointer; 
-                ${loading ? "background-color: #6B7280; cursor: not-allowed;" : "background-color: #000;"}
+                ${loading ? "background-color: var(--c-grey); cursor: not-allowed;" : "background-color: #000;"}
               `}>
             {loading ? (
               <LoadingDots color="#fff" />

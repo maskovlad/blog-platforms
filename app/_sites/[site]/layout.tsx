@@ -1,15 +1,12 @@
 import { ReactNode } from "react";
 import { getSiteData } from '../../../lib/fetchers';
 import type { Meta } from "@/types";
-import { Montserrat } from 'next/font/google';
-import { Roboto } from 'next/font/google';
-
-let font: string;
+import { Montserrat, Roboto, Lora } from 'next/font/google';
 
 export async function generateMetadata({ params }: { params: { site: string } }): Promise<Meta> {
   const { site } = params;
   const data = await getSiteData(site);
-  font = data.font
+  
   return {
     title: data.name,
     description: data.description,
@@ -81,6 +78,11 @@ const montserrat = Montserrat({
   display: 'swap',
 })
 
+const lora = Lora({
+  subsets: ['latin', 'cyrillic-ext'],
+  display: 'swap',
+})
+
 const roboto = Roboto({
   subsets: ['latin', 'cyrillic-ext'],
   display: 'swap',
@@ -90,23 +92,36 @@ const roboto = Roboto({
 
 
 export default async function Layout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+  params, children }: { params: { site: string }, children: ReactNode; }) {
 
-  if (!font) return 'Loading...'
-  return await (
+  const { site } = params;
+
+  const data = await getSiteData(site);
+
+  let font = montserrat
+
+  switch (data.font) {
+    case "font-mont":
+      font = montserrat
+      break;
+  
+    case "font-lora":
+      font = lora
+      break;
+  
+    case "font-robo":
+      font = roboto
+      break;
+  
+    default:
+      break;
+  }
+
+  return (
     <>
-      <header></header>
-      {/* {font && font === "font-cal"
-        ? (<main className={montserrat.className}>{children}</main>)
-        : font && font === "font-lora"
-          ? (<main className={roboto.className}>{children}</main>)
-          : null
-      } */}
-      <main className={montserrat.className}>{children}</main>
-      <footer></footer>
+      <header/>
+      <main className={font.className}>{children}</main>
+      <footer/>
     </>
   )
 }

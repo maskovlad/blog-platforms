@@ -1,0 +1,95 @@
+.container {
+  margin: 2.5rem 0;
+  width: 100%;
+}
+
+.fig1 {
+  margin: 0 auto;
+  background-color: var(--c-lightgrey2);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  height: 2.5rem;
+  width: 15rem;
+}
+
+.fig2 {
+  margin: 0 auto;
+  background-color: var(--c-lightgrey2);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  height: 20rem;
+  width: 100%;
+}
+
+.wrapper1 {
+  margin: 3rem auto;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.wrapper2 {
+  display: flex;
+  flex-direction: column;
+  margin: 2.5rem auto 0;
+  margin-top: 1rem;
+  width: 83.333333%;
+}
+
+.fig3 {
+  background-color: var(--c-lightgrey2);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  border-radius: 0.375rem;
+  width: 12rem;
+  height: 5rem;
+}
+
+.fig4 {
+  background-color: var(--c-lightgrey2);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  border-radius: 0.375rem;
+  width: 24rem;
+  height: 3rem;
+}
+
+.fig5 {
+  background-color: var(--c-lightgrey2);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  border-radius: 0.375rem;
+  width: 20rem;
+  height: 3rem;
+}
+
+@media (min-width: 640px) {
+  .fig2 {
+    height: 37.5rem;
+  }
+}
+
+
+@media (min-width: 768px) {
+  .fig1 {
+    border-radius: 0.375rem;
+  }
+
+  .fig2 {
+    border-radius: 0.75rem;
+  }
+
+  .wrapper1 {
+    width: 75%;
+  }
+
+  .wrapper2 {
+    width: 100%;
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+}

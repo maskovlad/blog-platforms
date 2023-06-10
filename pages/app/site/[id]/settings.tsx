@@ -50,7 +50,7 @@ export default function SiteSettings() {
     id: "",
     name: null,
     description: null,
-    font: "font-cal",
+    font: "font-mont",
     subdomain: null,
     customDomain: null,
     image: null,
@@ -257,12 +257,12 @@ export default function SiteSettings() {
                     font: (e.target as HTMLSelectElement).value,
                   }))
                 }
-                value={data?.font || "font-cal"}
+                value={data?.font || "font-mont"}
                 className="setting-input"
               >
-                <option value="font-cal">Cal Sans</option>
+                <option value="font-mont">Cal Sans</option>
                 <option value="font-lora">Lora</option>
-                <option value="font-work">Work Sans</option>
+                <option value="font-robo">Work Sans</option>
               </select>
             </div>
           </div>
@@ -311,7 +311,7 @@ export default function SiteSettings() {
               <div
                 className={css`
                   display: flex;
-                  background-color: #f3f4f6;
+                  background-color: var(--c-white);
                   justify-content: center;
                   align-items: center;
                   width: 50%;
@@ -319,7 +319,7 @@ export default function SiteSettings() {
                   border-top-right-radius: 0.5rem;
                   border-bottom-right-radius: 0.5rem;
                   border-left-width: 1px;
-                  border-color: #4b5563;
+                  border-color: var(--c-darkgrey);
                 `}
               >
                 sviy.site
@@ -413,7 +413,7 @@ export default function SiteSettings() {
                   strokeLinejoin="round"
                   fill="none"
                   shapeRendering="geometricPrecision"
-                  style={{ color: "#F82222" }}
+                  style={{ color: "var(--c-red)" }}
                 >
                   <circle cx="12" cy="12" r="10" fill="white" />
                   <path d="M12 8v4" stroke="var(--c-red)" />
@@ -450,7 +450,7 @@ export default function SiteSettings() {
                 ) : (
                   <p>
                     Неможливо додати <b>{error.domain}</b>, тому що він
-                    пов'язаний з іншим проєктом.
+                    пов&apos;язаний з іншим проєктом.
                   </p>
                 )}
               </div>
@@ -490,7 +490,7 @@ export default function SiteSettings() {
                       display: flex;
                       position: absolute;
                       z-index: 10;
-                      background-color: #e5e7eb;
+                      background-color: var(--c-lightgrey2);
                       transition-property: all;
                       transition-duration: 200ms;
                       transition-timing-function: linear;
@@ -628,7 +628,7 @@ export default function SiteSettings() {
             <p
               className={css`
                 margin-bottom: 0.75rem;
-                color: #4b5563;
+                color: var(--c-darkgrey);
               `}
             >
               Ви впевнені, що бажаєте видалити свій сайт? Ця дія незворотня.
@@ -761,7 +761,7 @@ export default function SiteSettings() {
           background-color: #ffffff;
           height: 4rem;
           border-top-width: 1px;
-          border-color: #6b7280;
+          border-color: var(--c-grey);
           border-style: solid;
         `}
       >

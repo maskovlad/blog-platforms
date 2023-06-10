@@ -1,12 +1,12 @@
-export default function Loader() {
-  const circleCommonClasses = "h-4 w-4 bg-black rounded-full";
+import styles from "./Loader.module.css"
 
+export default function Loader() {
   return (
-    <div className="flex h-screen">
-      <div className="flex m-auto">
-        <div className={`${circleCommonClasses} mr-2 animate-bounce`}></div>
-        <div className={`${circleCommonClasses} mr-2 animate-bounce200`}></div>
-        <div className={`${circleCommonClasses} animate-bounce400`}></div>
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
+        <div className={`${styles.circle} ${styles.circle1}`}></div>
+        <div className={`${styles.circle} ${styles.circle2}`}></div>
+        <div className={`${styles.circle} ${styles.circle3}`}></div>
       </div>
     </div>
   );

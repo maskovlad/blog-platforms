@@ -61,11 +61,23 @@ export default function Modal({
                 opacity: 0;
               `}
             >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75" />
+              <Dialog.Overlay className={css`
+                position: fixed; 
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0; 
+                background-color: #6B7280; 
+                background-opacity: 0.75; 
+              `} />
             </Transition.Child>
 
             <span
-              className="inline-block h-screen align-middle"
+              className={css`
+                display: inline-block; 
+                vertical-align: middle; 
+                height: 100vh; 
+              `}
               aria-hidden="true"
             >
               &#8203;

@@ -5,6 +5,7 @@ import { fetcher } from "@/lib/fetcher";
 import { HttpMethod } from "@/types";
 
 import type { Site } from "@prisma/client";
+import { css } from "@emotion/css";
 
 type DomainData = Pick<
   Site,
@@ -22,6 +23,7 @@ interface DomainCardProps<T = DomainData> {
 }
 
 export default function DomainCard({ data }: DomainCardProps) {
+  
   const { data: valid, isValidating } = useSWR<Site>(
     `/api/domain/check?domain=${data.customDomain}`,
     fetcher,
@@ -35,16 +37,52 @@ export default function DomainCard({ data }: DomainCardProps) {
       : "";
 
   return (
-    <div className="w-full max-w-2xl mt-10 border border-black rounded-lg py-10">
-      <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 justify-between px-10">
+    <div style={{
+      paddingTop: "2.5rem",
+      paddingBottom: "2.5rem",
+      marginTop: "2.5rem",
+      width: "100%",
+      maxWidth: "42rem",
+      borderRadius: "0.5rem",
+      borderWidth: "1px",
+      borderColor: "#000000",
+    }}>
+      <div className={css`
+        display: flex; 
+        padding-left: 2.5rem;
+        padding-right: 2.5rem; 
+        margin-top: 1rem; 
+        flex-direction: column; 
+        justify-content: space-between; 
+
+        @media (min-width: 640px) { 
+          margin-left: 1rem; 
+        flex-direction: row; 
+        }
+      `}>
         <a
-          className="text-xl font-semibold flex justify-center sm:justify-start items-center"
+          className={css`
+            display: flex; 
+            padding-left: 2.5rem;
+            padding-right: 2.5rem; 
+            margin-top: 1rem; 
+            flex-direction: column; 
+            justify-content: space-between; 
+
+            @media (min-width: 640px) { 
+              margin-left: 1rem; 
+              flex-direction: row; 
+            }
+          `}
           href={`http://${data.customDomain}`}
           rel="noreferrer"
           target="_blank"
         >
           {data.customDomain}
-          <span className="inline-block ml-2">
+          <span style={{
+            display: "inline-block",
+            marginLeft: "0.5rem",
+          }}>
             <svg
               viewBox="0 0 24 24"
               width="20"
@@ -62,17 +100,35 @@ export default function DomainCard({ data }: DomainCardProps) {
             </svg>
           </span>
         </a>
-        <div className="flex space-x-3">
+        <div style={{
+          display: "flex",
+          marginLeft: "0.75rem",
+        }}>
           <button
             onClick={() => {
               mutate(`/api/domain/check?domain=${data.customDomain}`);
             }}
             disabled={isValidating}
-            className={`${
+            className={css`
+              padding-top: 0.375rem;
+              padding-bottom: 0.375rem; 
+              transition-property: all; 
+              transition-duration: 150ms; 
+              transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); 
+              color: #6B7280; 
+              font-size: 0.875rem;
+              line-height: 1.25rem; 
+              width: 6rem; 
+              border-radius: 0.375rem; 
+              border-width: 1px; 
+              border-color: #E5E7EB; 
+              border-style: solid; 
+              ${
               isValidating
-                ? "cursor-not-allowed bg-gray-100"
-                : "bg-white hover:text-black hover:border-black"
-            } text-gray-500 border-gray-200 py-1.5 w-24 text-sm border-solid border rounded-md focus:outline-none transition-all ease-in-out duration-150`}
+                ? "background-color:#F3F4F6;cursor: not-allowed;"
+                : "background-color: #ffffff;:hover {color: #000000;border-color: #000000;}"
+              }
+            `}
           >
             {isValidating ? <LoadingDots /> : "Refresh"}
           </button>
@@ -94,16 +150,41 @@ export default function DomainCard({ data }: DomainCardProps) {
               });
             }}
             disabled={removing}
-            className={`${
-              removing ? "cursor-not-allowed bg-gray-100" : ""
-            }bg-red-500 text-white border-red-500 hover:text-red-500 hover:bg-white py-1.5 w-24 text-sm border-solid border rounded-md focus:outline-none transition-all ease-in-out duration-150`}
+            className={css`
+              padding-top: 0.375rem;
+              padding-bottom: 0.375rem; 
+              background-color: #EF4444; 
+              transition-property: all; 
+              transition-duration: 150ms; 
+              transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); 
+              color: #ffffff; 
+              font-size: 0.875rem;
+              line-height: 1.25rem; 
+              width: 6rem; 
+              border-radius: 0.375rem; 
+              border-width: 1px; 
+              border-color: #EF4444; 
+              border-style: solid; 
+
+              :hover {
+                background-color: #ffffff; 
+                color: #EF4444; 
+              }
+              ${removing ? "background-color: #F3F4F6;cursor: not-allowed; " : ""}
+            `}
           >
             {removing ? <LoadingDots /> : "Remove"}
           </button>
         </div>
       </div>
 
-      <div className="flex items-center space-x-3 my-3 px-10">
+      <div className={css`
+        display: flex; 
+        padding-left: 2.5rem;
+        padding-right: 2.5rem; 
+        margin-top: 0.75rem 0 0.75rem 0.875rem;
+        align-items: center; 
+      `}>
         <svg
           viewBox="0 0 24 24"
           width="24"
@@ -130,57 +211,115 @@ export default function DomainCard({ data }: DomainCardProps) {
           )}
         </svg>
         <p
-          className={`${
-            valid ? "text-black font-normal" : "text-red-700 font-medium"
-          } text-sm`}
-        >
+          className={css`
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            ${valid ? "color: #000000;font-weight: 400;" : "color: #B91C1C;font-weight: 500; "
+            }`}>
           {valid ? "Valid" : "Invalid"} Configuration
         </p>
       </div>
 
       {!valid && (
         <>
-          <div className="w-full border-t border-gray-100 mt-5 mb-8" />
+          <div className={css`
+            margin-top: 1.25rem; 
+            margin-bottom: 2rem; 
+            width: 100%; 
+            border-top-width: 1px; 
+            border-color: var(--c-white); 
+          `} />
 
-          <div className="px-10">
-            <div className="flex justify-start space-x-4">
+          <div className={css`
+            padding: 0 2.5;
+          `}>
+            <div className={css`
+              display: flex; 
+              justify-content: flex-start; 
+              margin-left: 1rem; 
+            `}>
               <button
                 onClick={() => setRecordType("CNAME")}
-                className={`${
-                  recordType == "CNAME"
-                    ? "text-black border-black"
-                    : "text-gray-400 border-white"
-                } text-sm border-b-2 pb-1 transition-all ease duration-150`}
-              >
+                className={css`
+                padding-bottom: 0.25rem; 
+                transition-property: all; 
+                transition-duration: 150ms; 
+                font-size: 0.875rem;
+                line-height: 1.25rem; 
+                border-bottom-width: 2px; 
+                ${recordType == "CNAME"
+                  ? "color:var(--c-black);border-color:var(--c-black);"
+                  : "color: var(--c-cyan);border-color: var(--c-white);"
+                }`}>
                 CNAME Record (subdomains)
               </button>
               {/* if the custom domain is a subdomain, only show CNAME record */}
               {!subdomain && (
                 <button
                   onClick={() => setRecordType("A")}
-                  className={`${
-                    recordType == "A"
-                      ? "text-black border-black"
-                      : "text-gray-400 border-white"
-                  } text-sm border-b-2 pb-1 transition-all ease duration-150`}
-                >
+                  className={css`
+                    padding-bottom: 0.25rem; 
+                    transition-property: all; 
+                    transition-duration: 150ms; 
+                    font-size: 0.875rem;
+                    line-height: 1.25rem; 
+                    border-bottom-width: 2px; 
+                    ${recordType == "A"
+                      ? "color:var(--c-black);border-color:var(--c-black);"
+                      : "color: var(--c-cyan);border-color: var(--c-white);"
+                  }`}>
                   A Record (apex domain)
                 </button>
               )}
             </div>
-            <div className="my-3 text-left">
-              <p className="my-5 text-sm">
+            <div className={css`
+              margin-top: 0.75rem;
+              margin-bottom: 0.75rem; 
+              text-align: left; 
+            `}>
+              <p className={css`
+                margin-top: 1.25rem;
+                margin-bottom: 1.25rem; 
+                font-size: 0.875rem;
+                line-height: 1.25rem; 
+              `}>
                 Set the following record on your DNS provider to continue:
               </p>
-              <div className="flex justify-start items-center space-x-10 bg-gray-50 p-2 rounded-md">
+              <div className={css`
+                display: flex; 
+                padding: 0.5rem; 
+                margin-left: 2.5rem; 
+                background-color: #F9FAFB; 
+                justify-content: flex-start; 
+                align-items: center; 
+                border-radius: 0.375rem; 
+              `}>
                 <div>
-                  <p className="text-sm font-bold">Type</p>
-                  <p className="text-sm font-mono mt-2">{recordType}</p>
+                  <p className={css`
+                    font-size: 0.875rem;
+                    line-height: 1.25rem; 
+                    font-weight: 700; 
+                  `}>Type</p>
+                  <p className={css`
+                    margin-top: 0.5rem; 
+                    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; 
+                    font-size: 0.875rem;
+                    line-height: 1.25rem;
+                  `}>{recordType}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-bold">Name</p>
+                  <p className={css`
+                    font-size: 0.875rem;
+                    line-height: 1.25rem; 
+                    font-weight: 700; 
+                  `}>Name</p>
                   {/* if the custom domain is a subdomain, the CNAME record is the subdomain */}
-                  <p className="text-sm font-mono mt-2">
+                  <p className={css`
+                    margin-top: 0.5rem; 
+                    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; 
+                    font-size: 0.875rem;
+                    line-height: 1.25rem; 
+                  `}>
                     {recordType === "A"
                       ? "@"
                       : recordType == "CNAME" && subdomain
@@ -189,8 +328,17 @@ export default function DomainCard({ data }: DomainCardProps) {
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm font-bold">Value</p>
-                  <p className="text-sm font-mono mt-2">
+                  <p className={css`
+                    font-size: 0.875rem;
+                    line-height: 1.25rem; 
+                    font-weight: 700; 
+                  `}>Value</p>
+                  <p className={css`
+                    margin-top: 0.5rem; 
+                    font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; 
+                    font-size: 0.875rem;
+                    line-height: 1.25rem; 
+                  `}>
                     {recordType == "CNAME" ? `cname.vercel.pub` : `76.76.21.21`}
                   </p>
                 </div>

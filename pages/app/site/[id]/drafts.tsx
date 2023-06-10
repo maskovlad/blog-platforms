@@ -164,7 +164,7 @@ export default function SiteDrafts() {
                     flex-direction: column;
                     border-radius: 0.5rem;
                     border-width: 1px;
-                    border-color: #e5e7eb;
+                    border-color: var(--c-lightgrey2);
 
                     @media (min-width: 768px) {
                       flex-direction: row;
@@ -200,8 +200,8 @@ export default function SiteDrafts() {
                           className={css`
                             display: flex;
                             position: absolute;
-                            background-color: #f3f4f6;
-                            color: #6b7280;
+                            background-color: var(--c-white);
+                            color: var(--c-grey);
                             font-size: 2.25rem;
                             line-height: 2.5rem;
                             justify-content: center;
@@ -251,8 +251,8 @@ export default function SiteDrafts() {
                         padding-bottom: 0.25rem;
                         padding-left: 0.75rem;
                         padding-right: 0.75rem;
-                        background-color: #e5e7eb;
-                        color: #4b5563;
+                        background-color: var(--c-lightgrey2);
+                        color: var(--c-darkgrey);
                         letter-spacing: 0.025em;
                         white-space: nowrap;
                         border-radius: 0.25rem;
@@ -277,7 +277,7 @@ export default function SiteDrafts() {
                 >
                   <p
                     className={css`
-                      color: #4b5563;
+                      color: var(--c-darkgrey);
                       font-size: 1.5rem;
                       line-height: 2rem;
                     `}

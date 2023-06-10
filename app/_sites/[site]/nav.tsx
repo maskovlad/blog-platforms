@@ -13,11 +13,23 @@ export default function Nav({ children }: { children: ReactNode }) {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, [onScroll]);
+  
   return (
     <div
-      className={`fixed w-full ${
-        scrolled ? "drop-shadow-md" : ""
-      }  top-0 left-0 right-0 h-16 bg-white z-30 transition-all ease duration-150 flex`}
+      style={{
+        display: "flex",
+        top: "0",
+        right: "0",
+        left: "0",
+        zIndex: "30",
+        backgroundColor: "#ffffff",
+        transitionProperty: "all",
+        transitionDuration: "150ms",
+        height: "4rem",
+        position: "fixed",
+        width: "100%",
+        filter: scrolled ? "drop-shadow(0 2px 2px rgba(0, 0, 0, 0.06))" : "none",
+      }}
     >
       {children}
     </div>

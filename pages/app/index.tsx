@@ -209,13 +209,13 @@ export default function AppIndex() {
                   display: flex;
                   padding-left: 1.25rem;
                   padding-right: 1.25rem;
-                  background-color: #f3f4f6;
+                  background-color: var(--c-white);
                   align-items: center;
                   height: 100%;
                   border-top-right-radius: 0.5rem;
                   border-bottom-right-radius: 0.5rem;
                   border-left-width: 1px;
-                  border-color: #4b5563;
+                  border-color: var(--c-darkgrey);
                 `}
               >
                 .{process.env.NEXT_PUBLIC_SITE_URL}
@@ -296,7 +296,7 @@ export default function AppIndex() {
                 transition-property: all;
                 transition-duration: 150ms;
                 transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                color: #4b5563;
+                color: var(--c-darkgrey);
                 font-size: 0.875rem;
                 line-height: 1.25rem;
                 width: 100%;
@@ -344,7 +344,7 @@ export default function AppIndex() {
 
                 ${creatingSite || error
                   ? "background-color: #F9FAFB;color: #9CA3AF;cursor: not-allowed;"
-                  : "background-color: #ffffff;color: #4B5563;:hover {color: #000000; }"}
+                  : "background-color: #ffffff;color: var(--c-darkgrey);:hover {color: #000000; }"}
               `}
             >
               {creatingSite ? <LoadingDots /> : "СТВОРИТИ"}
@@ -397,7 +397,7 @@ export default function AppIndex() {
           >
             Мої сайти
           </h1>
-          <button onClick={() => setShowModal(true)} className="btn-green">
+          <button onClick={() => setShowModal(true)} className="btn btn-green">
             Новий Сайт{" "}
             <span
               className={css`
@@ -428,7 +428,7 @@ export default function AppIndex() {
                     flex-direction: column;
                     border-radius: 0.5rem;
                     border-width: 1px;
-                    border-color: #e5e7eb;
+                    border-color: var(--c-lightgrey2);
 
                     @media (min-width: 768px) {
                       flex-direction: row;
@@ -466,8 +466,8 @@ export default function AppIndex() {
                           className={css`
                             display: flex;
                             position: absolute;
-                            background-color: #f3f4f6;
-                            color: #6b7280;
+                            background-color: var(--c-white);
+                            color: var(--c-grey);
                             font-size: 2.25rem;
                             line-height: 2.5rem;
                             justify-content: center;
@@ -519,8 +519,8 @@ export default function AppIndex() {
                         padding-bottom: 0.25rem;
                         padding-left: 0.75rem;
                         padding-right: 0.75rem;
-                        background-color: #e5e7eb;
-                        color: #4b5563;
+                        background-color: var(--c-lightgrey2);
+                        color: var(--c-darkgrey);
                         letter-spacing: 0.025em;
                         white-space: nowrap;
                         border-radius: 0.25rem;
@@ -545,7 +545,7 @@ export default function AppIndex() {
                 >
                   <p
                     className={css`
-                      color: #4b5563;
+                      color: var(--c-darkgrey);
                       font-size: 1.5rem;
                       line-height: 2rem;
                     `}

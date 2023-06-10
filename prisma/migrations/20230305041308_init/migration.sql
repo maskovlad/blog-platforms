@@ -74,7 +74,7 @@ CREATE TABLE "Site" (
     "name" TEXT,
     "description" TEXT,
     "logo" TEXT,
-    "font" TEXT NOT NULL DEFAULT 'font-cal',
+    "font" TEXT NOT NULL DEFAULT 'font-mont',
     "image" TEXT,
     "imageBlurhash" TEXT,
     "subdomain" TEXT,

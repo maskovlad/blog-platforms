@@ -197,7 +197,7 @@ export default function PostSettings() {
                     border-top-left-radius: 0.5rem;
                     border-bottom-left-radius: 0.5rem;
                     border-right-width: 1px;
-                    border-color: #4b5563;
+                    border-color: var(--c-darkgrey);
                   `}
                 >
                   {settings?.site?.subdomain}.{process.env.NEXT_PUBLIC_SITE_URL}
@@ -273,7 +273,7 @@ export default function PostSettings() {
                         display: flex;
                         position: absolute;
                         z-index: 10;
-                        background-color: #e5e7eb;
+                        background-color: var(--c-lightgrey2);
                         transition-property: all;
                         transition-duration: 200ms;
                         transition-timing-function: linear;
@@ -426,7 +426,7 @@ export default function PostSettings() {
               <p
                 className={css`
                   margin-bottom: 0.75rem;
-                  color: #4b5563;
+                  color: var(--c-darkgrey);
                 `}
               >
                 Ви впевнені, що хочете видалити свою публікацію? Цю дію не можна
@@ -522,7 +522,7 @@ export default function PostSettings() {
             background-color: #ffffff;
             height: 4rem;
             border-top-width: 1px;
-            border-color: #6b7280;
+            border-color: var(--c-grey);
             border-style: solid;
           `}
         >

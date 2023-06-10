@@ -15,6 +15,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css';
+import { css } from '@emotion/react';
 
 const HOTKEYS = {
   'mod+b': 'bold',
@@ -154,20 +155,42 @@ const Element = ({ attributes, children, element }) => {
       return (
         <blockquote
           style={style}
-          className='text-[#aaa] italic mx-0 pl-2.5 border-l-2 border-l-[#ddd] border-solid' {...attributes}
+          className={css`
+            padding-left: 0.625rem; 
+            margin-left: 0;
+            margin-right: 0; 
+            font-style: italic; 
+            border-left-width: 2px; 
+            border-style: solid;
+            border-color: #ddd; 
+            color: #aaa;
+          `} 
+          {...attributes}
         >
           {children}
         </blockquote>
       )
     case 'heading-one':
       return (
-        <h1 style={style} className="text-4xl" {...attributes}>
+        <h1 
+          style={style} 
+          className={css`
+            font-size: 2.25rem;
+            line-height: 2.5rem; 
+          `} 
+          {...attributes}>
           {children}
         </h1>
       )
     case 'heading-two':
       return (
-        <h2 style={style} className="text-2xl" {...attributes}>
+        <h2 
+          style={style} 
+          className={css`
+            font-size: 1.5rem;
+            line-height: 2rem; 
+          `} 
+          {...attributes}>
           {children}
         </h2>
       )
@@ -179,19 +202,35 @@ const Element = ({ attributes, children, element }) => {
       )
     case 'numbered-list':
       return (
-        <ol style={style} className='list-decimal' {...attributes}>
+        <ol 
+          style={style} 
+          className={css`
+            list-style-type: decimal; 
+          `} 
+          {...attributes}>
           {children}
         </ol>
       )
     case 'bulleted-list':
       return (
-        <ul style={style} className='list-disc' {...attributes}>
+        <ul 
+          style={style} 
+          className={css`
+            list-style-type: disc; 
+          `} 
+          {...attributes}>
           {children}
         </ul>
       )
     case 'code-block':
       return (
-        <code className="bg-gray-50 p-2 m-2" {...attributes}>
+        <code 
+          className={css`
+            padding: 0.5rem; 
+            margin: 0.5rem; 
+            background-color: #F9FAFB; 
+          `}
+          {...attributes}>
           {children}
         </code>
       )

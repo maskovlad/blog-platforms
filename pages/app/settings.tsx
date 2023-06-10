@@ -210,7 +210,7 @@ export default function AppSettings() {
                         display: flex;
                         position: absolute;
                         z-index: 10;
-                        background-color: #e5e7eb;
+                        background-color: var(--c-lightgrey2);
                         transition-property: all;
                         transition-duration: 200ms;
                         transition-timing-function: linear;
@@ -268,7 +268,7 @@ export default function AppSettings() {
             background-color: #ffffff;
             height: 4rem;
             border-top-width: 1px;
-            border-color: #6b7280;
+            border-color: var(--c-grey);
             border-style: solid;
           `}
         >

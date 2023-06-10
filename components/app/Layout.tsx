@@ -67,7 +67,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
             background-color: #ffffff;
             height: 4rem;
             border-bottom-width: 1px;
-            border-color: #e5e7eb;
+            border-color: var(--c-lightgrey2);
           `}
         >
           <div
@@ -150,7 +150,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
                   transition-property: all;
                   transition-duration: 150ms;
                   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                  color: #6b7280;
+                  color: var(--c-grey);
 
                   :hover {
                     color: var(--c-grey);
@@ -211,7 +211,7 @@ export default function Layout({ siteId, children }: LayoutProps) {
               justify-content: center;
               align-items: center;
               border-bottom-width: 1px;
-              border-color: #e5e7eb;
+              border-color: var(--c-lightgrey2);
               font-weight: 500;
               padding-left: 10%;
               padding-right: 10%;

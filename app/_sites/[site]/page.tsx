@@ -5,6 +5,7 @@ import type { _SiteData } from "@/types";
 import { placeholderBlurhash } from "@/lib/util";
 import { getSiteData } from "@/lib/fetchers";
 import Link from "next/link";
+import styles from "./page.module.css"
 
 //^ USER'S SITE INDEX PAGE
 
@@ -43,58 +44,78 @@ export default async function Page({ params }: { params: { site: string } }) {
   const data = await getSiteData(site);
 
   return (
-    <article className="md:mb-28">
+    <article className={styles.article}>
       {data.posts.length > 0 ? (
         <div>
           <Link href={`/${data.posts[0].slug}`}>
-            <div className="max-w-screen-xl relative group h-80 sm:h-150 w-full mx-auto overflow-hidden lg:rounded-xl">
+            <div className={styles.image_wrapper}>
               {data.posts[0].image ? (
                 <BlurImage
                   alt={data.posts[0].title ?? ""}
                   blurDataURL={
                     data.posts[0].imageBlurhash ?? placeholderBlurhash
                   }
-                  className="group-hover:scale-105 group-hover:duration-300 h-full w-full object-cover"
+                  className={styles.image}
                   width={1300}
                   height={630}
                   placeholder="blur"
                   src={data.posts[0].image}
                 />
               ) : (
-                <div className="absolute flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-4xl select-none">
+                <div className={styles.image_plh}>
                   ?
                 </div>
               )}
             </div>
-            <div className="max-w-screen-xl mx-5 xl:mx-auto mt-10">
-              <h2 className="font-title text-4xl md:text-6xl my-10">
+            <div className={styles.post0_wrapper}>
+              <h2 className={styles.post0_title}>
                 {data.posts[0].title}
               </h2>
-              <p className="text-base md:text-lg w-full lg:w-2/3">
+              <p className={styles.post0_description}>
                 {data.posts[0].description}
               </p>
-              <div className="flex justify-start items-center space-x-4 w-full">
-                <div className="relative w-8 h-8 flex-none rounded-full overflow-hidden">
+              <div className={styles.post0_avatar}>
+                <div className={styles.post0_avatar__image_wrapper}>
                   {data.user?.image ? (
                     <BlurImage
                       alt={data.user?.name ?? "User Avatar"}
                       width={100}
                       height={100}
-                      className="w-full h-full object-cover"
+                      style={{
+                        objectFit: "cover",
+                        width: "100%",
+                        height: "100%",
+                      }}
                       src={data.user?.image}
                     />
                   ) : (
-                    <div className="absolute flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-4xl select-none">
+                    <div style={{
+                        display: "flex",
+                        position: "absolute",
+                        backgroundColor: "var(--c-white)",
+                        color: "var(--c-grey)",
+                        fontSize: "2.25rem",
+                        lineHeight: "2.5rem",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "100%",
+                        height: "100%",
+                        userSelect: "none",
+                    }}>
                       ?
                     </div>
                   )}
                 </div>
-                <p className="font-title inline-block font-semibold text-sm md:text-base align-middle ml-3 whitespace-nowrap">
+                <p className={styles.post0_username}>
                   {data.user?.name}
                 </p>
-                <div className="border-l border-gray-600 h-6" />
-                <p className="text-sm md:text-base font-light text-gray-500 w-10/12 m-auto my-5">
-                  {data.createdAt.toLocaleDateString("en-US", {
+                <div style={{
+                  height: "1.5rem",
+                  borderLeftWidth: "1px",
+                  borderColor: "var(--c-darkgrey)",
+                }} />
+                <p className={styles.post0_date}>
+                  {data.createdAt.toLocaleDateString("uk-UK", {
                     month: "short",
                     day: "numeric",
                     year: "numeric",
@@ -105,7 +126,14 @@ export default async function Page({ params }: { params: { site: string } }) {
           </Link>
         </div>
       ) : (
-        <div className="flex flex-col justify-center items-center py-20">
+        <div style={{
+            display: "flex",
+            paddingTop: "5rem",
+            paddingBottom: "5rem",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+        }}>
           <BlurImage
             src="/empty-state.png"
             alt="No Posts"
@@ -114,17 +142,21 @@ export default async function Page({ params }: { params: { site: string } }) {
             placeholder="blur"
             blurDataURL={placeholderBlurhash}
           />
-          <p className="text-2xl font-cal text-gray-600">No posts yet.</p>
+          <p style={{
+              color: "var(--c-darkgrey)",
+              fontSize: "1.5rem",
+              lineHeight: "2rem",
+          }}>Ще немає постів.</p>
         </div>
       )}
 
 
       {data.posts.length > 1 && (
-        <div className="max-w-screen-xl mx-5 xl:mx-auto my-40">
-          <h2 className="font-title text-4xl md:text-5xl mb-10">
-            More stories
+        <div className={styles.other_posts}>
+          <h2>
+            Більше дописів:
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-4 gap-y-8">
+          <div className={styles.blogcard_container}>
             {data.posts.slice(1).map((metadata, index) => (
               <BlogCard key={index} data={metadata} />
             ))}
