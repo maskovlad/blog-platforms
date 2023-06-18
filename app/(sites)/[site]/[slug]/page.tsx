@@ -1,12 +1,14 @@
 import BlogCard from "@/components/BlogCard";
 import BlurImage from "@/components/BlurImage";
 import prisma from "@/lib/prisma";
-import { Text } from 'slate'
 import Highlight from 'react-highlight'
 import type { AdjacentPost, Meta, _SiteSlugData } from "@/types";
 import { placeholderBlurhash } from "@/lib/util";
 import { getPostData } from "@/lib/fetchers";
 import styles from "./page.module.css"
+import { slateToHtml } from 'slate-serializers'
+import { Element, Descendant } from "slate";
+import { CustomElement, CustomText } from "@/types/editor";
 
 //^ SINGLE POST
 
@@ -75,6 +77,10 @@ export default async function Post({
     ogUrl: `${process.env.NEXT_PUBLIC_SITE_PROTOCOL}${data.site?.subdomain}.${process.env.NEXT_PUBLIC_SITE_URL}/${data.slug}`,
     title: data.title,
   } as Meta;
+
+  // |)    (|
+  // |\_{}_/|  CODENKO
+  //    []   
 
   return (
 
@@ -149,9 +155,7 @@ export default async function Post({
       </section>
 
       {/* Article Content */}
-      <article className={styles.a_container}>
-        {/* {data.content.map(serialize)} */}
-        <pre>{JSON.stringify(data.content)}</pre>
+      <article className={styles.a_container} dangerouslySetInnerHTML={{__html:"No data"}}>
       </article>
 
       {/* Читайте також */}
@@ -206,63 +210,63 @@ export default async function Post({
   );
 }
 
+{/**
+const serialize = (node) => {
+  console.log({node})
+  if (Text.isText(node)) {
+    if (node.code) {
+      return <Highlight className="h-full">{node.text}</Highlight>
+    }
+    if (node['heading-one']) {
+      return (
+        <h1 className="text-3xl font-mont md:text-6xl mb-10 text-gray-800">
+          {node.text}
+        </h1>
+      )
+    }
 
-// const serialize = (node) => {
-//   console.log({node})
-//   if (Text.isText(node)) {
-//     if (node.code) {
-//       return <Highlight className="h-full">{node.text}</Highlight>
-//     }
-//     if (node['heading-one']) {
-//       return (
-//         <h1 className="text-3xl font-mont md:text-6xl mb-10 text-gray-800">
-//           {node.text}
-//         </h1>
-//       )
-//     }
+    if (node.bold && node.italic) {
+      return <p className="font-bold italic font-mont">{node.text}</p>
+    }
 
-//     if (node.bold && node.italic) {
-//       return <p className="font-bold italic font-mont">{node.text}</p>
-//     }
+    if (node.bold) {
+      return <p className="font-bold font-mont">{node.text}</p>
+    }
 
-//     if (node.bold) {
-//       return <p className="font-bold font-mont">{node.text}</p>
-//     }
+    if (node.italic) {
+      return <p className="font-italic font-mont">{node.text}</p>
+    }
 
-//     if (node.italic) {
-//       return <p className="font-italic font-mont">{node.text}</p>
-//     }
+    if (node['heading-two']) {
+      return <p className="text-2xl font-mont">{node.text}</p>
+    }
 
-//     if (node['heading-two']) {
-//       return <p className="text-2xl font-mont">{node.text}</p>
-//     }
+    return node.text
+  }
 
-//     return node.text
-//   }
+  const children = node?.children.map((n) => serialize(n))
 
-//   const children = node?.children.map((n) => serialize(n))
+  switch (node.type) {
+    case 'block-quote':
+      return <blockquote>{children}</blockquote>
+    case 'italic':
+      return <em className="italic">{children}</em>
+    case 'underline':
+      return <p className="underline">{children}</p>
 
-//   switch (node.type) {
-//     case 'block-quote':
-//       return <blockquote>{children}</blockquote>
-//     case 'italic':
-//       return <em className="italic">{children}</em>
-//     case 'underline':
-//       return <p className="underline">{children}</p>
+    case 'heading-one':
+      return <h1 className="text-4xl">{children}</h1>
+    case 'heading-two':
+      return <h2 className="text-2xl">{children}</h2>
+    case 'code':
+      return <code className="bg-gray-50 p-2 m-2">{children}</code>
 
-//     case 'heading-one':
-//       return <h1 className="text-4xl">{children}</h1>
-//     case 'heading-two':
-//       return <h2 className="text-2xl">{children}</h2>
-//     case 'code':
-//       return <code className="bg-gray-50 p-2 m-2">{children}</code>
-
-//     case 'list-item':
-//       return <li>{children}</li>
-//     case 'numbered-list':
-//       return <ol>{children}</ol>
-//     default:
-//       return <p>{children}</p>
-//   }
-// }
-
+    case 'list-item':
+      return <li>{children}</li>
+    case 'numbered-list':
+      return <ol>{children}</ol>
+    default:
+      return <p>{children}</p>
+  }
+}
+ */}
