@@ -9,6 +9,9 @@ import styles from "./page.module.css"
 import { slateToHtml } from 'slate-serializers'
 import { Element, Descendant } from "slate";
 import { CustomElement, CustomText } from "@/types/editor";
+import { config as defaultConfig } from '@/lib/serialaizers/default'
+import { config as demoConfig } from '@/lib/serialaizers/slateDemo'
+import { config as sviyConfig } from '@/lib/serialaizers/sviyConfig'
 
 //^ SINGLE POST
 
@@ -78,8 +81,9 @@ export default async function Post({
     title: data.title,
   } as Meta;
 
-  // |)    (|
-  // |\_{}_/|  CODENKO
+  // }      {
+  // |) () (|
+  // |\_}{_/}  CODENKO
   //    []   
 
   return (
@@ -155,8 +159,13 @@ export default async function Post({
       </section>
 
       {/* Article Content */}
-      <article className={styles.a_container} dangerouslySetInnerHTML={{__html:"No data"}}>
-      </article>
+      <article 
+        className={styles.a_container} 
+        dangerouslySetInnerHTML={{
+           __html: slateToHtml(
+            data.content as any[], 
+            sviyConfig) 
+      }} />
 
       {/* Читайте також */}
       {adjacentPosts.length > 0 && (

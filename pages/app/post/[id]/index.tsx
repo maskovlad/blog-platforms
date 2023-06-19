@@ -235,7 +235,7 @@ export default function Post() {
             disabled={disabled}
             className={css`
               position: absolute;
-              top: -8.5rem;
+              top: 4.3rem;
               right: 3rem;
               padding-left: 1rem;
               padding-right: 1rem;
