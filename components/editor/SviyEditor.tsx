@@ -16,6 +16,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css';
 import { css } from '@emotion/react';
+import styles from "./SviyEditor.module.css"
 
 const HOTKEYS = {
   'mod+b': 'bold',
@@ -72,9 +73,6 @@ export default function SviyEditor({ content, onChange }: { content: Descendant[
       </Slate>
     </>
   )
-
-
-
 }
 
 
