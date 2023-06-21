@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
-import type { WithChildren } from "@/types";
+import type { WithChildren } from "@/types/common";
 import { css } from "@emotion/css";
 
 interface ModalProps extends WithChildren {

@@ -11,12 +11,13 @@ import Layout from "@/components/app/Layout";
 import Loader from "@/components/app/Loader";
 import LoadingDots from "@/components/app/loading-dots";
 import { fetcher } from "@/lib/fetcher";
-import { HttpMethod } from "@/types";
-import type { WithSitePost } from "@/types";
+import { HttpMethod } from "@/types/http";
+import type { WithSitePost } from "@/types/common";
 
 import { Descendant } from "slate";
 import SviyEditor from "@/components/editor/SviyEditor";
 import Head from "next/head";
+import CodeBlockEditor from "@/components/editor/CodeBlockEditor";
 
 interface PostData {
   title: string;
@@ -324,12 +325,15 @@ export default function Post() {
             value={data.description}
           />
 
-          {data?.content && (
+          {/* {data?.content && (
             <SviyEditor
               content={data.content as Descendant[]}
               onChange={onChange}
             />
-          )}
+          )} */}
+
+<CodeBlockEditor />
+
         </div>
 
         <footer

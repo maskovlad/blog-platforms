@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { getSiteData } from '../../../lib/fetchers';
-import type { Meta } from "@/types";
+import type { Meta } from "@/types/seo";
 import { Montserrat, Roboto, Lora } from 'next/font/google';
 
 export async function generateMetadata({ params }: { params: { site: string } }): Promise<Meta> {

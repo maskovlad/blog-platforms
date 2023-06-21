@@ -1,4 +1,4 @@
-import type { WithClassName } from "@/types";
+import type { WithClassName } from "@/types/common";
 
 interface LogoSmallProps extends WithClassName {
   height?: number;

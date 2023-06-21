@@ -8,7 +8,7 @@ import type { Session } from "next-auth";
 import { revalidate } from "@/lib/revalidate";
 import { getBlurDataURL, placeholderBlurhash } from "@/lib/util";
 
-import type { WithSitePost } from "@/types";
+import type { WithSitePost } from "@/types/common";
 
 import { Descendant } from "slate";
 

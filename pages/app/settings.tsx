@@ -3,12 +3,12 @@ import toast, { Toaster } from "react-hot-toast";
 import BlurImage from "@/components/BlurImage";
 import CloudinaryUploadWidget from "@/components/Cloudinary";
 import LoadingDots from "@/components/app/loading-dots";
-import { HttpMethod } from "@/types";
+import { HttpMethod } from "@/types/http";
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
-import type { UserSettings } from "@/types";
+import type { UserSettings } from "@/types/settings";
 import { css } from "@emotion/css";
 
 export default function AppSettings() {

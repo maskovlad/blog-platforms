@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import type { BaseIconProps } from "@/types";
+import type { BaseIconProps } from "@/types/icon";
 
 interface LinkIconProps extends BaseIconProps { }
 

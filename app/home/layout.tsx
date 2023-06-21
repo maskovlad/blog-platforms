@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import type { Meta } from "@/types";
+import type { Meta } from "@/types/seo";
 
 import { Montserrat } from 'next/font/google';
 

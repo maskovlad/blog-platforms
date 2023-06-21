@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { WithChildren } from "@/types";
+import type { WithChildren } from "@/types/common";
 
 export function replaceLinks(options: { href?: string } & WithChildren) {
   // this is technically not a remark plugin but it

@@ -7,7 +7,7 @@ import { signOut } from "next-auth/react";
 import Loader from "./Loader";
 import useRequireAuth from "../../lib/useRequireAuth";
 
-import type { WithChildren } from "@/types";
+import type { WithChildren } from "@/types/common";
 import { css } from "@emotion/css";
 
 interface LayoutProps extends WithChildren {

@@ -10,11 +10,11 @@ import Loader from "@/components/app/Loader";
 import LoadingDots from "@/components/app/loading-dots";
 import Modal from "@/components/Modal";
 import { fetcher } from "@/lib/fetcher";
-import { HttpMethod } from "@/types";
+import { HttpMethod } from "@/types/http";
 
 import type { ChangeEvent } from "react";
 
-import type { WithSitePost } from "@/types";
+import type { WithSitePost } from "@/types/common";
 import { placeholderBlurhash } from "@/lib/util";
 import { css } from '@emotion/css';
 import { Hint } from "@/components/app/Hint";

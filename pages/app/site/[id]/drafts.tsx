@@ -7,7 +7,7 @@ import BlurImage from "@/components/BlurImage";
 import Layout from "@/components/app/Layout";
 import LoadingDots from "@/components/app/loading-dots";
 import { fetcher } from "@/lib/fetcher";
-import { HttpMethod } from "@/types";
+import { HttpMethod } from "@/types/http";
 
 import type { Post, Site } from "@prisma/client";
 import { css } from '@emotion/css';

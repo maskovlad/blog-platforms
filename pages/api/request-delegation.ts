@@ -3,7 +3,7 @@
 Предупреждение: мы активно работаем над улучшением нашего процесса делегирования домена, 
 и вполне вероятно, что в будущем эта конечная точка не понадобится. */
 
-import { HttpMethod } from "@/types";
+import { HttpMethod } from "@/types/http";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 

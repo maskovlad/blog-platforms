@@ -1,6 +1,6 @@
 //^ іконка для твіттера
 
-import type { BaseIconProps } from "@/types";
+import type { BaseIconProps } from "@/types/icon";
 
 interface TwitterIconProps extends BaseIconProps { }
 

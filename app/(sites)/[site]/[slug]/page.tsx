@@ -2,7 +2,8 @@ import BlogCard from "@/components/BlogCard";
 import BlurImage from "@/components/BlurImage";
 import prisma from "@/lib/prisma";
 import Highlight from 'react-highlight'
-import type { AdjacentPost, Meta, _SiteSlugData } from "@/types";
+import type { AdjacentPost, _SiteSlugData } from "@/types/_site";
+import type { Meta } from "@/types/seo";
 import { placeholderBlurhash } from "@/lib/util";
 import { getPostData } from "@/lib/fetchers";
 import styles from "./page.module.css"

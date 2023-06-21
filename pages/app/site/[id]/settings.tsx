@@ -12,7 +12,7 @@ import LoadingDots from "@/components/app/loading-dots";
 import Modal from "@/components/Modal";
 
 import { fetcher } from "@/lib/fetcher";
-import { HttpMethod } from "@/types";
+import { HttpMethod } from "@/types/http";
 
 import type { Site } from "@prisma/client";
 import { placeholderBlurhash } from "@/lib/util";

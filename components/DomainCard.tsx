@@ -2,7 +2,7 @@ import useSWR, { mutate } from "swr";
 import { useState } from "react";
 import LoadingDots from "@/components/app/loading-dots";
 import { fetcher } from "@/lib/fetcher";
-import { HttpMethod } from "@/types";
+import { HttpMethod } from "@/types/http";
 
 import type { Site } from "@prisma/client";
 import { css } from "@emotion/css";

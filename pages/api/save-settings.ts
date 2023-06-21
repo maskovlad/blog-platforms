@@ -1,7 +1,7 @@
 //^ API настройок користувача (таблиця User)
 
 import prisma from "@/lib/prisma";
-import { HttpMethod } from "@/types";
+import { HttpMethod } from "@/types/http";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 

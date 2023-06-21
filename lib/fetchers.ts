@@ -1,5 +1,5 @@
 import { cache } from "react";
-import type { _SiteData } from "@/types";
+import type { _SiteData } from "@/types/_site";
 import prisma from "@/lib/prisma";
 
 export const getSiteData = cache(async (site: string): Promise<_SiteData> => {

@@ -1,4 +1,4 @@
-import type { BaseIconProps } from "@/types";
+import type { BaseIconProps } from "@/types/icon";
 
 interface XIconProps extends BaseIconProps {}
 

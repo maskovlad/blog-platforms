@@ -1,7 +1,7 @@
 import BlurImage from "@/components/BlurImage";
 import BlogCard from "@/components/BlogCard";
 import prisma from "@/lib/prisma";
-import type { _SiteData } from "@/types";
+import type { _SiteData } from "@/types/_site";
 import { placeholderBlurhash } from "@/lib/util";
 import { getSiteData } from "@/lib/fetchers";
 import Link from "next/link";
