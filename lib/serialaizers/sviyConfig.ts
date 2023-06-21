@@ -7,6 +7,7 @@ const ELEMENT_NAME_TAG_MAP = {
   ['list-item']: 'li',
   ['numbered-list']: 'ol',
   ['bulleted-list']: 'ul',
+  ['code-block']: 'code',
   paragraph: 'p',
 }
 

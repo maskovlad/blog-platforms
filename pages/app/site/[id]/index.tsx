@@ -74,8 +74,7 @@ export default function SiteIndex() {
         }
         `}
       >
-        <div
-          className={css`
+        <div className={css`
             display: flex;
             margin-top: 1.25rem;
             flex-direction: column;

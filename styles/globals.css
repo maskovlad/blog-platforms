@@ -9,6 +9,9 @@
   --c-green: #42cc00;
   --c-blue: #3258D9;
   --c-red: #F82222;
+
+  --c-code-bg: #4B5563;
+  --c-code-txt: #F7F7F7;
 }
 
 html,
@@ -54,7 +57,7 @@ textarea {
   border: 0 solid var(--c-lightgrey2);
   outline: 0;
   box-sizing: border-box;
-  list-style: none;
+  /* list-style: none; */
   text-decoration: none;
 }
 

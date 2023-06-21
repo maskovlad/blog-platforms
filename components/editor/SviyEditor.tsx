@@ -37,7 +37,11 @@ export default function SviyEditor({ content, onChange }: { content: Descendant[
   return (
     <>
       <Tooltip id='format-tooltip' />
-      <Slate editor={editor} value={content} onChange={(content) => onChange(content)}>
+      <Slate 
+        editor={editor} 
+        value={content} 
+        onChange={(content) => onChange(content)}
+      >
         <Toolbar>
           <MarkButton format="bold" icon="format_bold" hint="Жирний" />
           <MarkButton format="italic" icon="format_italic" hint="Нахилений" />
@@ -153,16 +157,7 @@ const Element = ({ attributes, children, element }) => {
       return (
         <blockquote
           style={style}
-          className={css`
-            padding-left: 0.625rem; 
-            margin-left: 0;
-            margin-right: 0; 
-            font-style: italic; 
-            border-left-width: 2px; 
-            border-style: solid;
-            border-color: #ddd; 
-            color: #aaa;
-          `} 
+          className={styles['block-quote']} 
           {...attributes}
         >
           {children}
@@ -172,10 +167,7 @@ const Element = ({ attributes, children, element }) => {
       return (
         <h1 
           style={style} 
-          className={css`
-            font-size: 2.25rem;
-            line-height: 2.5rem; 
-          `} 
+          className={styles['heading-one']}
           {...attributes}>
           {children}
         </h1>
@@ -184,10 +176,7 @@ const Element = ({ attributes, children, element }) => {
       return (
         <h2 
           style={style} 
-          className={css`
-            font-size: 1.5rem;
-            line-height: 2rem; 
-          `} 
+          className={styles['heading-two']} 
           {...attributes}>
           {children}
         </h2>
@@ -202,9 +191,7 @@ const Element = ({ attributes, children, element }) => {
       return (
         <ol 
           style={style} 
-          className={css`
-            list-style-type: decimal; 
-          `} 
+          className={styles['numbered-list']}
           {...attributes}>
           {children}
         </ol>
@@ -213,24 +200,21 @@ const Element = ({ attributes, children, element }) => {
       return (
         <ul 
           style={style} 
-          className={css`
-            list-style-type: disc; 
-          `} 
+          className={styles['bulleted-list']}
           {...attributes}>
           {children}
         </ul>
       )
     case 'code-block':
       return (
-        <code 
-          className={css`
-            padding: 0.5rem; 
-            margin: 0.5rem; 
-            background-color: #F9FAFB; 
-          `}
-          {...attributes}>
-          {children}
-        </code>
+        <>
+          <span
+            className={styles['code-block']}
+            {...attributes}>
+            {children}
+          </span>
+          <br />
+        </>
       )
     default:
       return (

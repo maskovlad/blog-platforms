@@ -35,7 +35,7 @@ export default function Post() {
     router.isReady && `/api/post?postId=${postId}`,
     fetcher,
     {
-      dedupingInterval: 1000,
+      dedupingInterval: 60000,
       onError: () => router.push("/"),
       revalidateOnFocus: false,
     }
@@ -119,7 +119,7 @@ export default function Post() {
   );
 
   // усунення дрязгу
-  const [debouncedData] = useDebounce(data, 1000);
+  const [debouncedData] = useDebounce(data, 60000);
   useEffect(() => {
     if (debouncedData.title) saveChanges(debouncedData);
   }, [debouncedData, saveChanges]);
@@ -182,6 +182,7 @@ export default function Post() {
     }
   }
 
+  // onChange
   const onChange = (content: Descendant[]) => {
     setData({ ...data, content });
   };
@@ -203,8 +204,7 @@ export default function Post() {
         />
       </Head>
       <Layout siteId={post?.site?.id}>
-        <div
-          className={css`
+        <div className={css`
           padding-left: 1.5rem;
           padding-right: 1.5rem; 
           padding-top: 5rem;
@@ -260,6 +260,7 @@ export default function Post() {
             {publishing ? <LoadingDots /> : "Публікувати  →"}
           </button>
 
+{/* Заголовок посту */}
           <TextareaAutosize
             name="title"
             onInput={(e: ChangeEvent<HTMLTextAreaElement>) =>
@@ -293,6 +294,7 @@ export default function Post() {
             value={data.title}
           />
 
+{/* Опис посту */}
           <TextareaAutosize
             name="description"
             onInput={(e: ChangeEvent<HTMLTextAreaElement>) =>
@@ -341,8 +343,7 @@ export default function Post() {
             border-top-width: 1px;
             border-color: #d6d6d6;
             border-style: solid;
-          `}
-        >
+          `}>
           <div
             className={css`
               display: flex;
