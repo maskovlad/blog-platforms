@@ -325,14 +325,15 @@ export default function Post() {
             value={data.description}
           />
 
-          {/* {data?.content && (
+          <CodeBlockEditor />
+
+          {data?.content && (
             <SviyEditor
               content={data.content as Descendant[]}
               onChange={onChange}
             />
-          )} */}
+          )}
 
-<CodeBlockEditor />
 
         </div>
 

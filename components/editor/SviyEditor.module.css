@@ -21,12 +21,12 @@
 
 .numbered-list {
   list-style-type: decimal;
-  margin: 2rem 0 1rem 3rem;
+  margin: 1rem 0 1rem 2rem
 }
 
 .bulleted-list {
   list-style-type: disc;
-  margin: 2rem 0 1rem 3rem;
+  margin: 1rem 0 1rem 2rem
 }
 
 .code-block {
@@ -34,4 +34,10 @@
   margin: 0.5rem;
   background-color: var(--c-code-bg);
   color: var(--c-code-txt);
+}
+
+.code-line {
+  display: block;
+  background-color: inherit;
+  color: inherit;
 }

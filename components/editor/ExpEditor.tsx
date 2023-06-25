@@ -29,8 +29,10 @@ const LIST_TYPES = ['numbered-list', 'bulleted-list']
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
 const CODE_BLOCK_TYPE = 'code-block'
 const CODE_LINE_TYPE = 'code-line'
+const PARAGRAPH_TYPE = 'paragraph'
+const LIST_ITEM_TYPE = 'list-item'
 
-export default function SviyEditor({ content, onChange }: { content: Descendant[], onChange: any }) {
+export default function ExpEditor({ content, onChange }: { content: Descendant[], onChange: any }) {
 
   const renderElement = useCallback(props => <Element {...props} />, [])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
@@ -84,51 +86,55 @@ export default function SviyEditor({ content, onChange }: { content: Descendant[
 
 const toggleBlock = (editor, format) => {
 
-  const isActive = isBlockActive(
+  const isList = LIST_TYPES.includes(format)
+  const isCode = CODE_BLOCK_TYPE === format
+  const isAlign = TEXT_ALIGN_TYPES.includes(format)
+
+  //* чи увімкнений format, що прийшов з кнопки зараз на цьому блоці
+  const isActiveFormat = isBlockActive(
     editor,
     format,
-    TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type'
+    isAlign ? 'align' : 'type'
   )
-  const isList = LIST_TYPES.includes(format)
 
-//* стосується списочних типів, при їх переключенні на звичайний <p>
+  //* знімаємо у списка або у блока коду wrapper 
   Transforms.unwrapNodes(editor, {
     match: node => {
       return !Editor.isEditor(node) &&  // не є глобальним обьєктом Editor
-        SlateElement.isElement(node) && // чи вузол є елементом
-        LIST_TYPES.includes(node.type) &&  // чи вузол є списком
-        !TEXT_ALIGN_TYPES.includes(format)  // чи не є вирівнюванням
+        SlateElement.isElement(node) && // вузол є елементом
+        (LIST_TYPES.includes(node.type) || CODE_BLOCK_TYPE === node.type) &&  // вузол є списком або кодом
+        !isAlign  //? не є вирівнюванням
     },
     split: true,
   })
 
-  Transforms.unwrapNodes(editor, {
-    match: node => {
-      return !Editor.isEditor(node) &&  // не є глобальним обьєктом Editor
-        SlateElement.isElement(node) && // чи вузол є елементом
-        CODE_BLOCK_TYPE === node.type &&  // чи вузол є code-block
-        !TEXT_ALIGN_TYPES.includes(format)  // чи не є вирівнюванням
-    },
-    split: true,
-  })
+  let newProps: Partial<SlateElement>
 
-  let newProperties: Partial<SlateElement>
-
-  if (TEXT_ALIGN_TYPES.includes(format)) {
-    newProperties = {
-      align: isActive ? undefined : format,
+  if (!isActiveFormat) {
+    if (isAlign) {
+      newProps = { align: format }
+    } else if (isList) {
+      newProps = { type: LIST_ITEM_TYPE }
+    } else if (isCode) {
+      newProps = { type: CODE_LINE_TYPE }
+    } else {
+      newProps = { type: format }
     }
   } else {
-    newProperties = {
-      type: isActive ? 'paragraph' : isList ? 'list-item' : format,
+    if (isAlign) {
+      newProps = { align: undefined }
+    } else {
+      newProps = { type: PARAGRAPH_TYPE }
     }
   }
 
-  Transforms.setNodes<SlateElement>(editor, newProperties)
+  //* встановлюємо тип блоку або вирівнювання
+  Transforms.setNodes<SlateElement>(editor, newProps)
 
-  if (!isActive && isList) {
+  //* список або код обертаємо wrapper'ом
+  if (!isActiveFormat && (isList || isCode)) {
     const block: CustomElement = { type: format, children: [] }
-    Transforms.wrapNodes(editor, block)
+    Transforms.wrapNodes(editor, block) // обертає виділення блоком
   }
 }
 
@@ -221,14 +227,22 @@ const Element = ({ attributes, children, element }) => {
       )
     case 'code-block':
       return (
-        <>
-          <span
+        <pre>
+          <code
             className={styles['code-block']}
             {...attributes}>
             {children}
-          </span>
-          <br />
-        </>
+          </code>
+        </pre>
+      )
+    case 'code-line':
+      return (
+        <span
+          className={styles['code-line']}
+          style={style}
+          {...attributes}>
+          {children}
+        </span>
       )
     default:
       return (

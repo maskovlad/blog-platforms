@@ -48,12 +48,11 @@ const CodeBlockEditor = () => {
 
   const [value, setValue] = useState<Descendant[]>(initialValue)
 
-  console.log(value)
   return (
     <Slate editor={editor} value={value} onChange={(v) => setValue(v)}>
       <ExampleToolbar />
       <SetNodeToDecorations />
-      <Editable readOnly={true}
+      <Editable 
         decorate={decorate}
         renderElement={ElementWrapper}
         renderLeaf={renderLeaf}
@@ -75,25 +74,27 @@ const ElementWrapper = (props: RenderElementProps) => {
     }
 
     return (
-      <div
-        {...attributes}
-        className={css(`
-        font-family: monospace;
-        font-size: 16px;
-        line-height: 20px;
-        margin-top: 0;
-        background: rgba(0, 20, 60, .03);
-        padding: 5px 13px;
-      `)}
-        style={{ position: 'relative' }}
-        spellCheck={false}
-      >
-        <LanguageSelect
-          value={element.language}
-          onChange={e => setLanguage(e.target.value)}
-        />
-        {children}
-      </div>
+      <pre>
+        <code
+          {...attributes}
+          className={css(`
+          font-family: monospace;
+          font-size: 16px;
+          line-height: 20px;
+          margin-top: 0;
+          background: rgba(0, 20, 60, .03);
+          padding: 5px 13px;
+        `)}
+          style={{ position: 'relative' }}
+          spellCheck={false}
+        >
+          <LanguageSelect
+            value={element.language}
+            onChange={e => setLanguage(e.target.value)}
+          />
+          {children}
+        </code>
+      </pre>
     )
   }
 
@@ -123,12 +124,16 @@ const ExampleToolbar = () => {
 
 const CodeBlockButton = () => {
   const editor = useSlateStatic()
+
   const handleClick = () => {
     Transforms.wrapNodes(
       editor,
       { type: CodeBlockType, language: 'html', children: [] },
       {
-        match: n => Element.isElement(n) && n.type === ParagraphType,
+        match: n => {
+          
+         return Element.isElement(n) && n.type === ParagraphType
+        },
         split: true,
       }
     )
@@ -137,6 +142,7 @@ const CodeBlockButton = () => {
       { type: CodeLineType },
       { match: n => Element.isElement(n) && n.type === ParagraphType }
     )
+
   }
 
   return (
@@ -168,7 +174,7 @@ const useDecorate = (editor: Editor) => {
   return useCallback(
     ([node, path]) => {
       if (Element.isElement(node) && node.type === CodeLineType) {
-        const ranges = editor.nodeToDecorations.get(node) || []
+        const ranges = editor.nodeToDecorations?.get(node) || []
         return ranges
       }
 
