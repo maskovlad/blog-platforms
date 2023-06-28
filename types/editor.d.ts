@@ -143,6 +143,14 @@ type CustomElement =
   | CodeBlockElement
   | CodeLineElement;
 
+  type AlignElement = 
+  | ParagraphElement
+  | BlockQuoteElement
+  | BulletedListElement
+  | NumberedListElement
+  | HeadingOneElement
+  | HeadingTwoElement;
+
 export type CustomText = {
   bold?: boolean;
   italic?: boolean;
@@ -171,3 +179,28 @@ declare module "slate" {
     };
   }
 }
+
+/**
+ * `RenderLeafProps` are passed to the `renderLeaf` handler.
+ */
+export interface RenderLeafProps {
+  children: any;
+  leaf: CustomText;
+  text: Text;
+  attributes: {
+    'data-slate-leaf': true;
+  };
+}
+
+export interface RenderElementProps {
+  children: any;
+  element: AlignElement;
+  attributes: {
+    'data-slate-node': 'element';
+    'data-slate-inline'?: true;
+    'data-slate-void'?: true;
+    dir?: 'rtl';
+    ref: any;
+  };
+}
+

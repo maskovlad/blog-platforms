@@ -109,13 +109,10 @@ export const Icon = React.forwardRef(
     <span
       {...props}
       ref={ref as any}
+      style={{fontSize: "18px", verticalAlign: "text-bottom"}}
       className={cx(
         "material-icons",
         className,
-        css`
-          font-size: 18px;
-          vertical-align: text-bottom;
-        `
       )}
     />
   )

@@ -30,14 +30,23 @@
 }
 
 .code-block {
-  padding: 0.5rem;
-  margin: 0.5rem;
-  background-color: var(--c-code-bg);
-  color: var(--c-code-txt);
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 20px;
+  margin-top: 0;
+  background: rgba(0, 20, 60, .03);
+  padding: 5px 13px;
 }
 
 .code-line {
   display: block;
   background-color: inherit;
   color: inherit;
+}
+
+.language-select {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  z-index: 1;
 }

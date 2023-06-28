@@ -27,7 +27,6 @@ interface PostData {
 
 export default function Post() {
   const router = useRouter();
-
   // TODO: Undefined check redirects to error
   const { id: postId } = router.query;
 
@@ -325,15 +324,12 @@ export default function Post() {
             value={data.description}
           />
 
-          <CodeBlockEditor />
-
           {data?.content && (
             <SviyEditor
               content={data.content as Descendant[]}
               onChange={onChange}
             />
           )}
-
 
         </div>
 

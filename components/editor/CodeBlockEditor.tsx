@@ -1,3 +1,5 @@
+"use client"
+
 import Prism from 'prismjs'
 import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-jsx'
@@ -65,7 +67,7 @@ const CodeBlockEditor = () => {
 
 const ElementWrapper = (props: RenderElementProps) => {
   const { attributes, children, element } = props
-  const editor = useSlateStatic()
+  const editor = useSlate()
 
   if (element.type === CodeBlockType) {
     const setLanguage = (language: string) => {
@@ -78,11 +80,12 @@ const ElementWrapper = (props: RenderElementProps) => {
         <code
           {...attributes}
           className={css(`
+          display: block;
           font-family: monospace;
           font-size: 16px;
           line-height: 20px;
           margin-top: 0;
-          background: rgba(0, 20, 60, .03);
+          background: rgba(0, 20, 60, .3);
           padding: 5px 13px;
         `)}
           style={{ position: 'relative' }}
@@ -107,6 +110,7 @@ const ElementWrapper = (props: RenderElementProps) => {
   }
 
   const Tag = editor.isInline(element) ? 'span' : 'div'
+  
   return (
     <Tag {...attributes} style={{ position: 'relative' }}>
       {children}
@@ -503,8 +507,7 @@ const prismThemeCss = `
   }
 
   .token.important,
-  .token.import { Descendant } from 'slate';
-bold {
+  .token.bold {
       font-weight: bold;
   }
   .token.italic {
