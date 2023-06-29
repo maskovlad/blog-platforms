@@ -69,24 +69,27 @@ export const RenderElement = ({ attributes, children, element }) => {
         Transforms.setNodes(editor, { language }, { at: path })
       }
       return (
-        <pre className={prismThemeCss}>
+        <pre className={prismThemeCss} style={{margin:"2rem auto",maxWidth:"800px"}}>
           <code
             className={styles['code-block']}
             {...attributes}
-            style={{ position: 'relative', display: "block" }}
+            style={{ height: "auto",maxHeight:"800px", overflow: "scroll", display: "block" }}
             spellCheck={false}
           >
-            <LanguageSelect
-              value={element.language}
-              onChange={e => setLanguage(e.target.value)}
-            />
-            {children}
+            <div className={styles['code-block_head']}>
+              <div contentEditable={false} className={styles['code-block_file']}>FILE: </div>
+              <LanguageSelect
+                value={element.language}
+                onChange={e => setLanguage(e.target.value)}
+              />
+            </div>
+            <div className={styles['code-line_wrapper']}>{children}</div>
           </code>
         </pre>
       )
     case 'code-line':
       return (
-        <div {...attributes} style={{ position: 'relative' }}>
+        <div {...attributes} style={{ position: 'relative' }} className={styles['code-line']}>
           {children}
         </div>
       )
@@ -160,7 +163,7 @@ const prismThemeCss = css`
 
   code[class*="language-"],
   pre[class*="language-"] {
-      color: black;
+      color: #555;
       background: none;
       text-shadow: 0 1px white;
       font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
@@ -182,35 +185,21 @@ const prismThemeCss = css`
       hyphens: none;
   }
 
-  pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
-  code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
-      text-shadow: none;
-      background: #b3d4fc;
-  }
-
-  pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
-  code[class*="language-"]::selection, code[class*="language-"] ::selection {
-      text-shadow: none;
-      background: #b3d4fc;
-  }
-
   @media print {
       code[class*="language-"],
       pre[class*="language-"] {
           text-shadow: none;
       }
   }
+  ::-webkit-scrollbar {
+  display: none;
+}
 
   /* Code blocks */
   pre[class*="language-"] {
       padding: 1em;
       margin: .5em 0;
       overflow: auto;
-  }
-
-  :not(pre) > code[class*="language-"],
-  pre[class*="language-"] {
-      background: #f5f2f0;
   }
 
   /* Inline code */
@@ -224,11 +213,15 @@ const prismThemeCss = css`
   .token.prolog,
   .token.doctype,
   .token.cdata {
-      color: slategray;
+      color: #d9d9d9;
+  }
+
+  .token.plain {
+    color: #333;
   }
 
   .token.punctuation {
-      color: #999;
+      color: #666;
   }
 
   .token.namespace {
@@ -251,7 +244,7 @@ const prismThemeCss = css`
   .token.char,
   .token.builtin,
   .token.inserted {
-      color: #690;
+      color: #080;
   }
 
   .token.operator,
@@ -259,20 +252,20 @@ const prismThemeCss = css`
   .token.url,
   .language-css .token.string,
   .style .token.string {
-      color: #9a6e3a;
+      color: #b96400;
       /* This background color was intended by the author of this theme. */
-      background: hsla(0, 0%, 100%, .5);
+      /* background: hsla(0, 0%, 100%, .5); */
   }
 
   .token.atrule,
   .token.attr-value,
   .token.keyword {
-      color: #07a;
+      color: #0078a9;
   }
 
   .token.function,
   .token.class-name {
-      color: #DD4A68;
+      color: #b91637;
   }
 
   .token.regex,

@@ -7,7 +7,6 @@ import { CustomEditor } from "@/types/editor";
 import { Button, Icon, Toolbar } from '@/components/editor/components'
 import { useCallback, useMemo, useState } from 'react';
 import { Tooltip } from 'react-tooltip'
-import 'react-tooltip/dist/react-tooltip.css';
 import { toggleBlock, isBlockActive, toggleMark, isMarkActive } from './utils'
 import { initialValue } from './initialValue'
 import { RenderElement, RenderLeaf } from './Elements'
@@ -29,7 +28,7 @@ export default function ExpEditor() {
 
   return (
     <>
-      <Tooltip id='format-tooltip' />
+      <Tooltip id='format-tooltip'/>
       <Slate
         editor={editor}
         value={value}
@@ -62,6 +61,7 @@ export default function ExpEditor() {
           spellCheck
           autoFocus
           onKeyDown={onKeyDown}
+          style={{padding:"0 3rem"}}
         />
       </Slate>
     </>

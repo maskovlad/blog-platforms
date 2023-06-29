@@ -4,6 +4,7 @@
 // ^приймає children встановлює шрифт
 // These styles apply to every route in the application
 import "@/styles/globals.css";
+import "@/styles/react-tooltip.css";
 
 export default function RootLayout({
   children,

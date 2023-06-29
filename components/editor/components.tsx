@@ -184,17 +184,15 @@ export const Toolbar = React.forwardRef(
         css`
           position: sticky;
           top: 0;
-          margin: 1rem -2.5rem;
+          margin: 1rem 0;
           background: white;
-          padding: 0.2rem 2.5rem;
-          border-top: 1px solid #d6d6d6;
-          border-bottom: 1px solid #d6d6d6;
-          z-index: 99;
+          padding: 0.5rem 2rem;
+          border-top: 1px solid var(--c-lightgrey);
+          border-bottom: 1px solid var(--c-lightgrey);
+          z-index: 2;
 
-          @media (min-width: 640px) {
-            margin-left: -5rem;
-            margin-right: -5rem;
-            padding: 0.5rem 5rem;
+          @media (max-width: 640px) {
+            padding: 0.2rem 1rem;
           }
         `
       )}

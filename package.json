@@ -7,7 +7,6 @@
     "turbo": "next dev --turbo",
     "build": "next build",
     "prebuild": "prisma generate",
-    "predev": "prisma generate",
     "start": "next start",
     "lint": "next lint"
   },
