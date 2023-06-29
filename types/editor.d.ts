@@ -112,6 +112,7 @@ export type VideoElement = {
 export type CodeBlockElement = {
   type: "code-block";
   language: string;
+  url: string;
   children: Descendant[];
 };
 

@@ -1,13 +1,8 @@
 import { CustomEditor, CustomElement } from '@/types/editor'
 import {
-  createEditor,
-  Node,
   Editor,
-  Range,
   Element as SlateElement,
   Transforms,
-  NodeEntry,
-  Descendant,
 } from 'slate'
 
 

@@ -1,8 +1,9 @@
 import { RenderLeafProps } from "@/types/editor"
-import { Transforms } from "slate"
+import { Element as SlateElement, Transforms } from "slate"
 import { ReactEditor, useSlateStatic } from "slate-react"
 import styles from "./Elements.module.css"
-import {css} from "@emotion/css"
+import { css } from "@emotion/css"
+import React from "react"
 
 
 export const RenderElement = ({ attributes, children, element }) => {
@@ -64,20 +65,36 @@ export const RenderElement = ({ attributes, children, element }) => {
         </ul>
       )
     case 'code-block':
+      const { url } = element
+
       const setLanguage = (language: string) => {
         const path = ReactEditor.findPath(editor, element)
         Transforms.setNodes(editor, { language }, { at: path })
       }
       return (
-        <pre className={prismThemeCss} style={{margin:"2rem auto",maxWidth:"800px"}}>
+        <pre className={prismThemeCss} style={{ margin: "2rem auto", maxWidth: "800px" }}>
           <code
             className={styles['code-block']}
             {...attributes}
-            style={{ height: "auto",maxHeight:"800px", overflow: "scroll", display: "block" }}
+            style={{ height: "auto", maxHeight: "800px", overflow: "scroll", display: "block" }}
             spellCheck={false}
           >
             <div className={styles['code-block_head']}>
-              <div contentEditable={false} className={styles['code-block_file']}>FILE: </div>
+              <div contentEditable={false} className={styles['code-block_file']}>
+                FILE:
+                <UrlInput
+                  url={url}
+                  onChange={val => {
+                    const path = ReactEditor.findPath(editor, element)
+                    const newProperties: Partial<SlateElement> = {
+                      url: val,
+                    }
+                    Transforms.setNodes<SlateElement>(editor, newProperties, {
+                      at: path,
+                    })
+                  }}
+                />
+              </div>
               <LanguageSelect
                 value={element.language}
                 onChange={e => setLanguage(e.target.value)}
@@ -148,6 +165,22 @@ const LanguageSelect = (props: JSX.IntrinsicElements['select']) => {
       <option value="tsx">TSX</option>
       <option value="typescript">TypeScript</option>
     </select>
+  )
+}
+
+const UrlInput = ({ url, onChange }) => {
+  const [value, setValue] = React.useState(url || "")
+  return (
+    <input
+      value={value}
+      onClick={e => e.stopPropagation()}
+      style={{ boxSizing: 'border-box', }}
+      onChange={e => {
+        const newUrl = e.target.value
+        setValue(newUrl)
+        onChange(newUrl)
+      }}
+    />
   )
 }
 
