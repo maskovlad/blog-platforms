@@ -32,7 +32,7 @@ export async function generateStaticParams() {
     ...subdomains.map(({ subdomain }) => subdomain),
     ...customDomains.map(({ customDomain }) => customDomain),
   ].filter((path) => path) as Array<string>;
-  // console.log({ allPaths })
+  console.log({ allPaths })
   return allPaths.map((path) => ({
     site: path,
   }));

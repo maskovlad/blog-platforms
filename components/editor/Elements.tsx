@@ -4,9 +4,11 @@ import { ReactEditor, useSlateStatic } from "slate-react"
 import styles from "./Elements.module.css"
 import { css } from "@emotion/css"
 import React from "react"
+import { Button, Icon } from "./components"
 
 
-export const RenderElement = ({ attributes, children, element }) => {
+export const RenderElement = (props) => {
+  const { attributes, children, element } = props
   const style = { textAlign: element.align }
   const editor = useSlateStatic()
 
@@ -64,6 +66,8 @@ export const RenderElement = ({ attributes, children, element }) => {
           {children}
         </ul>
       )
+    case 'image':
+      return <Image {...props} />
     case 'code-block':
       const { url } = element
 
@@ -79,6 +83,7 @@ export const RenderElement = ({ attributes, children, element }) => {
             style={{ height: "auto", maxHeight: "800px", overflow: "scroll", display: "block" }}
             spellCheck={false}
           >
+
             <div className={styles['code-block_head']}>
               <div contentEditable={false} className={styles['code-block_file']}>
                 FILE:
@@ -100,6 +105,7 @@ export const RenderElement = ({ attributes, children, element }) => {
                 onChange={e => setLanguage(e.target.value)}
               />
             </div>
+
             <div className={styles['code-line_wrapper']}>{children}</div>
           </code>
         </pre>
@@ -108,6 +114,48 @@ export const RenderElement = ({ attributes, children, element }) => {
       return (
         <div {...attributes} style={{ position: 'relative' }} className={styles['code-line']}>
           {children}
+        </div>
+      )
+    case 'youtube':
+      const path = ReactEditor.findPath(editor, element)
+      return (
+        <div 
+          {...attributes} 
+          contentEditable={false}
+          className={css`
+          position: relative;
+          :hover span {
+            display: inline;
+          }
+        `}
+        >
+          <iframe
+            contentEditable={false}
+            title="Youtube video"
+            src={`https://www.youtube.com/embed/${element?.videoId}`}
+            frameBorder="0"
+            className={css`
+            width: 75vw;
+            aspect-ratio: 2;
+          `}
+          ></iframe>
+          {children}
+          <Button
+            active
+            onClick={() => Transforms.removeNodes(editor, { at: path })}
+            className={css`
+              display: none;
+              position: absolute;
+              top: 0.5em;
+              left: 0.5em;
+              background-color: white;
+              color: red !important;
+            `}
+            data-tooltip-id="format-tooltip" data-tooltip-content="Прибрати"
+          >
+            <Icon>delete</Icon>
+          </Button>
+
         </div>
       )
     default:
@@ -183,6 +231,53 @@ const UrlInput = ({ url, onChange }) => {
     />
   )
 }
+
+const Image = ({ attributes, children, element }) => {
+  const editor = useSlateStatic()
+  const path = ReactEditor.findPath(editor, element)
+
+  return (
+    <div {...attributes}>
+      {children}
+      <div contentEditable={false}
+        className={css`
+          position: relative;
+          :hover span {
+            display: inline;
+          }
+        `}
+      >
+        <img
+          src={element.url}
+          className={css`
+            display: block;
+            max-width: 100%;
+            max-height: 20em;
+            :hover, :focus, :active {
+              box-shadow: 0 0 0 3px #B4D5FF;
+            }
+          `}
+        />
+        <Button
+          active
+          onClick={() => Transforms.removeNodes(editor, { at: path })}
+          className={css`
+            display: none;
+            position: absolute;
+            top: 0.5em;
+            left: 0.5em;
+            background-color: white;
+            color: red !important;
+          `}
+          data-tooltip-id="format-tooltip" data-tooltip-content="Прибрати"
+        >
+          <Icon>delete</Icon>
+        </Button>
+      </div>
+    </div>
+  )
+}
+
 
 // Prismjs theme stored as a string instead of emotion css function.
 // It is useful for copy/pasting different themes. Also lets keeping simpler Leaf implementation

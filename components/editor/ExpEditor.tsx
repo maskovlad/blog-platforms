@@ -1,13 +1,19 @@
 "use client"
 
-import { createEditor } from 'slate'
+import { createEditor, Descendant, Node } from 'slate'
 import { withReact, Slate, Editable, useSlate } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { CustomEditor } from "@/types/editor";
 import { Button, Icon, Toolbar } from '@/components/editor/components'
 import { useCallback, useMemo, useState } from 'react';
 import { Tooltip } from 'react-tooltip'
-import { toggleBlock, isBlockActive, toggleMark, isMarkActive } from './utils'
+import { 
+  toggleBlock, 
+  isBlockActive, 
+  toggleMark, 
+  isMarkActive, 
+  withMedia, 
+  InsertMediaButton} from './utils'
 import { initialValue } from './initialValue'
 import { RenderElement, RenderLeaf } from './Elements'
 import 'material-icons/iconfont/material-icons.css'
@@ -21,17 +27,18 @@ export default function ExpEditor() {
 
   const renderElement = useCallback(props => <RenderElement {...props} />, [])
   const renderLeaf = useCallback(props => <RenderLeaf {...props} />, [])
-  const editor: CustomEditor = useMemo(() => withHistory(withReact(createEditor())), [])
+  const editor: CustomEditor = useMemo(() => withMedia(withHistory(withReact(createEditor()))), [])
   const decorate = useDecorate(editor)
   const onKeyDown = useOnKeydown(editor)
-  const [value, setValue] = useState(initialValue)
+  const [value, setValue] = useState<Descendant[]>(initialValue)
 
+  console.log(value)
   return (
     <>
       <Tooltip id='format-tooltip'/>
       <Slate
         editor={editor}
-        value={value}
+        initialValue={value}
         onChange={(c) => setValue(c)}
       >
         <Toolbar>
@@ -49,6 +56,8 @@ export default function ExpEditor() {
           <BlockButton format="right" icon="format_align_right" hint="По правому краю" />
           <BlockButton format="justify" icon="format_align_justify" hint="По ширині" />
           <BlockButton format="code-block" icon="integration_instructions" hint="Блок коду" />
+          <InsertMediaButton format="image" icon="image" hint="Вставити зображення" />
+          <InsertMediaButton format="youtube" icon="smart_display" hint="Вставити відео Youtube" />
         </Toolbar>
         
         <SetNodeToDecorations />

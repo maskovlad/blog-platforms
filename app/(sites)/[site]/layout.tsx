@@ -2,11 +2,14 @@ import { ReactNode } from "react";
 import { getSiteData } from '../../../lib/fetchers';
 import type { Meta } from "@/types/seo";
 import { Montserrat, Roboto, Lora } from 'next/font/google';
+import { NextFont } from "next/dist/compiled/@next/font";
 
 export async function generateMetadata({ params }: { params: { site: string } }): Promise<Meta> {
   const { site } = params;
   const data = await getSiteData(site);
-  
+
+  data ? console.log(data.name) : console.log("No data")
+
   return {
     title: data.name,
     description: data.description,
@@ -54,9 +57,10 @@ export async function generateMetadata({ params }: { params: { site: string } })
     //   name="googlebot"
     //   content="index, nofollow, noimageindex, max-video-preview:-1, max-image-preview:large, max-snippet:-1" />
     icons: {
-      icon: '/icon.png',
-      shortcut: '/shortcut-icon.png',
-      apple: '/apple-icon.png',
+      //todo зробити динамічним, брати з настройок сайту
+      icon: '/favicon_bird.png',
+      shortcut: '/favicon_bird.png',
+      apple: '/favicon_bird.png',
       other: {
         rel: 'apple-touch-icon-precomposed',
         url: '/apple-touch-icon-precomposed.png',
@@ -76,17 +80,19 @@ export async function generateMetadata({ params }: { params: { site: string } })
 const montserrat = Montserrat({
   subsets: ['latin', 'cyrillic-ext'],
   display: 'swap',
+  weight: ["300", "500", "700"]
 })
 
 const lora = Lora({
   subsets: ['latin', 'cyrillic-ext'],
   display: 'swap',
+  weight: ["400", "500", "700"]
 })
 
 const roboto = Roboto({
   subsets: ['latin', 'cyrillic-ext'],
   display: 'swap',
-  weight: ["300", "500"]
+  weight: ["300", "500", "700"]
 })
 
 
@@ -98,19 +104,24 @@ export default async function Layout({
 
   const data = await getSiteData(site);
 
-  let font = montserrat
+  const {font} = data
 
-  switch (data.font) {
+    console.log({site,font,params});
+    
+
+  let f:NextFont = montserrat
+
+  switch (font) {
     case "font-mont":
-      font = montserrat
+      f = montserrat
       break;
   
     case "font-lora":
-      font = lora
+      f = lora
       break;
   
     case "font-robo":
-      font = roboto
+      f = roboto
       break;
   
     default:
@@ -120,7 +131,8 @@ export default async function Layout({
   return (
     <>
       <header/>
-      <main className={font.className}>{children}</main>
+      {/* <main>{children}</main> */}
+      <main className={f.className}>{children}</main>
       <footer/>
     </>
   )

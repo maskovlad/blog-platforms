@@ -260,9 +260,9 @@ export default function SiteSettings() {
                 value={data?.font || "font-mont"}
                 className="setting-input"
               >
-                <option value="font-mont">Cal Sans</option>
+                <option value="font-mont">Montserrat</option>
                 <option value="font-lora">Lora</option>
-                <option value="font-robo">Work Sans</option>
+                <option value="font-robo">Roboto</option>
               </select>
             </div>
           </div>

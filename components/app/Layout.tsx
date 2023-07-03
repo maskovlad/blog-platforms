@@ -17,7 +17,7 @@ interface LayoutProps extends WithChildren {
 export default function Layout({ siteId, children }: LayoutProps) {
   const title = "Українська Блогова Платформа - Свій.Site";
   const description = "Створи власний повноцінний сайт-блог. Розвивай, просувай і заробляй з найшвидшою і найнадійнішою хмарною платформою Свій.Site";
-  const logo = "/favicon.ico";
+  const logo = "/ss-icon-color.svg";
   const router = useRouter();
   const sitePage = router.pathname.startsWith("/app/site/[id]");
   const postPage = router.pathname.startsWith("/app/post/[id]");

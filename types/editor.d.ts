@@ -109,6 +109,12 @@ export type VideoElement = {
   children: EmptyText[];
 };
 
+export type YoutubeElement = {
+  type: "youtube";
+  videoId: string;
+  children: EmptyText[]; 
+}
+
 export type CodeBlockElement = {
   type: "code-block";
   language: string;
@@ -141,16 +147,9 @@ type CustomElement =
   | TableCellElement
   | TitleElement
   | VideoElement
+  | YoutubeElement
   | CodeBlockElement
   | CodeLineElement;
-
-  type AlignElement = 
-  | ParagraphElement
-  | BlockQuoteElement
-  | BulletedListElement
-  | NumberedListElement
-  | HeadingOneElement
-  | HeadingTwoElement;
 
 export type CustomText = {
   bold?: boolean;

@@ -1,9 +1,16 @@
-import { CustomEditor, CustomElement } from '@/types/editor'
+import { CustomEditor, CustomElement, ImageElement, NumberedListElement, YoutubeElement } from '@/types/editor'
 import {
   Editor,
   Element as SlateElement,
   Transforms,
+  Node
 } from 'slate'
+import isUrl from 'is-url'
+import imageExtensions from 'image-extensions'
+import { useSlateStatic } from 'slate-react'
+import { Button, Icon } from './components'
+import { css } from '@emotion/react'
+import toast, { Toaster } from "react-hot-toast";
 
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
@@ -63,11 +70,11 @@ export const toggleBlock = (editor, format) => {
 
   //* список обертаємо wrapper'ом
   if (!isActiveFormat && isList) {
-    const block: CustomElement = { type: format, children: [] }
+    const block= { type: format, children: [] }
     Transforms.wrapNodes(editor, block) // обертає виділення блоком
   }
   if (!isActiveFormat && isCode) {
-    const block: CustomElement = { type: format, language: 'css', children: [] }
+    const block = { type: format, language: 'css', url:"", children: [] }
     Transforms.wrapNodes(editor, block) // обертає виділення блоком
   }
 }
@@ -103,4 +110,107 @@ export const isMarkActive = (editor: CustomEditor, format: string) => {
   const marks = Editor.marks(editor)
   return marks ? marks[format] === true : false
 }
+
+export const withMedia = editor => {
+  const { insertData, isVoid } = editor
+
+  // повідомляє slate, що певні вузли не мають текстового вмісту (вони _void_)
+  // дуже зручно для таких речей, як зображення та діаграми
+  editor.isVoid = element => {
+    return (element.type === ('image' || 'youtube')) ? true : isVoid(element)
+  }
+
+  //  викликається, коли користувачі вставляють або перетягують речі в редактор
+  editor.insertData = data => {
+    const text = data.getData('text/plain')
+    const { files } = data
+    console.log( text )
+
+    if (isUrl(text)) {
+      if (isImageUrl(text)) insertImage(editor, text)
+      else if (isYoutubeUrl(text)) insertYoutube(editor, isYoutubeUrl(text))
+    
+    } else if (files && files.length > 0) {
+      for (const file of files) {
+        const reader = new FileReader()
+        const [mime] = file.type.split('/')
+
+        if (mime === 'image') {
+          reader.addEventListener('load', () => {
+            const url = reader.result
+            insertImage(editor, url)
+          })
+
+          reader.readAsDataURL(file)
+        }
+      }
+    } else {
+      insertData(data)
+    }
+  }
+
+  return editor
+}
+
+const insertImage = (editor, url) => {
+  const text = { text: '' }
+  const image: ImageElement = { type: 'image', url, children: [text] }
+  Transforms.insertNodes(editor, image)
+}
+
+const insertYoutube = (editor, matches) => {
+  const text = { text: '' }
+  const [_, videoId] = matches
+  const youtube = {type: 'youtube', videoId, children: [text]}
+  Transforms.insertNodes(editor, youtube as Node)
+}
+
+const isImageUrl = (url: string | URL) => {
+  if (!url) return false
+  if (!isUrl(url)) return false
+  const ext = new URL(url).pathname.split('.').pop() as string
+  return imageExtensions.includes(ext)
+}
+
+const isYoutubeUrl = (url: string | URL) => {
+  if (!url) return false
+  if (!isUrl(url)) return false
+  const youtubeRegex = /^(?:(?:https?:)?\/\/)?(?:(?:www|m)\.)?(?:(?:youtube\.com|youtu.be))(?:\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(?:\S+)?$/
+  const matches = (url as string).match(youtubeRegex)
+  return matches
+}
+
+export const InsertMediaButton = ({format, icon, hint}) => {
+  const editor = useSlateStatic()
+  return (
+    <Button
+      onMouseDown={event => {
+        event.preventDefault()
+        const посилання = window.prompt(`Вставте посилання на ${format === "image" ? "зображення" : "Youtube"} сюди, або в потрібне місце в дописі`)
+        if (посилання && !isUrl(посилання)) {
+          toast.error('Посилання не дійсне')
+          return
+        }
+        if (посилання && isImageUrl(посилання as string)) insertImage(editor, посилання)
+        else if (посилання && isYoutubeUrl(посилання as string)) insertYoutube(editor, isYoutubeUrl(посилання as string))
+        else {
+          toast.error(`Посилання не є ${format === "image" ? "зображення" : "Youtube"}`)
+          return
+        }
+      }}
+      data-tooltip-id="format-tooltip" data-tooltip-content={hint}
+    >
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 5000,
+        }}
+      />
+      <Icon>{icon}</Icon>
+    </Button>
+  )
+}
+
+
+
 

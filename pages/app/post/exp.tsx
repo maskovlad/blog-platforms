@@ -27,17 +27,17 @@ export default function Exp() {
         <div className={css`
         margin-bottom: 3rem;
       `}>
-          <ExpEditor content={data} onChange={onChange} />
+          <ExpEditor />
         </div>
         <div>
-          {data.map((n) => {
+          {data.map((n,key) => {
             return (
-              <pre className={css`
+              <pre key={key} className={css`
                 text-wrap: wrap;
                 margin-bottom: 1rem;
               `}>{Object.entries(n)
-                .map(([key,value]) => <div style={{display:"block"}}>
-                  &#123;<span style={{ color: "green" }}>"{key}"</span>: {JSON.stringify(value)}&#125;,
+                .map(([key,value]) => <div key={key} style={{display:"block"}}>
+                  &#123;<span style={{ color: "green" }}>&quot;{key}&quot;</span>: {JSON.stringify(value)}&#125;,
                 </div>)}
               </pre>
             )

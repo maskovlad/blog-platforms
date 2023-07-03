@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client"
 
 import Prism from 'prismjs'
@@ -54,7 +55,7 @@ const CodeBlockEditor = () => {
     <Slate editor={editor} value={value} onChange={(v) => setValue(v)}>
       <ExampleToolbar />
       <SetNodeToDecorations />
-      <Editable 
+      <Editable
         decorate={decorate}
         renderElement={ElementWrapper}
         renderLeaf={renderLeaf}
@@ -110,7 +111,7 @@ const ElementWrapper = (props: RenderElementProps) => {
   }
 
   const Tag = editor.isInline(element) ? 'span' : 'div'
-  
+
   return (
     <Tag {...attributes} style={{ position: 'relative' }}>
       {children}
@@ -132,11 +133,11 @@ const CodeBlockButton = () => {
   const handleClick = () => {
     Transforms.wrapNodes(
       editor,
-      { type: CodeBlockType, language: 'html', children: [] },
+      { type: CodeBlockType, language: 'html', url: "", children: [] },
       {
         match: n => {
-          
-         return Element.isElement(n) && n.type === ParagraphType
+
+          return Element.isElement(n) && n.type === ParagraphType
         },
         split: true,
       }
@@ -325,6 +326,7 @@ const initialValue: Element[] = [
   {
     type: CodeBlockType,
     language: 'jsx',
+    url: "",
     children: toCodeLines(`// Add the initial value.
       const initialValue = [
         {
@@ -352,6 +354,7 @@ const initialValue: Element[] = [
   {
     type: CodeBlockType,
     language: 'typescript',
+    url: "",
     children: toCodeLines(`// TypeScript users only add this code
       import { BaseEditor, Descendant } from 'slate'
       import { ReactEditor } from 'slate-react'

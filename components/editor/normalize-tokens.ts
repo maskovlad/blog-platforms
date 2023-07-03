@@ -53,7 +53,7 @@ export const normalizeTokens = (
 
   let i = 0
   let stackIndex = 0
-  let currentLine = []
+  let currentLine: Token[] = []
 
   const acc = [currentLine]
 

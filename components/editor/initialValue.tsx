@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { Descendant, Element as SlateElement } from 'slate'
 
 
@@ -26,6 +28,7 @@ export const initialValue: Descendant[] = [
   {
     type: CODE_BLOCK_TYPE,
     language: 'jsx',
+    url: "",
     children: toCodeLines(`// Add the initial value.
       const initialValue = [
         {
@@ -53,6 +56,7 @@ export const initialValue: Descendant[] = [
   {
     type: CODE_BLOCK_TYPE,
     language: 'typescript',
+    url: "",
     children: toCodeLines(`// TypeScript users only add this code
       import { BaseEditor, Descendant } from 'slate'
       import { ReactEditor } from 'slate-react'

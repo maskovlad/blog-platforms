@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import Prism from 'prismjs'
 import 'prismjs/components/prism-javascript'
 import 'prismjs/components/prism-jsx'
@@ -42,7 +44,7 @@ import { useCallback, useMemo } from 'react';
 
 import { Tooltip } from 'react-tooltip'
 import 'react-tooltip/dist/react-tooltip.css';
-import styles from "./SviyEditor.module.css"
+import styles from "./Elements.module.css"
 
 const HOTKEYS = {
   'mod+b': 'bold',
@@ -170,7 +172,7 @@ const toggleBlock = (editor, format) => {
     Transforms.wrapNodes(editor, block) // обертає виділення блоком
   }
   if (!isActiveFormat && isCode) {
-    const block: CustomElement = { type: format, language: 'css', children: [] }
+    const block: CustomElement = { type: format, language: 'css', url:"", children: [] }
     Transforms.wrapNodes(editor, block) // обертає виділення блоком
   }
 }
