@@ -41,3 +41,6 @@ next-env.d.ts
 
 # vscode
 blog-platforms.code-workspace
+
+# приклади для Slate Editor
+components/editor/examples

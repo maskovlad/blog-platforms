@@ -21,6 +21,12 @@
   margin: 2rem 0;
 }
 
+.heading-three {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin: 2rem 0;
+}
+
 .numbered-list {
   list-style-type: decimal;
   margin: 1rem 0 1rem 2rem

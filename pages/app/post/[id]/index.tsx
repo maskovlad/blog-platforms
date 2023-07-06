@@ -17,7 +17,7 @@ import type { WithSitePost } from "@/types/common";
 import { Descendant } from "slate";
 import SviyEditor from "@/components/editor/SviyEditor";
 import Head from "next/head";
-import CodeBlockEditor from "@/components/editor/CodeBlockEditor";
+import ExpEditor from "@/components/editor/ExpEditor";
 
 interface PostData {
   title: string;
@@ -216,7 +216,7 @@ export default function Post() {
           @media (min-width: 412px) { 
             padding-left: 2.5rem;
             padding-right: 2.5rem;
-
+          }
           @media (min-width: 640px) { 
             padding-left: 5rem;
             padding-right: 5rem; 
@@ -229,7 +229,7 @@ export default function Post() {
             }}
             title={
               disabled
-                ? "Пост повинен мати заголовок, опис і контент."
+                ? "У поста мають бути заголовок, опис і контент."
                 : "Публікувати"
             }
             disabled={disabled}
@@ -324,13 +324,13 @@ export default function Post() {
             value={data.description}
           />
 
-          {data?.content && (
+          {/* {data?.content && (
             <SviyEditor
               content={data.content as Descendant[]}
               onChange={onChange}
             />
-          )}
-
+          )} */}
+<ExpEditor />
         </div>
 
         <footer

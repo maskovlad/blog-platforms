@@ -49,6 +49,12 @@ export type HeadingTwoElement = {
   children: Descendant[];
 };
 
+export type HeadingThreeElement = {
+  type: "heading-three";
+  align?: string;
+  children: Descendant[];
+};
+
 export type ImageElement = {
   type: "image";
   url: string;

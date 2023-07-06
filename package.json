@@ -17,6 +17,7 @@
     "@next-auth/prisma-adapter": "^1.0.5",
     "@paralleldrive/cuid2": "^2.2.0",
     "@prisma/client": "^4.11.0",
+    "@react-icons/all-files": "https://github.com/react-icons/react-icons/releases/download/v4.7.1/react-icons-all-files-4.7.1.tgz",
     "@types/node": "18.14.6",
     "@types/prismjs": "^1.26.0",
     "@types/react": "18.0.28",

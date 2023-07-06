@@ -1,10 +1,11 @@
 import { RenderLeafProps } from "@/types/editor"
 import { Element as SlateElement, Transforms } from "slate"
 import { ReactEditor, useSlateStatic } from "slate-react"
-import styles from "./Elements.module.css"
+import styles from "./elements.module.css"
 import { css } from "@emotion/css"
 import React from "react"
-import { Button, Icon } from "./components"
+import { Button } from "./ui"
+import Icon from "./Icon"
 
 
 export const RenderElement = (props) => {
@@ -34,13 +35,14 @@ export const RenderElement = (props) => {
         </h1>
       )
     case 'heading-two':
+    case 'heading-three':
       return (
-        <h2
+        <h3
           style={style}
-          className={styles['heading-two']}
+          className={styles['heading-three']}
           {...attributes}>
           {children}
-        </h2>
+        </h3>
       )
     case 'list-item':
       return (
@@ -235,6 +237,7 @@ const UrlInput = ({ url, onChange }) => {
 const Image = ({ attributes, children, element }) => {
   const editor = useSlateStatic()
   const path = ReactEditor.findPath(editor, element)
+  console.log(element)
 
   return (
     <div {...attributes}>
@@ -271,7 +274,7 @@ const Image = ({ attributes, children, element }) => {
           `}
           data-tooltip-id="format-tooltip" data-tooltip-content="Прибрати"
         >
-          <Icon>delete</Icon>
+          <Icon icon="removeMedia"/>
         </Button>
       </div>
     </div>

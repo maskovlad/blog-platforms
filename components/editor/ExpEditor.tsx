@@ -4,23 +4,16 @@ import { createEditor, Descendant, Node } from 'slate'
 import { withReact, Slate, Editable, useSlate } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { CustomEditor } from "@/types/editor";
-import { Button, Icon, Toolbar } from '@/components/editor/components'
+import { Toolbar } from '@/components/editor/ui'
 import { useCallback, useMemo, useState } from 'react';
 import { Tooltip } from 'react-tooltip'
-import { 
-  toggleBlock, 
-  isBlockActive, 
-  toggleMark, 
-  isMarkActive, 
-  withMedia, 
-  InsertMediaButton} from './utils'
+import { withMedia } from './plugins'
 import { initialValue } from './initialValue'
-import { RenderElement, RenderLeaf } from './Elements'
+import { RenderElement, RenderLeaf } from './elements'
 import 'material-icons/iconfont/material-icons.css'
 import { SetNodeToDecorations, useDecorate } from './CodeDecorate'
 import useOnKeydown from './useOnKeyDown'
-
-const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
+import { BlockButton, MarkButton, MediaButton } from './buttons';
 
 
 export default function ExpEditor() {
@@ -42,22 +35,23 @@ export default function ExpEditor() {
         onChange={(c) => setValue(c)}
       >
         <Toolbar>
-          <MarkButton format="bold" icon="format_bold" hint="Жирний" />
-          <MarkButton format="italic" icon="format_italic" hint="Нахилений" />
-          <MarkButton format="underline" icon="format_underlined" hint="Підкреслений" />
-          <MarkButton format="code" icon="code" hint="Код" />
-          <BlockButton format="heading-one" icon="looks_one" hint="Заголовок 1" />
-          <BlockButton format="heading-two" icon="looks_two" hint="Заголовок 2" />
-          <BlockButton format="block-quote" icon="format_quote" hint="Цитата" />
-          <BlockButton format="numbered-list" icon="format_list_numbered" hint="Нумерований" />
-          <BlockButton format="bulleted-list" icon="format_list_bulleted" hint="Список" />
-          <BlockButton format="left" icon="format_align_left" hint="По лівому краю" />
-          <BlockButton format="center" icon="format_align_center" hint="По центру" />
-          <BlockButton format="right" icon="format_align_right" hint="По правому краю" />
-          <BlockButton format="justify" icon="format_align_justify" hint="По ширині" />
-          <BlockButton format="code-block" icon="integration_instructions" hint="Блок коду" />
-          <InsertMediaButton format="image" icon="image" hint="Вставити зображення" />
-          <InsertMediaButton format="youtube" icon="smart_display" hint="Вставити відео Youtube" />
+          <MarkButton format="bold" hint="Жирний" />
+          <MarkButton format="italic" hint="Нахилений" />
+          <MarkButton format="underline" hint="Підкреслений" />
+          <MarkButton format="code" hint="Код" />
+          <BlockButton format="heading-one" hint="Заголовок 1" />
+          <BlockButton format="heading-two" hint="Заголовок 2" />
+          <BlockButton format="heading-three" hint="Заголовок 3" />
+          <BlockButton format="block-quote" hint="Цитата" />
+          <BlockButton format="numbered-list" hint="Нумерований" />
+          <BlockButton format="bulleted-list" hint="Список" />
+          <BlockButton format="left" hint="По лівому краю" />
+          <BlockButton format="center" hint="По центру" />
+          <BlockButton format="right" hint="По правому краю" />
+          <BlockButton format="justify" hint="По ширині" />
+          <BlockButton format="code-block" hint="Блок коду" />
+          <MediaButton format="image" hint="Вставити зображення" />
+          <MediaButton format="youtube" hint="Вставити відео Youtube" />
         </Toolbar>
         
         <SetNodeToDecorations />
@@ -74,43 +68,6 @@ export default function ExpEditor() {
         />
       </Slate>
     </>
-  )
-}
-
-const BlockButton = ({ format, icon, hint }: { format: string, icon: string, hint: string }) => {
-  const editor = useSlate()
-
-  return (
-    <Button
-      active={isBlockActive(
-        editor,
-        format,
-        TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type'
-      )}
-      onMouseDown={event => {
-        event.preventDefault()
-        toggleBlock(editor, format)
-      }}
-      data-tooltip-id="format-tooltip" data-tooltip-content={hint}
-    >
-      <Icon>{icon}</Icon>
-    </Button>
-  )
-}
-
-const MarkButton = ({ format, icon, hint }: { format: string, icon: string, hint: string }) => {
-  const editor = useSlate()
-  return (
-    <Button
-      active={isMarkActive(editor, format)}
-      onMouseDown={event => {
-        event.preventDefault()
-        toggleMark(editor, format)
-      }}
-      data-tooltip-id="format-tooltip" data-tooltip-content={hint}
-    >
-      <Icon>{icon}</Icon>
-    </Button>
   )
 }
 
