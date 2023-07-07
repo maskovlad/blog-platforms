@@ -5,12 +5,13 @@ import isUrl from 'is-url'
 import { insertImage, insertYoutube, isBlockActive, isImageUrl, isMarkActive, isYoutubeUrl, toggleBlock, toggleMark } from './utils'
 import Icon from "./Icon"
 import { Transforms } from 'slate'
+import { Editor } from 'slate'
 
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
 
 export const BlockButton = ({ format, hint }) => {
   const editor = useSlateStatic()
-
+  
   return (
     <Button
       active={isBlockActive(
@@ -47,8 +48,9 @@ export const MarkButton = ({ format, hint }) => {
 
 
 
-export const MediaButton = ({ format, hint }) => {
+export const MediaButton = ({ format, hint, ...props }) => {
   const editor = useSlateStatic()
+  
   
   return (
     <Button
@@ -56,19 +58,24 @@ export const MediaButton = ({ format, hint }) => {
         event.preventDefault()
         const url = window.prompt(`Вставте посилання на ${format === "image" ? "зображення" : "Youtube"} сюди, або в потрібне місце в дописі`)
         if (!url || url==="") return
+
         if (url && !isUrl(url)) {
           toast.error('Посилання не дійсне')
           return
         }
+
         if (url && isImageUrl(url as string)) {
           insertImage(editor, url)
-        }
-        else if (url && isYoutubeUrl(url as string)) insertYoutube(editor, isYoutubeUrl(url as string))
-        else {
+        } else if (url && isYoutubeUrl(url as string)) {
+          insertYoutube(editor, isYoutubeUrl(url as string))
+        } else {
           toast.error(`Посилання не є ${format === "image" ? "зображення" : "Youtube"}`)
           return
         }
-        Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] })
+
+        if (!Editor.next(editor)) {
+          Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] })
+        }
       }}
       data-tooltip-id="format-tooltip" data-tooltip-content={hint}
     >

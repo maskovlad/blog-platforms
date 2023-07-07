@@ -129,21 +129,26 @@ export const RenderElement = (props) => {
           contentEditable={false}
           className={css`
           position: relative;
-          :hover span {
-            display: inline;
+          margin: 2rem;
+
+          :hover button {
+            display: flex;
+            align-items: center;
+            border-radius: 5px;
+            padding: 8px;
           }
         `}
         >
-          <iframe
-            contentEditable={false}
-            title="Youtube video"
-            src={`https://www.youtube.com/embed/${element?.videoId}`}
-            frameBorder="0"
-            className={css`
-            width: 75vw;
-            aspect-ratio: 2;
-          `}
-          ></iframe>
+            <iframe
+              contentEditable={false}
+              title="Youtube video"
+              src={`https://www.youtube.com/embed/${element?.videoId}`}
+              frameBorder="0"
+              className={css`
+              width: 75vw;
+              aspect-ratio: 2;
+            `}
+            ></iframe>
           {children}
           <Button
             active
@@ -153,12 +158,12 @@ export const RenderElement = (props) => {
               position: absolute;
               top: 0.5em;
               left: 0.5em;
-              background-color: white;
+              background-color: white !important;
               color: red !important;
             `}
             data-tooltip-id="format-tooltip" data-tooltip-content="Прибрати"
           >
-            <Icon>delete</Icon>
+            <Icon icon="removeMedia" />
           </Button>
 
         </div>

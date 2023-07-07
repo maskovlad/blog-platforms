@@ -24,12 +24,13 @@ export const Button = React.forwardRef(
     >,
     ref: Ref<OrNull<HTMLSpanElement>>
   ) => (
-    <span
+    <button
       {...props}
       ref={ref as any}
       className={cx(
         className,
         css`
+          background: transparent;
           cursor: pointer;
           color: ${reversed
             ? active
@@ -206,7 +207,9 @@ export const AdditionalInput = ({ prop, onChange, className, placeholder }) => {
     <label htmlFor="prop" className={css`
       display: flex;
       align-items: center;
+      justify-content: center;
       margin-left: 5px;
+      font-size: 12px;
     `}>
       ✏️
       <input
@@ -219,6 +222,7 @@ export const AdditionalInput = ({ prop, onChange, className, placeholder }) => {
           fontSize: "14px",
           lineHeight: "2rem",
           fontStyle: "italic",
+          textAlign: "center",
         }}
         onChange = { e => {
           const newProp = e.target.value

@@ -7,7 +7,6 @@ import Icon from "../Icon"
 export const Image = ({ attributes, children, element }) => {
   const editor = useSlateStatic()
   const path = ReactEditor.findPath(editor, element)
-  console.log({element,path})
 
   const inputHandler = (val) => {
     const path = ReactEditor.findPath(editor, element)
@@ -26,9 +25,15 @@ export const Image = ({ attributes, children, element }) => {
       <div contentEditable={false}
         className={css`
           position: relative;
-          :hover span {
-            display: inline;
-          }
+          margin: 2rem;
+
+          :hover button {
+              display: flex;
+              align-items: center;
+              border-radius: 5px;
+              padding: 8px;
+            }
+
         `}
       >
         <img
@@ -53,8 +58,9 @@ export const Image = ({ attributes, children, element }) => {
             position: absolute;
             top: 0.5em;
             left: 0.5em;
-            background-color: white;
+            background-color: white !important;
             color: red !important;
+
           `}
           data-tooltip-id="format-tooltip" data-tooltip-content="Прибрати"
         >
