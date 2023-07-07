@@ -10,7 +10,7 @@ import { Tooltip } from 'react-tooltip'
 import { withMedia } from './plugins'
 import { initialValue } from './initialValue'
 import { RenderElement, RenderLeaf } from './elements'
-import 'material-icons/iconfont/material-icons.css'
+// import 'material-icons/iconfont/material-icons.css'
 import { SetNodeToDecorations, useDecorate } from './CodeDecorate'
 import useOnKeydown from './useOnKeyDown'
 import { BlockButton, MarkButton, MediaButton } from './buttons';

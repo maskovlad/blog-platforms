@@ -4,6 +4,7 @@ import { useSlateStatic } from 'slate-react'
 import isUrl from 'is-url'
 import { insertImage, insertYoutube, isBlockActive, isImageUrl, isMarkActive, isYoutubeUrl, toggleBlock, toggleMark } from './utils'
 import Icon from "./Icon"
+import { Transforms } from 'slate'
 
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
 
@@ -48,30 +49,37 @@ export const MarkButton = ({ format, hint }) => {
 
 export const MediaButton = ({ format, hint }) => {
   const editor = useSlateStatic()
+  
   return (
     <Button
       onMouseDown={event => {
         event.preventDefault()
-        const посилання = window.prompt(`Вставте посилання на ${format === "image" ? "зображення" : "Youtube"} сюди, або в потрібне місце в дописі`)
-        if (посилання && !isUrl(посилання)) {
+        const url = window.prompt(`Вставте посилання на ${format === "image" ? "зображення" : "Youtube"} сюди, або в потрібне місце в дописі`)
+        if (!url || url==="") return
+        if (url && !isUrl(url)) {
           toast.error('Посилання не дійсне')
           return
         }
-        if (посилання && isImageUrl(посилання as string)) insertImage(editor, посилання)
-        else if (посилання && isYoutubeUrl(посилання as string)) insertYoutube(editor, isYoutubeUrl(посилання as string))
+        if (url && isImageUrl(url as string)) {
+          insertImage(editor, url)
+        }
+        else if (url && isYoutubeUrl(url as string)) insertYoutube(editor, isYoutubeUrl(url as string))
         else {
           toast.error(`Посилання не є ${format === "image" ? "зображення" : "Youtube"}`)
           return
         }
+        Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] })
       }}
       data-tooltip-id="format-tooltip" data-tooltip-content={hint}
     >
+
       <Toaster
         position="top-right"
         toastOptions={{
           duration: 5000,
         }}
       />
+
       <Icon icon={format} />
     </Button>
   )

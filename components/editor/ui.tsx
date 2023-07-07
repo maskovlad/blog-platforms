@@ -36,8 +36,8 @@ export const Button = React.forwardRef(
               ? "white"
               : "#aaa"
             : active
-            ? "black"
-            : "#ccc"};
+              ? "black"
+              : "#ccc"};
         `
       )}
     />
@@ -109,7 +109,7 @@ export const Icon = React.forwardRef(
     <span
       {...props}
       ref={ref as any}
-      style={{fontSize: "18px", verticalAlign: "text-bottom"}}
+      style={{ fontSize: "18px", verticalAlign: "text-bottom" }}
       className={cx(
         "material-icons",
         className,
@@ -199,3 +199,34 @@ export const Toolbar = React.forwardRef(
     />
   )
 );
+
+export const AdditionalInput = ({ prop, onChange, className, placeholder }) => {
+  const [value, setValue] = React.useState(prop || "")
+  return (
+    <label htmlFor="prop" className={css`
+      display: flex;
+      align-items: center;
+      margin-left: 5px;
+    `}>
+      ✏️
+      <input
+        name="prop"
+        className={className}
+        value={value}
+        onClick={e => e.stopPropagation()}
+        style={{
+          boxSizing: 'border-box',
+          fontSize: "14px",
+          lineHeight: "2rem",
+          fontStyle: "italic",
+        }}
+        onChange = { e => {
+          const newProp = e.target.value
+          setValue(newProp)
+          onChange(newProp)
+        }}
+        placeholder = { placeholder }
+      />
+    </label>
+  )
+}

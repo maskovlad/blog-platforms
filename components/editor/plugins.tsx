@@ -1,9 +1,10 @@
 import isUrl from 'is-url'
+import { Transforms, Path, Node } from 'slate'
 import { insertImage, insertYoutube, isImageUrl, isYoutubeUrl } from './utils'
 
 
 export const withMedia = editor => {
-  const { insertData, isVoid } = editor
+  const { insertData, isVoid, insertBreak } = editor
 
   // повідомляє slate, що певні вузли не мають текстового вмісту (вони _void_)
   // дуже зручно для таких речей, як зображення та діаграми
@@ -16,22 +17,25 @@ export const withMedia = editor => {
     const text = data.getData('text/plain')
     const { files } = data
     console.log(text)
-
+  
     if (isUrl(text)) {
-      if (isImageUrl(text)) insertImage(editor, text)
+      if (isImageUrl(text)) {
+        insertImage(editor, text)
+      }
       else if (isYoutubeUrl(text)) insertYoutube(editor, isYoutubeUrl(text))
-
+      Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] })
     } else if (files && files.length > 0) {
       for (const file of files) {
         const reader = new FileReader()
         const [mime] = file.type.split('/')
-
+  
         if (mime === 'image') {
           reader.addEventListener('load', () => {
             const url = reader.result
             insertImage(editor, url)
+            Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] })
           })
-
+  
           reader.readAsDataURL(file)
         }
       }
@@ -42,3 +46,4 @@ export const withMedia = editor => {
 
   return editor
 }
+

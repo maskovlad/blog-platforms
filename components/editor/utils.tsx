@@ -109,8 +109,9 @@ export const isMarkActive = (editor: CustomEditor, format: string) => {
 export const insertImage = (editor, url) => {
   const text = { text: '' }
   const image: ImageElement = { type: 'image', url, children: [text] }
-  const paragraph: ParagraphElement = { type: 'paragraph', children: [text] }
+  // const paragraph: ParagraphElement = { type: 'paragraph', children: [text] }
   Transforms.insertNodes(editor, image)
+  // Transforms.insertNodes(editor, paragraph)
 }
 
 export const insertYoutube = (editor, matches) => {

@@ -58,6 +58,7 @@ export type HeadingThreeElement = {
 export type ImageElement = {
   type: "image";
   url: string;
+  description?: string;
   children: EmptyText[];
 };
 
