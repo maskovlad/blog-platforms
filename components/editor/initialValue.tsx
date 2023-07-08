@@ -22,7 +22,18 @@ export const initialValue: Descendant[] = [
   {
     type: PARAGRAPH_TYPE,
     children: toChildren(
-      "Here's one containing a single paragraph block with some text in it:"
+      "Here's one containing a single paragraph block with"
+    ),
+  },
+  {
+    type: "image",
+    url: "https://cdn.tabletki.ua/img/site_pages/261c9040-ad2e-11ed-badd-000c2992667d/3859e991-d7e4-4427-8723-6a80eae22163/9fda3e57-f54f-4baa-991b-8682b21d9110/1674aa1a-d020-4ddf-a22c-a65c355764b4_prod.png",
+    children: toChildren("")
+  },
+  {
+    type: PARAGRAPH_TYPE,
+    children: toChildren(
+      "some text in it:"
     ),
   },
   {

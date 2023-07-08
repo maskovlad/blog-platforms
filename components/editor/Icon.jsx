@@ -31,7 +31,7 @@ import { AiOutlineInsertRowRight } from "@react-icons/all-files/ai/AiOutlineInse
 import { AiOutlineDelete } from "@react-icons/all-files/ai/AiOutlineDelete";
 import { AiFillTag } from "@react-icons/all-files/ai/AiFillTag";
 import { AiOutlineUpload } from "@react-icons/all-files/ai/AiOutlineUpload";
-import { AiOutlineArrowsAlt } from "@react-icons/all-files/ai/AiOutlineArrowsAlt";
+import { HiArrowsExpand } from "@react-icons/all-files/hi/HiArrowsExpand";
 import { AiOutlineInsertRowAbove } from "@react-icons/all-files/ai/AiOutlineInsertRowAbove";
 import { AiOutlineInsertRowLeft } from "@react-icons/all-files/ai/AiOutlineInsertRowLeft";
 import { AiFillHtml5 } from "@react-icons/all-files/ai/AiFillHtml5";
@@ -78,7 +78,7 @@ const iconList = {
   addId: <AiFillTag size={20} />,
   upload: <AiOutlineUpload size={20} />,
   equation: <SiLatex size={20} />,
-  resize: <AiOutlineArrowsAlt size={20} />,
+  resize: <HiArrowsExpand style={{transform:"rotate"}} size={20} />,
   videoPlayer: <BsCameraVideoFill size={20} />,
   insertHtml: <AiFillHtml5 size={20} />,
   arrowRight: <MdArrowForward size={35} />,
