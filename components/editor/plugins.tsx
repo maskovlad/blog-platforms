@@ -13,7 +13,7 @@ export const withMedia = editor => {
   }
 
   //*  викликається, коли користувачі вставляють або перетягують речі в редактор
-  editor.insertData = data => {
+  editor.insertData = (data) => {
     const text = data.getData('text/plain')
     const { files } = data
     //
@@ -24,10 +24,6 @@ export const withMedia = editor => {
       }
       else if (isYoutubeUrl(text)) {
         insertYoutube(editor, isYoutubeUrl(text))
-      }
-      // якщо в кінці документа додамо за медіа параграф
-      if (!Editor.next(editor)) {
-        Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] })
       }
     //
     // FILE
@@ -44,10 +40,6 @@ export const withMedia = editor => {
 
           reader.readAsDataURL(file)
         }
-      }
-      // якщо в кінці документа додамо за медіа параграф
-      if (!Editor.next(editor)) {  
-        Transforms.insertNodes(editor, { type: 'paragraph', children: [{ text: '' }] })
       }
 
     } else {

@@ -201,7 +201,7 @@ export const Toolbar = React.forwardRef(
   )
 );
 
-export const AdditionalInput = ({ prop, onChange, className, placeholder }) => {
+export const AdditionalInput = ({ prop, onChange, className, placeholder, hint }) => {
   const [value, setValue] = React.useState(prop || "")
   return (
     <label htmlFor="prop" className={css`
@@ -210,7 +210,9 @@ export const AdditionalInput = ({ prop, onChange, className, placeholder }) => {
       justify-content: center;
       margin-left: 5px;
       font-size: 12px;
-    `}>
+    `}
+      data-tooltip-id="format-tooltip" data-tooltip-content={hint}
+    >
       ✏️
       <input
         name="prop"

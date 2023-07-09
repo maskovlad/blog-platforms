@@ -55,13 +55,6 @@ export type HeadingThreeElement = {
   children: Descendant[];
 };
 
-export type ImageElement = {
-  type: "image";
-  url: string;
-  description?: string;
-  children: EmptyText[];
-};
-
 export type LinkElement = {
   type: "link";
   url: string;
@@ -108,6 +101,16 @@ export type TableRowElement = {
 export type TitleElement = { 
   type: "title"; 
   children: Descendant[] 
+};
+
+export type ImageElement = {
+  type: "image";
+  url: string;
+  width: number | undefined;
+  height: number | undefined;
+  ratio: number;
+  description?: string;   // for description and alt
+  children: EmptyText[];
 };
 
 export type VideoElement = {

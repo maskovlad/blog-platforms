@@ -7,6 +7,7 @@ import {
 } from 'slate'
 import isUrl from 'is-url'
 import imageExtensions from 'image-extensions'
+import { useState } from 'react'
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
@@ -65,11 +66,11 @@ export const toggleBlock = (editor, format) => {
 
   //* список обертаємо wrapper'ом
   if (!isActiveFormat && isList) {
-    const block= { type: format, children: [] }
+    const block = { type: format, children: [] }
     Transforms.wrapNodes(editor, block) // обертає виділення блоком
   }
   if (!isActiveFormat && isCode) {
-    const block = { type: format, language: 'css', url:"", children: [] }
+    const block = { type: format, language: 'css', url: "", children: [] }
     Transforms.wrapNodes(editor, block) // обертає виділення блоком
   }
 }
@@ -106,18 +107,35 @@ export const isMarkActive = (editor: CustomEditor, format: string) => {
   return marks ? marks[format] === true : false
 }
 
-export const insertImage = (editor, url) => {
+export const insertImage = async (editor, url) => {
   const text = { text: '' }
-  const image: ImageElement = { type: 'image', url, children: [text] }
-  // const paragraph: ParagraphElement = { type: 'paragraph', children: [text] }
-  Transforms.insertNodes(editor, image)
-  // Transforms.insertNodes(editor, paragraph)
+  const paragraph: ParagraphElement = { type: 'paragraph', children: [text] }
+  const img: HTMLImageElement = new Image()
+  console.log({url})
+  
+  img.onload = () => {
+    const image = {
+      type: 'image',
+      url,
+      width: img.naturalWidth,
+      height: img.naturalHeight,
+      ratio: img.naturalWidth / img.naturalHeight,
+      children: [text]
+    }
+    Transforms.insertNodes(editor, image as Node)
+    // якщо в кінці документа додамо за медіа параграф
+    if (!Editor.next(editor)) {
+      Transforms.insertNodes(editor, paragraph)
+    }
+  }
+
+  img.src = url
 }
 
 export const insertYoutube = (editor, matches) => {
   const text = { text: '' }
   const [_, videoId] = matches
-  const youtube = {type: 'youtube', videoId, children: [text]}
+  const youtube = { type: 'youtube', videoId, children: [text] }
   Transforms.insertNodes(editor, youtube as Node)
 }
 
