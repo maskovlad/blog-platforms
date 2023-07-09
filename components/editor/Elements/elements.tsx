@@ -4,10 +4,10 @@ import { ReactEditor, useSlateStatic } from "slate-react"
 import styles from "./elements.module.css"
 import { css } from "@emotion/css"
 import React from "react"
-import { Button } from "./ui"
-import Icon from "./Icon"
-import { Image } from "./Elements/Image"
-import CodeBlock from "./Elements/CodeBlock"
+import { Button } from "../ui/ui"
+import Icon from "../ui/Icon"
+import { Image } from "./Image"
+import CodeBlock from "./CodeBlock"
 
 
 export const RenderElement = (props) => {

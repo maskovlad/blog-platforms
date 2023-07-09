@@ -38,8 +38,8 @@ import {
   CodeBlockElement,
   RenderLeafProps, 
   RenderElementProps } from "@/types/editor";
-import { normalizeTokens } from './normalize-tokens'
-import { Button, Icon, Toolbar } from '@/components/editor/ui'
+import { normalizeTokens } from './codeDecorate/normalize-tokens'
+import { Button, Icon, Toolbar } from '@/components/editor/ui/ui'
 import { useCallback, useMemo } from 'react';
 
 import { Tooltip } from 'react-tooltip'

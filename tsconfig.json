@@ -39,6 +39,6 @@
   ],
   "exclude": [
     "node_modules",
-    "components/editor/examples"
+    "components/editor/_examples"
   ]
 }

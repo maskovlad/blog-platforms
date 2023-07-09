@@ -4,16 +4,16 @@ import { createEditor, Descendant, Node } from 'slate'
 import { withReact, Slate, Editable, useSlate } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { CustomEditor } from "@/types/editor";
-import { Toolbar } from '@/components/editor/ui'
+import { Toolbar } from '@/components/editor/ui/ui'
 import { useCallback, useMemo, useState } from 'react';
 import { Tooltip } from 'react-tooltip'
-import { withMedia } from './plugins'
+import { withMedia } from './plugins/withMedia'
 import { initialValue } from './initialValue'
-import { RenderElement, RenderLeaf } from './elements'
+import { RenderElement, RenderLeaf } from './Elements/elements'
 // import 'material-icons/iconfont/material-icons.css'
-import { SetNodeToDecorations, useDecorate } from './CodeDecorate'
-import useOnKeydown from './useOnKeyDown'
-import { BlockButton, MarkButton, MediaButton } from './buttons';
+import { SetNodeToDecorations, useDecorate } from './codeDecorate/CodeDecorate'
+import useOnKeydown from './customHooks/useOnKeyDown'
+import { BlockButton, MarkButton, MediaButton } from './buttons/buttons';
 
 
 export default function ExpEditor() {

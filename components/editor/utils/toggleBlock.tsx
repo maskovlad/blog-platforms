@@ -1,13 +1,9 @@
-import { CustomEditor, CustomElement, ImageElement, NumberedListElement, ParagraphElement, YoutubeElement } from '@/types/editor'
+import { CustomEditor } from '@/types/editor'
 import {
   Editor,
   Element as SlateElement,
   Transforms,
-  Node
 } from 'slate'
-import isUrl from 'is-url'
-import imageExtensions from 'image-extensions'
-import { useState } from 'react'
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
@@ -91,70 +87,4 @@ export const isBlockActive = (editor: CustomEditor, format: string, blockType = 
 
   return !!match
 }
-
-export const toggleMark = (editor, format) => {
-  const isActive = isMarkActive(editor, format)
-
-  if (isActive) {
-    Editor.removeMark(editor, format)
-  } else {
-    Editor.addMark(editor, format, true)
-  }
-}
-
-export const isMarkActive = (editor: CustomEditor, format: string) => {
-  const marks = Editor.marks(editor)
-  return marks ? marks[format] === true : false
-}
-
-export const insertImage = async (editor, url) => {
-  const text = { text: '' }
-  const paragraph: ParagraphElement = { type: 'paragraph', children: [text] }
-  const img: HTMLImageElement = new Image()
-  console.log({url})
-  
-  img.onload = () => {
-    const image = {
-      type: 'image',
-      url,
-      width: img.naturalWidth,
-      height: img.naturalHeight,
-      ratio: img.naturalWidth / img.naturalHeight,
-      children: [text]
-    }
-    Transforms.insertNodes(editor, image as Node)
-    // якщо в кінці документа додамо за медіа параграф
-    if (!Editor.next(editor)) {
-      Transforms.insertNodes(editor, paragraph)
-    }
-  }
-
-  img.src = url
-}
-
-export const insertYoutube = (editor, matches) => {
-  const text = { text: '' }
-  const [_, videoId] = matches
-  const youtube = { type: 'youtube', videoId, children: [text] }
-  Transforms.insertNodes(editor, youtube as Node)
-}
-
-export const isImageUrl = (url: string | URL) => {
-  if (!url) return false
-  if (!isUrl(url)) return false
-  const ext = new URL(url).pathname.split('.').pop() as string
-  return imageExtensions.includes(ext)
-}
-
-export const isYoutubeUrl = (url: string | URL) => {
-  if (!url) return false
-  if (!isUrl(url)) return false
-  const youtubeRegex = /^(?:(?:https?:)?\/\/)?(?:(?:www|m)\.)?(?:(?:youtube\.com|youtu.be))(?:\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(?:\S+)?$/
-  const matches = (url as string).match(youtubeRegex)
-  return matches
-}
-
-
-
-
 

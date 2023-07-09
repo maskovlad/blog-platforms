@@ -1,6 +1,6 @@
 import isUrl from 'is-url'
 import { Transforms, Path, Node, Editor } from 'slate'
-import { insertImage, insertYoutube, isImageUrl, isYoutubeUrl } from './utils'
+import { insertImage, insertYoutube, isImageUrl, isYoutubeUrl } from '../utils/toggleMark'
 
 
 export const withMedia = editor => {

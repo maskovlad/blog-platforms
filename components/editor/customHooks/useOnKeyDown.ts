@@ -1,7 +1,7 @@
 import isHotkey from "is-hotkey"
 import { useCallback } from "react"
 import { Editor } from "slate"
-import { toggleMark } from "./utils"
+import { toggleMark } from "../utils/toggleMark"
 
 const HOTKEYS = {
   'mod+b': 'bold',
