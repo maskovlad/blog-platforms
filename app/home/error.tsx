@@ -14,18 +14,5 @@ export default function Error({
     console.error(error);
   }, [error]);
 
-  return (
-    <div>
-      <h2>Щось пішло не так. Вибачте і натисніть кнопку, щоб повенутися на сторінку</h2>
-      <button
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
-        className="btn btn-green"
-      >
-        Повернутися
-      </button>
-    </div>
-  );
+  return null
 }

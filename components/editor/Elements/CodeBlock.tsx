@@ -3,7 +3,7 @@ import React from 'react'
 import { Transforms, Element as SlateElement } from 'slate'
 import { ReactEditor, useSlateStatic } from 'slate-react'
 import styles from "../elements.module.css"
-import { AdditionalInput } from '../ui/ui'
+import { AdditionalInput } from '../ui/AdditionalInput'
 
 const CodeBlock = ({ attributes, children, element }) => {
 

@@ -1,7 +1,8 @@
 import { css, cx } from "@emotion/css"
 import { Transforms, Element as SlateElement } from "slate"
 import { ReactEditor, useSlateStatic, useSelected, useFocused } from "slate-react"
-import { AdditionalInput, Button } from "../ui/ui"
+import { AdditionalInput } from "../ui/AdditionalInput"
+import { Button } from "../ui/ui"
 import useResize from "../customHooks/useResize";
 import Icon from "../ui/Icon"
 
@@ -34,10 +35,11 @@ export const Image = ({ attributes, children, element }) => {
         }
       `}
       {...attributes}
+      contentEditable={false}
     >
       {children}
 
-      <div contentEditable={false}
+      <div 
         data-expeditor="image-size"
         className={css`
           position: relative;
@@ -45,8 +47,9 @@ export const Image = ({ attributes, children, element }) => {
           border-radius: 5px;
           max-width: 90vw;
           max-height: 90vh;
+          margin-bottom: 0.5rem;
 
-          :hover {
+          :hover,:focus {
             box-shadow: 0 0 3px 3px lightgray;
           }
 

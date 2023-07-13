@@ -31,6 +31,7 @@ export const initialValue: Descendant[] = [
     width: 400,
     height: 200,
     ratio: 2,
+    description: "",
     children: toChildren("")
   },
   {

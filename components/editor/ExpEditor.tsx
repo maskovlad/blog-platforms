@@ -13,7 +13,9 @@ import { RenderElement, RenderLeaf } from './Elements/elements'
 // import 'material-icons/iconfont/material-icons.css'
 import { SetNodeToDecorations, useDecorate } from './codeDecorate/CodeDecorate'
 import useOnKeydown from './customHooks/useOnKeyDown'
-import { BlockButton, MarkButton, MediaButton } from './buttons/buttons';
+import { MarkButton } from './buttons/MarkButton'
+import { BlockButton } from "./buttons/BlockButton"
+import { MediaButton } from "./buttons/MediaButton"
 
 
 export default function ExpEditor() {
@@ -23,7 +25,12 @@ export default function ExpEditor() {
   const editor: CustomEditor = useMemo(() => withMedia(withHistory(withReact(createEditor()))), [])
   const decorate = useDecorate(editor)
   const onKeyDown = useOnKeydown(editor)
-  const [value, setValue] = useState<Descendant[]>(initialValue)
+  const [value, setValue] = useState<Descendant[]>([
+    {
+      type: "paragraph",
+      children: [{ text: "" }],
+    },
+  ]);
 
   console.log(value)
   return (
