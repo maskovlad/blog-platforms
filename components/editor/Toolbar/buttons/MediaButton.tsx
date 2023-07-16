@@ -1,11 +1,9 @@
 import Button from './Button'
-import { toast, Toaster } from 'react-hot-toast'
 import { ReactEditor, useSlateStatic } from 'slate-react'
 import { insertImage } from "../../utils/insertImage"
 import { insertYoutube } from "../../utils/insertYoutube"
 import Icon from "../../ui/Icon"
 import { BaseSelection, } from 'slate'
-import { Editor } from 'slate'
 import { useRef, useState } from 'react'
 import usePopup from "../../customHooks/usePopup"
 import { css } from '@emotion/css'
@@ -133,13 +131,6 @@ export const MediaButton = ({ format, hint }) => {
 
         </div>
       )}
-
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          duration: 5000,
-        }}
-      />
 
     </div>
   )

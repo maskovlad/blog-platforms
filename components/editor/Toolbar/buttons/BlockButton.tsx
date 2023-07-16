@@ -1,4 +1,5 @@
-import { Button } from '@/components/editor/ui/ui'
+// import { Button } from '@/components/editor/ui/ui'
+import Button from './Button'
 import { useSlate } from 'slate-react'
 import { toggleBlock, isBlockActive } from '../../utils/toggleBlock'
 import Icon from "../../ui/Icon"
@@ -19,7 +20,7 @@ export const BlockButton = ({ format, hint }) => {
         event.preventDefault()
         toggleBlock(editor, format)
       }}
-      data-tooltip-id="format-tooltip" data-tooltip-content={hint}
+      hint={hint}
     >
       <Icon icon={format} />
     </Button>

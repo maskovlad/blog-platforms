@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { insertLink } from "../../utils/link.js";
 import Button from "./Button";
 import Icon from "../../ui/Icon"
-import { isBlockActive } from "../../utils/toggleBlock";
 import usePopup from "../../customHooks/usePopup";
 import { Transforms } from "slate";
 import { css } from "@emotion/css";

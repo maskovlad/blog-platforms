@@ -189,7 +189,7 @@ export const RenderLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
   }
 
   if (leaf.code) {
-    children = <code>{children}</code>
+    children = <code style={{fontSize:"1rem"}}>{children}</code>
   }
 
   if (leaf.italic) {
