@@ -1,12 +1,12 @@
 import { Button } from '@/components/editor/ui/ui'
-import { useSlateStatic } from 'slate-react'
-import { toggleBlock, isBlockActive } from '../utils/toggleBlock'
-import Icon from "../ui/Icon"
+import { useSlate } from 'slate-react'
+import { toggleBlock, isBlockActive } from '../../utils/toggleBlock'
+import Icon from "../../ui/Icon"
 
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
 
 export const BlockButton = ({ format, hint }) => {
-  const editor = useSlateStatic()
+  const editor = useSlate()
 
   return (
     <Button

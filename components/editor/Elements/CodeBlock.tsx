@@ -104,6 +104,7 @@ const CodeBlock = ({ attributes, children, element }) => {
                 margin-left: 1rem;
               `}
               placeholder="Додайте ім&apos;я файлу..."
+              hint="Ім&apos;я файлу"
             />
           </div>
           <LanguageSelect

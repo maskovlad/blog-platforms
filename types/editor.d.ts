@@ -83,24 +83,24 @@ export type ParagraphElement = {
   children: Descendant[];
 };
 
-export type TableElement = { 
-  type: "table"; 
-  children: TableRow[] 
+export type TableElement = {
+  type: "table";
+  children: TableRow[]
 };
 
-export type TableCellElement = { 
-  type: "table-cell"; 
-  children: CustomText[] 
+export type TableCellElement = {
+  type: "table-cell";
+  children: CustomText[]
 };
 
-export type TableRowElement = { 
-  type: "table-row"; 
-  children: TableCell[] 
+export type TableRowElement = {
+  type: "table-row";
+  children: TableCell[]
 };
 
-export type TitleElement = { 
-  type: "title"; 
-  children: Descendant[] 
+export type TitleElement = {
+  type: "title";
+  children: Descendant[]
 };
 
 export type ImageElement = {
@@ -122,7 +122,7 @@ export type VideoElement = {
 export type YoutubeElement = {
   type: "youtube";
   videoId: string;
-  children: EmptyText[]; 
+  children: EmptyText[];
 }
 
 export type CodeBlockElement = {
@@ -166,6 +166,11 @@ export type CustomText = {
   italic?: boolean;
   code?: boolean;
   underline?: boolean;
+  strikethrough?: boolean;
+  superscript?: boolean;
+  subscript?: boolean;
+  color?: string;
+  bgColor?: string;
   text: string;
 };
 

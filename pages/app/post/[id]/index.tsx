@@ -324,12 +324,12 @@ export default function Post() {
             value={data.description}
           />
 
-          {/* {data?.content && (
+          {data?.content && (
             <SviyEditor
-              content={data.content as Descendant[]}
-              onChange={onChange}
+              // content={data.content as Descendant[]}
+              // onChange={onChange}
             />
-          )} */}
+          )}
 <ExpEditor />
         </div>
 

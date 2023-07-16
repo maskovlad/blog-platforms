@@ -1,6 +1,6 @@
-import Image from "next/image";
 import type { Metadata } from 'next'
 import ExpEditor from "@/components/editor/ExpEditor";
+import SviyEditor from '@/components/editor/SviyEditor';
 
 //^ SVIY SITE HOME PAGE
 
@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description: 'Welcome to Next.js'
 };
 
+
 export default async function Page({ params }: { params: { site: string } }) {
 
   return (
@@ -16,12 +17,7 @@ export default async function Page({ params }: { params: { site: string } }) {
       <div className="m-auto w-48">
         <h1 className="text-white">Українська блогова платформа - Sviy.Site</h1>
         <ExpEditor />
-        {/* <Image
-          width={512}
-          height={512}
-          src="/logo.png"
-          alt="Українська блогова платформа - Sviy.Site"
-        /> */}
+        {/* <SviyEditor /> */}
       </div>
     </article>
   )

@@ -1,13 +1,14 @@
 import { RenderLeafProps } from "@/types/editor"
 import { Transforms } from "slate"
 import { ReactEditor, useSlateStatic } from "slate-react"
-import styles from "./elements.module.css"
+// import styles from "./elements.module.css"
 import { css } from "@emotion/css"
 import React from "react"
 import { Button } from "../ui/ui"
 import Icon from "../ui/Icon"
 import { Image } from "./Image"
 import CodeBlock from "./CodeBlock"
+import Link from "./Link"
 
 
 export const RenderElement = (props) => {
@@ -105,6 +106,8 @@ export const RenderElement = (props) => {
           {children}
         </ul>
       )
+    case 'link':
+      return <Link {...props} />      
     case 'image':
       return <Image {...props} />
     case 'code-block':
@@ -194,7 +197,7 @@ export const RenderLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
   }
 
   if (leaf.underline) {
-    children = <u>{children}</u>
+    children = <u style={{textDecoration: "underline"}}>{children}</u>
   }
 
   return <span

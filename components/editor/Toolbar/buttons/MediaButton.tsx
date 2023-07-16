@@ -1,26 +1,26 @@
-import { Button } from '@/components/editor/ui/ui'
+import Button from './Button'
 import { toast, Toaster } from 'react-hot-toast'
 import { ReactEditor, useSlateStatic } from 'slate-react'
-import { insertImage } from "../utils/insertImage"
-import { insertYoutube } from "../utils/insertYoutube"
-import Icon from "../ui/Icon"
+import { insertImage } from "../../utils/insertImage"
+import { insertYoutube } from "../../utils/insertYoutube"
+import Icon from "../../ui/Icon"
 import { BaseSelection, } from 'slate'
 import { Editor } from 'slate'
 import { useRef, useState } from 'react'
-import usePopup from "../customHooks/usePopup"
+import usePopup from "../../customHooks/usePopup"
 import { css } from '@emotion/css'
 
 export const MediaButton = ({ format, hint }) => {
   const editor = useSlateStatic()
   const urlInputRef = useRef(null);
   const [showInput, setShowInput] = usePopup(urlInputRef);
-  const [url, setUrl] = useState<string | undefined>(undefined);
+  const [url, setUrl] = useState<string>("");
   const [selection, setSelection] = useState<BaseSelection>();
 
 
   const handleButtonClick = (e) => {
     e.preventDefault();
-    
+
     setSelection(editor.selection);
     selection && ReactEditor.focus(editor);
     // @ts-ignore
@@ -38,7 +38,7 @@ export const MediaButton = ({ format, hint }) => {
     else if (format === "youtube") insertYoutube(editor, url)
     // @ts-ignore
     setShowInput(false);
-    setUrl(undefined);
+    setUrl("");
   };
 
 
@@ -47,6 +47,9 @@ export const MediaButton = ({ format, hint }) => {
   //   setShowInput(false);
   // };
 
+  const handleInputChange = (e) => {
+    setUrl(e.target.value)
+  }
 
   return (
     <div
@@ -58,7 +61,7 @@ export const MediaButton = ({ format, hint }) => {
     >
       <Button
         onClick={handleButtonClick}
-        data-tooltip-id="format-tooltip" data-tooltip-content={hint}
+        hint={hint}
       >
         <Icon icon={format} />
       </Button>
@@ -90,8 +93,7 @@ export const MediaButton = ({ format, hint }) => {
               </div>
             )} */}
 
-          <form
-            onSubmit={handleFormSubmit}
+          <div
             className={css`
                 display: flex;
                 flex-direction: column;
@@ -103,30 +105,31 @@ export const MediaButton = ({ format, hint }) => {
                   border-radius: 3px;
                   padding: 0.2rem;
                 }
-
-                button {
-                  background-color: var(--c-green);
-                  color: white;
-                  border-radius: 5px;
-                  padding: 0.4rem;
-                  cursor: pointer;
-                }
               `}>
+
             <label>
-              Вставте посилання сюди або в будь-яке місце допису
+              Вставте посилання на медіафайл сюди або в будь-яке місце допису
             </label>
+
             <input
               type="text"
               placeholder="https://..."
               value={url}
-              onChange={(e) => setUrl(e.target.value)}
+              onChange={handleInputChange}
             />
-            <button
-              type="submit"
-            >
+
+            <div
+              onClick={handleFormSubmit}
+              className={css`
+                background-color: var(--c-green);
+                color: white;
+                border-radius: 5px;
+                padding: 0.4rem;
+                cursor: pointer;
+              `}>
               Додати
-            </button>
-          </form>
+            </div>
+          </div>
 
         </div>
       )}

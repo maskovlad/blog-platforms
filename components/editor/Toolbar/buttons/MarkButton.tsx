@@ -1,16 +1,17 @@
 import { Button } from '@/components/editor/ui/ui'
-import { useSlateStatic } from 'slate-react'
-import { toggleMark, isMarkActive } from '../utils/toggleMark'
-import Icon from "../ui/Icon"
+import { useSlate } from 'slate-react'
+import { toggleMark, isMarkActive } from '../../utils/toggleMark'
+import Icon from "../../ui/Icon"
+
 
 const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify']
 
-export const MarkButton = ({ format, hint }) => {
-  const editor = useSlateStatic()
+export const MarkButton = ({ format, hint  }) => {
+  const editor = useSlate()
   return (
     <Button
       active={isMarkActive(editor, format)}
-      onMouseDown={event => {
+      onMouseDown={(event:any) => {
         event.preventDefault()
         toggleMark(editor, format)
       }}
