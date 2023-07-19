@@ -1,7 +1,7 @@
 
 import { css } from '@emotion/css';
 import { Tooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
+// import "react-tooltip/dist/react-tooltip.css";
 
 export const Hint = ({ text }: { text: string }) => {
   return (

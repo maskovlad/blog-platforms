@@ -12,6 +12,7 @@ export const toggleMark = (editor, format) => {
 }
 
 export const isMarkActive = (editor: CustomEditor, format: string) => {
+  // if (format==="color"||format==="bgColor") console.log({format})
   const marks = Editor.marks(editor)
   return marks ? marks[format] === true : false
 }

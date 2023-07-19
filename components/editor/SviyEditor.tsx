@@ -12,10 +12,7 @@ import { ToolBar } from './Toolbar/ToolBar'
 import { MarkButton } from './Toolbar/buttons/MarkButton'
 import { BlockButton } from "./Toolbar/buttons/BlockButton"
 import useOnKeydown from './customHooks/useOnKeyDown'
-
-
 import { Tooltip } from 'react-tooltip'
-import 'react-tooltip/dist/react-tooltip.css';
 
 export default function SviyEditor() {
 
@@ -36,7 +33,7 @@ export default function SviyEditor() {
       >
         <Toolbar>
           <MarkButton format="bold" hint="Жирний" />
-          <MarkButton format="italic" hint="Нахилени" />
+          <MarkButton format="italic" hint="Нахилений" />
           <MarkButton format="underline" hint="Підкреслений" />
           <MarkButton format="code" hint="Код" />
           <MarkButton format="strikethrough" hint="Перекреслений" />

@@ -7,6 +7,7 @@ import Icon from "../../ui/Icon"
 
 export const MarkButton = ({ format, hint  }) => {
   const editor = useSlate()
+  // console.log({MarkButton: format})
   return (
     <Button
       active={isMarkActive(editor, format)}

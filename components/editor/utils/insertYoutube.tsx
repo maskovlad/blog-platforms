@@ -9,12 +9,12 @@ import { toast } from 'react-hot-toast'
 //   Transforms.insertNodes(editor, youtube as Node)
 // }
 
-// export const isYoutubeUrl = (url: string | URL) => {
-//   if (!isUrl(url)) return false
-//   const youtubeRegex = /^(?:(?:https?:)?\/\/)?(?:(?:www|m)\.)?(?:(?:youtube\.com|youtu.be))(?:\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(?:\S+)?$/
-//   const matches = (url as string).match(youtubeRegex)
-//   return matches
-// }
+export const isYoutubeUrl = (url: string | URL) => {
+  if (!isUrl(url)) return false
+  const youtubeRegex = /^(?:(?:https?:)?\/\/)?(?:(?:www|m)\.)?(?:(?:youtube\.com|youtu.be))(?:\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(?:\S+)?$/
+  const matches = (url as string).match(youtubeRegex)
+  return !!matches
+}
 
 export const insertYoutube = (editor, url) => {
   if (!isUrl(url)) return false

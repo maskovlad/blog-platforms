@@ -3,23 +3,19 @@ import { insertLink } from "../../utils/link.js";
 import Button from "./Button";
 import Icon from "../../ui/Icon"
 import usePopup from "../../customHooks/usePopup";
-import { BaseSelection, Transforms } from "slate";
+import { Transforms } from "slate";
 import { css } from "@emotion/css";
-import { useSlate } from "slate-react";
-import { Location } from "slate";
-import { isBlockActive } from "../../utils/toggleBlock";
 
 const LinkButton = (props) => {
-  const { hint } = props;
-  const editor = useSlate()
+  const { editor, hint } = props;
   const linkInputRef = useRef(null);
   const [showInput, setShowInput] = usePopup(linkInputRef);
   const [url, setUrl] = useState("");
   const [showInNewTab, setShowInNewTab] = useState(false);
-  const [selection, setSelection] = useState<BaseSelection>();
+  const [selection, setSelection] = useState([]);
 
   const handleInsertLink = () => {
-    Transforms.select(editor, selection as Location);
+    Transforms.select(editor, selection);
     insertLink(editor, { url, showInNewTab });
     setUrl("");
     // @ts-ignore
@@ -51,13 +47,13 @@ const LinkButton = (props) => {
 
       <Button
         // className={showInput ? css`border: 1px solid lightgray;border-bottom: none;` : ""}
-        active={isBlockActive(editor, 'link')}
+        active={showInput}
         onClick={toggleLink}
         hint={hint}
       >
         <Icon icon="link" />
       </Button>
-
+      
       {showInput && (
         <div className={css`
             position: absolute;
@@ -69,8 +65,8 @@ const LinkButton = (props) => {
             height: fit-content;
             z-index: 234;
         `}>
-
-          <div
+          
+          <div 
             className={css`
                 display: flex;
                 flex-direction: column;
@@ -104,7 +100,7 @@ const LinkButton = (props) => {
               <span style={{ fontSize: "0.8em", marginLeft: "4px" }}>Відкрити в новій вкладці</span>
             </label>
 
-            <div
+            <div 
               onClick={handleInsertLink}
               className={css`
                 background-color: var(--c-green);
@@ -116,7 +112,7 @@ const LinkButton = (props) => {
               Додати
             </div>
           </div>
-
+          
         </div>
       )}
     </div>

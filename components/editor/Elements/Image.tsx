@@ -1,13 +1,13 @@
 import { css, cx } from "@emotion/css"
 import { Transforms, Element as SlateElement } from "slate"
-import { ReactEditor, useSlateStatic, useSelected, useFocused } from "slate-react"
+import { ReactEditor, useSlateStatic, useSelected, useFocused, useSlate } from "slate-react"
 import { AdditionalInput } from "../ui/AdditionalInput"
 import { Button } from "../ui/ui"
 import useResize from "../customHooks/useResize";
 import Icon from "../ui/Icon"
 
 export const Image = ({ attributes, children, element }) => {
-  const editor = useSlateStatic()
+  const editor = useSlate()
   const path = ReactEditor.findPath(editor, element)
   // const selected = useSelected();
   // const focused = useFocused();

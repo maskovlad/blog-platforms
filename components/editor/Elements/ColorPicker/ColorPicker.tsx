@@ -3,9 +3,9 @@ import { MdFormatColorText } from "@react-icons/all-files/md/MdFormatColorText";
 import { MdFormatColorFill } from "@react-icons/all-files/md/MdFormatColorFill";
 import { MdCheck } from "@react-icons/all-files/md/MdCheck";
 import { colors } from "./defaultColors.js";
-import { Transforms } from "slate";
+import { BaseSelection, Transforms } from "slate";
 import usePopup from "../../customHooks/usePopup";
-import { ReactEditor } from "slate-react";
+import { ReactEditor, useSlate } from "slate-react";
 import { css } from "@emotion/css";
 import { Editor } from "slate";
 
@@ -31,8 +31,9 @@ const logo = {
 };
 
 
-const ColorPicker = ({ format, editor, hint }) => {
-  const [selection, setSelection] = useState();
+const ColorPicker = ({ format, hint }) => {
+  const editor = useSlate()
+  const [selection, setSelection] = useState<BaseSelection>();
   const [hexValue, setHexValue] = useState("");
   const [validHex, setValidHex] = useState("");
   const colorPickerRef = useRef(null);

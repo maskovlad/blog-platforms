@@ -1,20 +1,15 @@
 import { RenderLeafProps } from "@/types/editor"
-import { Transforms } from "slate"
-import { ReactEditor, useSlateStatic } from "slate-react"
-// import styles from "./elements.module.css"
 import { css } from "@emotion/css"
 import React from "react"
-import { Button } from "../ui/ui"
-import Icon from "../ui/Icon"
 import { Image } from "./Image"
 import CodeBlock from "./CodeBlock"
 import Link from "./Link"
+import Youtube from "./Youtube"
 
 
 export const RenderElement = (props) => {
   const { attributes, children, element } = props
   const style = { textAlign: element.align }
-  const editor = useSlateStatic()
 
   switch (element.type) {
 
@@ -125,52 +120,7 @@ export const RenderElement = (props) => {
         </div>
       )
     case 'youtube':
-      const path = ReactEditor.findPath(editor, element)
-      return (
-        <div 
-          {...attributes} 
-          contentEditable={false}
-          className={css`
-          position: relative;
-          margin: 2rem;
-
-          :hover button {
-            display: flex;
-            align-items: center;
-            border-radius: 5px;
-            padding: 8px;
-          }
-        `}
-        >
-            <iframe
-              contentEditable={false}
-              title="Youtube video"
-              src={`https://www.youtube.com/embed/${element?.videoId}`}
-              frameBorder="0"
-              className={css`
-              width: 75vw;
-              aspect-ratio: 2;
-            `}
-            ></iframe>
-          {children}
-          <Button
-            active
-            onClick={() => Transforms.removeNodes(editor, { at: path })}
-            className={css`
-              display: none;
-              position: absolute;
-              top: 0.5em;
-              left: 0.5em;
-              background-color: white !important;
-              color: red !important;
-            `}
-            data-tooltip-id="format-tooltip" data-tooltip-content="Прибрати"
-          >
-            <Icon icon="removeMedia" />
-          </Button>
-
-        </div>
-      )
+      return <Youtube {...props} />
     default:
       return (
         <p style={style} {...attributes}>
@@ -189,7 +139,7 @@ export const RenderLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
   }
 
   if (leaf.code) {
-    children = <code style={{fontSize:"1rem"}}>{children}</code>
+    children = <code style={{ fontSize: "1rem" }}>{children}</code>
   }
 
   if (leaf.italic) {
@@ -197,7 +147,31 @@ export const RenderLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
   }
 
   if (leaf.underline) {
-    children = <u style={{textDecoration: "underline"}}>{children}</u>
+    children = <u style={{ textDecoration: "underline" }}>{children}</u>
+  }
+
+  if (leaf.strikethrough) {
+    children = (
+      <span style={{ textDecoration: "line-through" }}>{children}</span>
+    );
+  }
+
+  if (leaf.superscript) {
+    children = <sup>{children}</sup>;
+  }
+
+  if (leaf.subscript) {
+    children = <sub>{children}</sub>;
+  }
+
+  if (leaf.color) {
+    children = <span style={{ color: leaf.color }}>{children}</span>;
+  }
+
+  if (leaf.bgColor) {
+    children = (
+      <span style={{ backgroundColor: leaf.bgColor }}>{children}</span>
+    );
   }
 
   return <span
@@ -205,4 +179,5 @@ export const RenderLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
     className={Object.keys(rest).join(' ')}
   >{children}</span>
 }
+
 

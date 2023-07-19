@@ -1,8 +1,9 @@
 import isUrl from 'is-url'
 import { toast } from 'react-hot-toast'
 import { Transforms, Path, Node, Editor } from 'slate'
-import { insertImage, isImageUrl, imageExists } from "../utils/insertImage"
-import { insertYoutube } from "../utils/insertYoutube"
+import { insertImage, isImageUrl } from "../utils/insertImage"
+import { insertYoutube, isYoutubeUrl } from "../utils/insertYoutube"
+import { insertLink } from '../utils/link'
 
 export const withMedia = editor => {
   const { insertData, isVoid, insertBreak } = editor
@@ -14,19 +15,25 @@ export const withMedia = editor => {
     return (element.type === ('image' || 'youtube')) ? true : isVoid(element)
   }
 
-  editor.insertData = data => {
+  /**
+   * спрацьовує при вставці (Ctrl+v або drag-n-drop) у редактор
+   * @param data DataTransfer
+   */
+  editor.insertData = async data => {
     const text = data.getData('text/plain')
     const { files } = data
 
-    console.log({ text, files })
-
+    // якщо це файл, то цікавить тільки якщо це зображення
     if (files && files.length > 0) {
       for (const file of files) {
         const [mime] = file.type.split('/')
-        console.log({ type: file.type })
+        
         if (mime === 'image') {
           const reader = new FileReader()
           reader.addEventListener('load', () => {
+            // якщо у файла є url, то вставлятимемо блок "image" з урлом у першу чергу,
+            // щоб економити розмір бази даних. 
+            // Тільки якщо це локальний файл то вставлятимемо як base64
             const url = text ? text : reader.result
             insertImage(editor, url)
           })
@@ -34,8 +41,19 @@ export const withMedia = editor => {
           reader.readAsDataURL(file)
         }
       }
+    // якщо це посилання, перевірятимемо по черзі всі підтримувані 
+    // редактором типи посилань і вставляємо
     } else if (isUrl(text)) {
-      if (!insertYoutube(editor, text)) insertImage(editor, text)
+      if (isYoutubeUrl(text)) {
+        console.log("Pasting youtube")
+        insertYoutube(editor, text)
+      }
+      else if (await isImageUrl(text)) {
+        console.log("Pasting image")
+        insertImage(editor, text)}
+      else {
+        console.log("Pasting link")
+        insertLink(editor, { url: text, showInNewTab: false })}
     } else {
       insertData(data)
     }
