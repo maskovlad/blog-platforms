@@ -10,7 +10,7 @@ import { toast } from "react-hot-toast"
  * @param url string
  * @returns void | false при помилці
  */
-export const insertImage = (editor, url) => {
+export const insertImage = (editor, url, href) => {
   const text = { text: '' }
   const paragraph: ParagraphElement = { type: 'paragraph', children: [text] }
   const img: HTMLImageElement = new Image()
@@ -24,6 +24,7 @@ export const insertImage = (editor, url) => {
     const image = {
       type: 'image',
       url,
+      href,
       width: img.naturalWidth,
       height: img.naturalHeight,
       ratio: img.naturalWidth / img.naturalHeight,

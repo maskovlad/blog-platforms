@@ -16,7 +16,7 @@ export const insertLink = (editor, { url, showInNewTab }) => {
   
   if (!!selection) {
     const [parent, parentPath] = Editor.parent(editor, selection.focus.path);
-
+    console.log({ parent, parentPath })
     // якщо вибраний лінк, видаляємо його
     if (parent.type === "link") {
       removeLink(editor);
@@ -24,6 +24,7 @@ export const insertLink = (editor, { url, showInNewTab }) => {
 
     // якщо вибраний void-елемент (image, youtube etc.) вставляємо за ним paragraph з лінком у children
     if (editor.isVoid(parent)) {
+      console.log({parent})
       Transforms.insertNodes(
         editor,
         { type: "paragraph", children: [link] },

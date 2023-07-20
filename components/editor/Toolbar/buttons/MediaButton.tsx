@@ -13,6 +13,7 @@ export const MediaButton = ({ format, hint }) => {
   const urlInputRef = useRef(null);
   const [showInput, setShowInput] = usePopup(urlInputRef);
   const [url, setUrl] = useState<string>("");
+  const [href, setHref] = useState<string>("");
   const [selection, setSelection] = useState<BaseSelection>();
 
 
@@ -26,13 +27,13 @@ export const MediaButton = ({ format, hint }) => {
   };
 
 
-  const handleFormSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     // selection && Transforms.select(editor, selection);
     // selection && ReactEditor.focus(editor);
     if (!url) return
-    if (format === "image") insertImage(editor, url)
+    if (format === "image") insertImage(editor, url, href)
     else if (format === "youtube") insertYoutube(editor, url)
     // @ts-ignore
     setShowInput(false);
@@ -103,21 +104,27 @@ export const MediaButton = ({ format, hint }) => {
                   border-radius: 3px;
                   padding: 0.2rem;
                 }
-              `}>
+              `}
+          >
 
-            <label>
-              Вставте посилання на медіафайл сюди або в будь-яке місце допису
-            </label>
-
+            <label>Вставте посилання на медіафайл сюди або в будь-яке місце допису АБО перетягніть медіафайл в потрібне місце</label>
             <input
               type="text"
               placeholder="https://..."
               value={url}
-              onChange={handleInputChange}
+              onChange={(e) => setUrl(e.target.value)}
+            />
+
+            <label>Якщо потрібно, додайте адресу, на яку вестиме це зображення</label>
+            <input
+              type="text"
+              placeholder="https://..."
+              value={href}
+              onChange={(e) => setHref(e.target.value)}
             />
 
             <div
-              onClick={handleFormSubmit}
+              onClick={handleSubmit}
               className={css`
                 background-color: var(--c-green);
                 color: white;

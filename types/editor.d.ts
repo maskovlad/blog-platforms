@@ -110,6 +110,7 @@ export type ImageElement = {
   height: number | undefined;
   ratio: number;
   description?: string;   // for description and alt
+  href?: string;
   children: EmptyText[];
 };
 

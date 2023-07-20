@@ -1,6 +1,6 @@
 import { css, cx } from "@emotion/css"
 import { Transforms, Element as SlateElement } from "slate"
-import { ReactEditor, useSlateStatic, useSelected, useFocused, useSlate } from "slate-react"
+import { ReactEditor, useSelected, useFocused, useSlate } from "slate-react"
 import { AdditionalInput } from "../ui/AdditionalInput"
 import { Button } from "../ui/ui"
 import useResize from "../customHooks/useResize";
@@ -9,8 +9,8 @@ import Icon from "../ui/Icon"
 export const Image = ({ attributes, children, element }) => {
   const editor = useSlate()
   const path = ReactEditor.findPath(editor, element)
-  // const selected = useSelected();
-  // const focused = useFocused();
+  const selected = useSelected();
+  const focused = useFocused();
   const { width, height, ratio } = element
   const [size, onMouseDown] = useResize({ width, height, ratio });
 
@@ -28,6 +28,7 @@ export const Image = ({ attributes, children, element }) => {
     <div className={css`
         width: fit-content;
         margin: 2rem;
+        ${selected && focused && "border: 2px solid var(--c-grey);"}
 
         img {
           width: 100%;
@@ -39,7 +40,7 @@ export const Image = ({ attributes, children, element }) => {
     >
       {children}
 
-      <div 
+      <div
         data-expeditor="image-size"
         className={css`
           position: relative;
@@ -65,10 +66,18 @@ export const Image = ({ attributes, children, element }) => {
           width: size.width, height: size.height
         }}
       >
-        <img
-          src={element.url}
-          alt={element.description}
-        />
+        {element.href
+          ? <a href={element.href}>
+              <img
+                src={element.url}
+                alt={element.description}
+              />
+            </a>
+          : <img
+              src={element.url}
+              alt={element.description}
+            />
+        }        
         <button
           // @ts-ignore
           onMouseDown={onMouseDown}
