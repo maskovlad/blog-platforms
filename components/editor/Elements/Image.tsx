@@ -28,6 +28,7 @@ export const Image = ({ attributes, children, element }) => {
     <div className={css`
         width: fit-content;
         margin: 2rem;
+        ${element.float ? "float:" + element.float + ";" : null}
         ${selected && focused && "border: 2px solid var(--c-grey);"}
 
         img {
@@ -68,16 +69,16 @@ export const Image = ({ attributes, children, element }) => {
       >
         {element.href
           ? <a href={element.href}>
-              <img
-                src={element.url}
-                alt={element.description}
-              />
-            </a>
-          : <img
+            <img
               src={element.url}
               alt={element.description}
             />
-        }        
+          </a>
+          : <img
+            src={element.url}
+            alt={element.description}
+          />
+        }
         <button
           // @ts-ignore
           onMouseDown={onMouseDown}

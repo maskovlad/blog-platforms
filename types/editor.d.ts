@@ -111,6 +111,7 @@ export type ImageElement = {
   ratio: number;
   description?: string;   // for description and alt
   href?: string;
+  float?: "left" | "right";
   children: EmptyText[];
 };
 

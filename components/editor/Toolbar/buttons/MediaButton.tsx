@@ -14,6 +14,7 @@ export const MediaButton = ({ format, hint }) => {
   const [showInput, setShowInput] = usePopup(urlInputRef);
   const [url, setUrl] = useState<string>("");
   const [href, setHref] = useState<string>("");
+  const [float, setFloat] = useState<string>("");
   const [selection, setSelection] = useState<BaseSelection>();
 
 
@@ -33,11 +34,10 @@ export const MediaButton = ({ format, hint }) => {
     // selection && Transforms.select(editor, selection);
     // selection && ReactEditor.focus(editor);
     if (!url) return
-    if (format === "image") insertImage(editor, url, href)
+    if (format === "image") insertImage(editor, url, href, float)
     else if (format === "youtube") insertYoutube(editor, url)
     // @ts-ignore
-    setShowInput(false);
-    setUrl("");
+    setShowInput(false); setUrl(""); setHref(""); setFloat("");
   };
 
 
@@ -45,10 +45,6 @@ export const MediaButton = ({ format, hint }) => {
   //   // @ts-ignore
   //   setShowInput(false);
   // };
-
-  const handleInputChange = (e) => {
-    setUrl(e.target.value)
-  }
 
   return (
     <div
@@ -100,6 +96,11 @@ export const MediaButton = ({ format, hint }) => {
                 gap: 1rem;
                 font-size: 14px;
 
+                label {
+                  font-size: 0.8rem;
+                  line-height: 1rem;
+                }
+
                 input {
                   border-radius: 3px;
                   padding: 0.2rem;
@@ -122,6 +123,49 @@ export const MediaButton = ({ format, hint }) => {
               value={href}
               onChange={(e) => setHref(e.target.value)}
             />
+
+            <div className={css`
+              display: flex;
+              flex-direction: column;
+              gap: 1rem;
+            `}>
+              <label>Обтікання медіа текстом (вставляти медіа необхідно на початку або всередині тексту)</label>
+              <div className={css`
+                display: flex;
+                gap: 1rem
+              `}>
+                <label>
+                  <input
+                    type="radio"
+                    className={css``}
+                    name="float"
+                    value="left"
+                    onChange={() => setFloat("left")}
+                    checked={
+                      float
+                        ? float === "left" ? true : false
+                        : false
+                    }
+                  />
+                  {" "}Справа
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    className={css``}
+                    name="float"
+                    value="right"
+                    onChange={() => setFloat("right")}
+                    checked={
+                      float
+                        ? float === "right" ? true : false
+                        : false
+                    }
+                  />
+                  {" "}Зліва
+                </label>
+              </div>
+            </div>
 
             <div
               onClick={handleSubmit}
