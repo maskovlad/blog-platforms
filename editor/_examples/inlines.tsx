@@ -13,8 +13,9 @@ import {
   Descendant,
 } from 'slate'
 import { withHistory } from 'slate-history'
-import { LinkElement, ButtonElement, BadgeElement } from '../../editor/_examples/custom-types'
-import { Button, Icon, Toolbar } from '../../editor/ui/ui'
+import { LinkElement, ButtonElement } from './custom-types'
+
+import { Button, Icon, Toolbar } from '../ui/ui'
 
 const initialValue: Descendant[] = [
   {
@@ -22,7 +23,7 @@ const initialValue: Descendant[] = [
     children: [
       {
         text:
-          'In addition block nodes, you can create inline nodes. Here is a ',
+          'In addition to block nodes, you can create inline nodes. Here is a ',
       },
       {
         type: 'link',
@@ -40,7 +41,6 @@ const initialValue: Descendant[] = [
         text: '! Here is a read-only inline: ',
       },
       {
-        // @ts-ignore
         type: 'badge',
         children: [{ text: 'Approved' }],
       },
@@ -67,8 +67,6 @@ const initialValue: Descendant[] = [
     ],
   },
 ]
-
-
 const InlinesExample = () => {
   const editor = useMemo(
     () => withInlines(withHistory(withReact(createEditor()))),

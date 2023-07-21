@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import ExpEditor from "@/components/editor/ExpEditor";
-import SviyEditor from '@/components/editor/SviyEditor';
-import NewEditor from '@/components/editor/NewEditor';
+import ExpEditor from "@/editor/ExpEditor";
+import SviyEditor from '@/editor/SviyEditor';
+import NewEditor from '@/editor/NewEditor';
 
 //^ SVIY SITE HOME PAGE
 

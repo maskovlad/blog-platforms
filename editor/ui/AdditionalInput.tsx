@@ -12,6 +12,7 @@ export const AdditionalInput = ({ prop, onChange, className, placeholder, hint }
       justify-content: center;
       margin-left: 5px;
       font-size: 12px;
+      width: 100%;
 
       :hover input,input:focus {
         box-shadow: 0 0 3px 3px lightgray;
@@ -30,7 +31,6 @@ export const AdditionalInput = ({ prop, onChange, className, placeholder, hint }
           fontSize: "14px",
           lineHeight: "2rem",
           fontStyle: "italic",
-          textAlign: "center",
           borderRadius: "5px"
         }}
         onChange={e => {

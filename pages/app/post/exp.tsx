@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { css } from '@emotion/css'
-import ExpEditor from '@/components/editor/ExpEditor'
+import ExpEditor from '@/editor/ExpEditor'
 import { Descendant, Element } from 'slate'
 import Head from 'next/head'
 import { CustomElement } from '@/types/editor'

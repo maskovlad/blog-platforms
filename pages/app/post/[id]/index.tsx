@@ -15,9 +15,9 @@ import { HttpMethod } from "@/types/http";
 import type { WithSitePost } from "@/types/common";
 
 import { Descendant } from "slate";
-import SviyEditor from "@/components/editor/SviyEditor";
+import SviyEditor from "@/editor/SviyEditor";
 import Head from "next/head";
-import ExpEditor from "@/components/editor/ExpEditor";
+import ExpEditor from "@/editor/ExpEditor";
 
 interface PostData {
   title: string;
