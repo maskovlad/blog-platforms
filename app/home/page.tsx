@@ -17,7 +17,7 @@ export default async function Page({ params }: { params: { site: string } }) {
     <article className="flex h-screen bg-black">
       <div className="m-auto w-48">
         <h1 className="text-white">Українська блогова платформа - Sviy.Site</h1>
-        <NewEditor />
+        <ExpEditor />
         {/* <SviyEditor /> */}
       </div>
     </article>

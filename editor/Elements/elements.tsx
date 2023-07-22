@@ -5,6 +5,7 @@ import { Image } from "./Image"
 import CodeBlock from "./CodeBlock"
 import Link from "./Link"
 import Youtube from "./Youtube"
+import Table from "./Table/Table"
 
 
 export const RenderElement = (props) => {
@@ -102,25 +103,35 @@ export const RenderElement = (props) => {
         </ul>
       )
     case 'link':
-      return <Link {...props} />      
+      return <Link {...props} />
     case 'image':
       return <Image {...props} />
     case 'code-block':
       return <CodeBlock {...props} />
     case 'code-line':
       return (
-        <div 
+        <div
           className={css`
             display: block;
           `}
-          {...attributes} 
-          style={{ position: 'relative' }} 
+          {...attributes}
+          style={{ position: 'relative' }}
         >
           {children}
         </div>
       )
     case 'youtube':
       return <Youtube {...props} />
+    case "table":
+      return <Table {...props} />;
+    case "table-row":
+      return <tr {...attributes}>{children}</tr>;
+    case "table-cell":
+      return (
+        <td {...element.attr} {...attributes}>
+          {children}
+        </td>
+      );
     default:
       return (
         <p style={style} {...attributes}>

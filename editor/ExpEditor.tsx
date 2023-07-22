@@ -16,21 +16,25 @@ import useOnKeydown from './customHooks/useOnKeyDown'
 import { MarkButton } from './Toolbar/buttons/MarkButton'
 import { BlockButton } from "./Toolbar/buttons/BlockButton"
 import { MediaButton } from "./Toolbar/buttons/MediaButton"
+import TableSelector from './Elements/Table/TableSelector';
 import withLinks from "./plugins/withLinks"
+import withTable from "./plugins/withTable"
 import LinkButton from './Toolbar/buttons/LinkButton'
 import ColorPicker from "./Elements/ColorPicker/ColorPicker"
+import "material-icons/iconfont/material-icons.css"
 
 
-export default function ExpEditor() {
+export default function NewEditor() {
 
   const renderElement = useCallback(props => <RenderElement {...props} />, [])
   const renderLeaf = useCallback(props => <RenderLeaf {...props} />, [])
   const editor: CustomEditor = useMemo(() =>
-    withLinks(
-      withMedia(
-        withHistory(
-          withReact(
-            createEditor())))), [])
+    withTable(
+      withLinks(
+        withMedia(
+          withHistory(
+            withReact(
+              createEditor()))))), [])
   const decorate = useDecorate(editor)
   const onKeyDown = useOnKeydown(editor)
   const [value, setValue] = useState<Descendant[]>(initialValue);
@@ -47,13 +51,13 @@ export default function ExpEditor() {
         <ToolBar>
           <MarkButton format="bold" hint="Жирний" />
           <MarkButton format="italic" hint="Нахилений" />
-          <MarkButton format="underline" hint="Під креслений" />
+          <MarkButton format="underline" hint="Підкреслений" />
           <MarkButton format="code" hint="Код" />
           <MarkButton format="strikethrough" hint="Перекреслений" />
           <MarkButton format="superscript" hint="Верхній індекс" />
           <MarkButton format="subscript" hint="Нижній індекс" />
-          <ColorPicker format="color" editor={editor} hint="Колір тексту" />
-          <ColorPicker format="bgColor" editor={editor} hint="Колір тла" />
+          <ColorPicker format="color" hint="Колір тексту" />
+          <ColorPicker format="bgColor" hint="Колір тла" />
           <BlockButton format="heading-one" hint="Заголовок 1" />
           <BlockButton format="heading-two" hint="Заголовок 2" />
           <BlockButton format="heading-three" hint="Заголовок 3" />
@@ -65,7 +69,8 @@ export default function ExpEditor() {
           <BlockButton format="right" hint="По правому краю" />
           <BlockButton format="justify" hint="По ширині" />
           <BlockButton format="code-block" hint="Блок коду" />
-          <LinkButton editor={editor} hint="Виділіть текст у пості і натисніть цю кнопку, щоб додати посилання" />
+          <TableSelector hint="Таблиця" />
+          <LinkButton hint="Виділіть текст у пості і натисніть цю кнопку, щоб додати посилання" />
           <MediaButton format="image" hint="Вставити зображення" />
           <MediaButton format="youtube" hint="Вставити відео Youtube" />
         </ToolBar>

@@ -1,4 +1,5 @@
 import { css } from "@emotion/css"
+import TableContextMenu from "../Elements/Table/TableContextMenu"
 
 export const ToolBar = ({ children }) => {
   return (
@@ -20,6 +21,7 @@ export const ToolBar = ({ children }) => {
         // padding: 0.2rem 1rem;
       }
   `}>
+      <TableContextMenu />
       {children}
     </div>
   )

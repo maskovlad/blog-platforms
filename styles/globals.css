@@ -154,6 +154,23 @@ h2 {
   outline: none;
 }
 
+/** POST SLATE TABLE */
+table.post-table ,
+.post-table tr,
+.post-table td {
+  border: 1px solid black;
+}
+
+table.post-table  {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.post-table td {
+  height: 50px;
+  padding: 0 5px;
+}
+
 
 @media (max-width: 640px) {
   .btn-green {
