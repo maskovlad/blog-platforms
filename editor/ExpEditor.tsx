@@ -9,7 +9,7 @@ import { ToolBar } from './Toolbar/ToolBar'
 import { useCallback, useMemo, useState } from 'react';
 import { Tooltip } from 'react-tooltip'
 import { withMedia } from './plugins/withMedia'
-import { initialValue } from './SviyEditor'
+import { initialValue } from './initialValue'
 import { RenderElement, RenderLeaf } from './Elements/elements'
 import { SetNodeToDecorations, useDecorate } from './codeDecorate/CodeDecorate'
 import useOnKeydown from './customHooks/useOnKeyDown'
@@ -22,6 +22,7 @@ import withTable from "./plugins/withTable"
 import LinkButton from './Toolbar/buttons/LinkButton'
 import ColorPicker from "./Elements/ColorPicker/ColorPicker"
 import "material-icons/iconfont/material-icons.css"
+import { withHtml } from './plugins/withHtml';
 
 
 export default function NewEditor() {
@@ -29,12 +30,13 @@ export default function NewEditor() {
   const renderElement = useCallback(props => <RenderElement {...props} />, [])
   const renderLeaf = useCallback(props => <RenderLeaf {...props} />, [])
   const editor: CustomEditor = useMemo(() =>
-    withTable(
+    withHtml(
+      withTable(
       withLinks(
         withMedia(
           withHistory(
             withReact(
-              createEditor()))))), [])
+              createEditor())))))), [])
   const decorate = useDecorate(editor)
   const onKeyDown = useOnKeydown(editor)
   const [value, setValue] = useState<Descendant[]>(initialValue);

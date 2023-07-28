@@ -72,6 +72,36 @@ export const RenderElement = (props) => {
           {children}
         </h3>
       )
+    case 'heading-four':
+      return <h4
+        style={style}
+        className={css`
+            font-size: 1.4rem;
+            line-height: 1.9rem;
+            margin: 1rem 0;
+          `}
+        {...attributes}>
+        {children}</h4>
+    case 'heading-five':
+      return <h5
+        style={style}
+        className={css`
+            font-size: 1.3rem;
+            line-height: 1.8rem;
+            margin: 1rem 0;
+          `}
+        {...attributes}>
+        {children}</h5>
+    case 'heading-six':
+      return <h6
+        style={style}
+        className={css`
+            font-size: 1.2rem;
+            line-height: 1.7rem;
+            margin: 1rem 0;
+          `}
+        {...attributes}>
+        {children}</h6>
     case 'list-item':
       return (
         <li style={style} {...attributes}>
@@ -134,7 +164,7 @@ export const RenderElement = (props) => {
       );
     default:
       return (
-        <p style={style} {...attributes}>
+        <p style={{...style,margin:"1rem 0"}} {...attributes}>
           {children}
         </p>
       )

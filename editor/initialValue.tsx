@@ -20,76 +20,37 @@ const toCodeLines = (content: string): SlateElement[] =>
 
 export const initialValue: Descendant[] = [
   {
-    type: PARAGRAPH_TYPE,
-    children: toChildren(
-      "Here's one containing a single paragraph block with"
-    ),
+    "type": "paragraph",
+    "children": [
+      {
+        "text": "Почніть "
+      },
+      {
+        "text": "створювати",
+        "bold": true
+      },
+      {
+        "text": " свій, "
+      },
+      {
+        "text": "найкращий",
+        "italic": true
+      },
+      {
+        "text": " пост!"
+      }
+    ]
   },
   {
-    type: "image",
-    url: "https://cdn.tabletki.ua/img/site_pages/261c9040-ad2e-11ed-badd-000c2992667d/3859e991-d7e4-4427-8723-6a80eae22163/9fda3e57-f54f-4baa-991b-8682b21d9110/1674aa1a-d020-4ddf-a22c-a65c355764b4_prod.png",
-    width: 400,
-    height: 200,
-    ratio: 2,
-    description: "",
-    children: toChildren("")
-  },
-  {
-    type: PARAGRAPH_TYPE,
-    children: toChildren(
-      "some text in it:"
-    ),
-  },
-  {
-    type: CODE_BLOCK_TYPE,
-    language: 'jsx',
-    url: "",
-    children: toCodeLines(`// Add the initial value.
-      const initialValue = [
-        {
-          type: 'paragraph',
-          children: [{ text: 'A line of text in a paragraph.' }]
-        }
-      ]
-
-      const App = () => {
-        const [editor] = useState(() => withReact(createEditor()))
-
-        return (
-          <Slate editor={editor} initialValue={initialValue}>
-            <Editable />
-          </Slate>
-        )
-      }`),
-  },
-  {
-    type: PARAGRAPH_TYPE,
-    children: toChildren(
-      'If you are using TypeScript, you will also need to extend the Editor with ReactEditor and add annotations as per the documentation on TypeScript. The example below also includes the custom types required for the rest of this example.'
-    ),
-  },
-  {
-    type: CODE_BLOCK_TYPE,
-    language: 'typescript',
-    url: "",
-    children: toCodeLines(`// TypeScript users only add this code
-      import { BaseEditor, Descendant } from 'slate'
-      import { ReactEditor } from 'slate-react'
-
-      type CustomElement = { type: 'paragraph'; children: CustomText[] }
-      type CustomText = { text: string }
-
-      declare module 'slate' {
-        interface CustomTypes {
-          Editor: BaseEditor & ReactEditor
-          Element: CustomElement
-          Text: CustomText
-        }
-      }`),
-  },
-  {
-    type: PARAGRAPH_TYPE,
-    children: toChildren('There you have it!'),
-  },
+    "type": "image",
+    "url": "https://news.bigmir.net/i/72/88/57/7/7288577/image_main/9b4f131b5c6ba33a102d48c1fb433b80-quality_75Xresize_crop_1Xallow_enlarge_0Xw_740Xh_400.jpg",
+    "width": 740,
+    "height": 400,
+    "ratio": 1.85,
+    "children": [
+      {
+        "text": ""
+      }
+    ]
+  }
 ]
-

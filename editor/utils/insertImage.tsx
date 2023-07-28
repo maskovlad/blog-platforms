@@ -10,13 +10,15 @@ import { toast } from "react-hot-toast"
  * @param url string
  * @returns void | false при помилці
  */
-export const insertImage = (editor, url, href, float) => {
+export const insertImage = (editor, url, href="", float="") => {
   const text = { text: '' }
   const paragraph: ParagraphElement = { type: 'paragraph', children: [text] }
   const img: HTMLImageElement = new Image()
   // console.log({ url })
 
-  if (!(img.onerror = () => {
+  if (!(img.onerror = (error) => {
+    console.log("ONERROR: ", error)
+    toast.error("Помилка вставки зображення. Спробуйте зберегти зображення на свій компьютер і перетягнути у потрібне місце в дописі.", {duration:10000})
     return false
   })) return false
 
@@ -36,7 +38,6 @@ export const insertImage = (editor, url, href, float) => {
     // @ts-ignore
     if (isEnd) { Transforms.insertNodes(editor, [image, paragraph]) } else { Transforms.insertNodes(editor, image) }
   }
-  img.crossOrigin = "Anonymous"
 
   img.src = url
 }
@@ -51,17 +52,19 @@ export const isImageUrl = async (url: string | URL) => {
 
   if (!url) return false
   if (!isUrl(url)) return false
+  console.log("Start isImageUrl")
 
   // перевіка по розширенню файла, якщо воно є
   const ext = new URL(url).pathname.split('.').pop() as string
   if (imageExtensions.includes(ext)) {
-    console.log({ imageExtensions: "imageExtensions" })
+    console.log({ imageExtensions: "Its imageExtensions" })
     return true
   }
 
   // якщо немає розширення - запит fetch з перевіркою заголовків
   let response: Response
   try {
+    console.log("Fetch для перевірки, чи посилання є зображенням")
     response = await fetch(url, {
       // method: 'GET', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, *cors, same-origin

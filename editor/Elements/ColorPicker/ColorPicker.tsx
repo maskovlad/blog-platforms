@@ -1,6 +1,4 @@
 import React, { useRef, useState } from "react";
-import { MdFormatColorText } from "@react-icons/all-files/md/MdFormatColorText";
-import { MdFormatColorFill } from "@react-icons/all-files/md/MdFormatColorFill";
 import { MdCheck } from "@react-icons/all-files/md/MdCheck";
 import { colors } from "./defaultColors.js";
 import { BaseSelection, Transforms } from "slate";

@@ -5,6 +5,8 @@ import { AdditionalInput } from "../ui/AdditionalInput"
 import { Button } from "../ui/ui"
 import useResize from "../customHooks/useResize";
 import Icon from "../ui/Icon"
+import { ImageElement } from "@/types/editor"
+import { useEffect, useState } from "react"
 
 export const Image = ({ attributes, children, element }) => {
   const editor = useSlate()
@@ -12,22 +14,62 @@ export const Image = ({ attributes, children, element }) => {
   const selected = useSelected();
   const focused = useFocused();
   const { width, height, ratio } = element
-  const [size, onMouseDown] = useResize({ width, height, ratio });
+  const [imgWidth, setImgWidth] = useState<number>(width)
+  const [imgHeight, setImgHeight] = useState<number>(height)
+  const [imgRatio, setImgRatio] = useState<number>(ratio)
+  const [size, onMouseDown, resizing] = useResize(imgWidth, imgHeight, imgRatio );
+
+  // console.log(
+  //   {
+  //     width:width?width:"null",
+  //     height:height?height:"null",
+  //     ratio:ratio?ratio:"null",
+  //   })
+    
+  const onImageLoad = async (e) => {
+    const w = +e.target?.naturalWidth
+    const h = +e.target?.naturalHeight
+    if (!width) setImgWidth(w)
+    if (!height) setImgHeight(h)
+    if (!ratio) setImgRatio(w/h)
+  }
+
+  useEffect(() => {
+    if (!resizing) {
+      //@ts-ignore
+      setImgWidth(size.width); setImgHeight(size.height)
+    }
+  }, [resizing])
+
+  useEffect(() => {
+    const path = ReactEditor.findPath(editor, element)
+    const newProperties = {
+      width: imgWidth,
+      height: imgHeight,
+      ratio: imgRatio,
+    }
+    Transforms.setNodes<ImageElement>(editor, newProperties, {
+      at: path,
+    })
+  }, [imgWidth, imgHeight])
 
   const inputHandler = (val) => {
     const path = ReactEditor.findPath(editor, element)
-    const newProperties: Partial<SlateElement> = {
+    const newProperties = {
       description: val,
     }
-    Transforms.setNodes<SlateElement>(editor, newProperties, {
+    Transforms.setNodes<ImageElement>(editor, newProperties, {
       at: path,
     })
   }
 
+  // console.log({ imgWidth, imgHeight, imgRatio })
+
   return (
-    <div className={css`
+    <div className={cx("img-wrapper", css`
         width: fit-content;
         margin: 2rem;
+        border: 2px solid transparent;
         ${element.float ? "float:" + element.float + ";" : null}
         ${selected && focused && "border: 2px solid var(--c-grey);"}
 
@@ -35,7 +77,7 @@ export const Image = ({ attributes, children, element }) => {
           width: 100%;
           height: 100%;
         }
-      `}
+      `)}
       {...attributes}
       contentEditable={false}
     >
@@ -72,11 +114,13 @@ export const Image = ({ attributes, children, element }) => {
             <img
               src={element.url}
               alt={element.description}
+              onLoad={onImageLoad}
             />
           </a>
           : <img
             src={element.url}
             alt={element.description}
+            onLoad={onImageLoad}
           />
         }
         <button
@@ -116,6 +160,7 @@ export const Image = ({ attributes, children, element }) => {
         </Button>
 
       </div>
+
       <AdditionalInput
         prop={element.description}
         onChange={inputHandler}

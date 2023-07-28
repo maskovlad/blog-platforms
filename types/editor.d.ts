@@ -106,9 +106,9 @@ export type TitleElement = {
 export type ImageElement = {
   type: "image";
   url: string;
-  width: number | undefined;
-  height: number | undefined;
-  ratio: number;
+  width: number | undefined | "auto";
+  height: number | undefined | "auto";
+  ratio: number | undefined;
   description?: string;   // for description and alt
   href?: string;
   float?: "left" | "right";

@@ -23,6 +23,8 @@ export const withMedia = editor => {
     const text = data.getData('text/plain')
     const { files } = data
 
+    console.log("Starting insertData")
+
     // якщо це файл, то цікавить тільки якщо це зображення
     if (files && files.length > 0) {
       for (const file of files) {
@@ -35,6 +37,7 @@ export const withMedia = editor => {
             // щоб економити розмір бази даних. 
             // Тільки якщо це локальний файл то вставлятимемо як base64
             const url = text ? text : reader.result
+            console.log("Вставка зображення як ", text ? "url" : "file")
             insertImage(editor, url)
           })
 
@@ -49,7 +52,7 @@ export const withMedia = editor => {
         insertYoutube(editor, text)
       }
       else if (await isImageUrl(text)) {
-        console.log("Pasting image")
+        console.log("Pasting image as url")
         insertImage(editor, text)}
       else {
         console.log("Pasting link")
