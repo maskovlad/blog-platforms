@@ -173,6 +173,7 @@ export type CustomText = {
   subscript?: boolean;
   color?: string;
   bgColor?: string;
+  highlighted?: boolean;
   text: string;
 };
 
@@ -190,7 +191,7 @@ declare module "slate" {
   interface CustomTypes {
     Editor: CustomEditor;
     Element: CustomElement;
-    Text: CustomText | EmptyText;
+    Text: CustomText | EmptyText ;
     Range: BaseRange & {
       [key: string]: unknown;
     };

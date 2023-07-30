@@ -138,9 +138,11 @@ const ColorPicker = ({ format, hint }) => {
         <div className={css`
           position: absolute;
           left: 0;
-          background-color: white;
+          top: 25px;
+          background-color: var(--c-lightgrey);
           padding: 6px 10px;
-          border: 1px solid lightgray;
+          border: 1px solid var(--c-cyan);
+          border-radius: 5px;
           height: fit-content;
           z-index: 123;
         `}>
@@ -161,6 +163,7 @@ const ColorPicker = ({ format, hint }) => {
                     width: 16px;
                     height: 16px;
                     background-color: #000000;
+                    border: 1px solid black;
                   `}
                   style={{ background: color }}
                 ></div>
@@ -169,7 +172,7 @@ const ColorPicker = ({ format, hint }) => {
           </div>
 
           <p style={{ textAlign: "center", opacity: "0.7", width: "100%" }}>
-            OR
+            АБО
           </p>
 
           <form onSubmit={handleFormSubmit}>

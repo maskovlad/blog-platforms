@@ -83,7 +83,7 @@ const iconList = {
   insertHtml: <AiFillHtml5 size={20} />,
   arrowRight: <MdArrowForward size={35} />,
   pen: <AiFillEdit size={20} />,
-  removeMedia: <AiFillDelete size={30} color="red" />
+  removeMedia: <AiFillDelete size={20} color="red" />
 };
 
 const Icon = (props) => {

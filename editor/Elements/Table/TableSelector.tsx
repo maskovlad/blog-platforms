@@ -17,6 +17,7 @@ const TableSelector = ({ hint }) => {
     row: 0,
     column: 0,
   });
+  const [leftPosition, setLeftPosition] = useState(false)
 
   const [tableInput, setTableInput] = useState(
     Array.from({ length: 6 }, () =>
@@ -32,7 +33,7 @@ const TableSelector = ({ hint }) => {
       Array.from({ length: 6 }, (v, col) => ({
         bg:
           row + 1 <= tableData.row && col + 1 <= tableData.column
-            ? "orange"
+            ? "#f44336"
             : "lightgray",
         column: col,
       }))
@@ -50,7 +51,12 @@ const TableSelector = ({ hint }) => {
   }, [showOptions]);
   const table = new TableUtil(editor);
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e) => {
+    // коригування позиції popup, коли він упирається в край вікна
+    const buttonLeftCoord = e.target.getBoundingClientRect().left
+    const documentWidth = document.documentElement.clientWidth
+    if (buttonLeftCoord < (documentWidth - 200)) setLeftPosition(true); else setLeftPosition(false)
+
     setSelection(editor.selection);
     //@ts-ignore
     setShowOptions((prev) => !prev);
@@ -64,7 +70,7 @@ const TableSelector = ({ hint }) => {
     setShowOptions(false);
   };
 
-
+  // console.log({ leftPosition })
   return (
     <div
       ref={tableOptionsRef}
@@ -96,10 +102,11 @@ const TableSelector = ({ hint }) => {
       {showOptions && (
         <div className={css`
           position: absolute;
-          left: 0;
-          background-color: white;
+          ${leftPosition ? "left: 0;" : "right: 0;"}
+          background-color: var(--c-lightgrey);
           padding: 6px 10px;
-          border: 1px solid lightgray;
+          border: 1px solid var(--c-cyan);
+          border-radius: 5px;
           height: fit-content;
           z-index: 1;
         `}>
@@ -126,9 +133,10 @@ const TableSelector = ({ hint }) => {
                     setTableData({ row: row + 1, column: column + 1 })
                   }
                   className={css`
-                    width:15px;
-                    height:15px;
-                    border: 1px solid lightgray;
+                    width:17px;
+                    height:17px;
+                    border: 1px solid var(--c-cyan);
+                    background-color: var(--c-green);
                   `}
                   style={{ border: `1px solid ${bg}` }}
                 ></div>

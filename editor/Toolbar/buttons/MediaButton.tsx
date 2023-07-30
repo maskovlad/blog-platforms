@@ -16,10 +16,15 @@ export const MediaButton = ({ format, hint }) => {
   const [href, setHref] = useState<string>("");
   const [float, setFloat] = useState<string>("");
   const [selection, setSelection] = useState<BaseSelection>();
+  const [leftPosition, setLeftPosition] = useState(false)
 
 
   const handleButtonClick = (e) => {
     e.preventDefault();
+    // коригування позиції popup, коли він упирається в край вікна
+    const buttonLeftCoord = e.target.getBoundingClientRect().left
+    const documentWidth = document.documentElement.clientWidth
+    if (buttonLeftCoord < (documentWidth - 250)) setLeftPosition(true); else setLeftPosition(false)
 
     setSelection(editor.selection);
     selection && ReactEditor.focus(editor);
@@ -62,9 +67,10 @@ export const MediaButton = ({ format, hint }) => {
       </Button>
 
       {showInput && (
-        <div className={css`
+        <div 
+          className={css`
             position: absolute;
-            left: 0;
+            ${leftPosition ? "left: 0;" : "right: 0;"}
             background-color: var(--c-lightgrey);
             padding: 6px 10px;
             border: 1px solid var(--c-cyan);
@@ -72,21 +78,6 @@ export const MediaButton = ({ format, hint }) => {
             height: fit-content;
             z-index: 234;
           `}>
-
-          {/* {format === "image" && (
-              <div>
-                <div
-                  style={{ display: "flex", gap: "10px" }}
-                  onClick={handleImageUpload}
-                >
-                  <Icon icon="upload" />
-                  <span>Upload</span>
-                </div>
-                <p style={{ textAlign: "center", opacity: "0.7", width: "100%" }}>
-                  OR
-                </p>
-              </div>
-            )} */}
 
           <div
             className={css`

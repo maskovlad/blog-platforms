@@ -215,6 +215,10 @@ export const RenderLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
     );
   }
 
+  if (leaf.highlighted) {
+    return <span {...attributes} style={{ background: 'yellow' }}>{children}</span>
+  }
+
   return <span
     {...attributes}
     className={Object.keys(rest).join(' ')}

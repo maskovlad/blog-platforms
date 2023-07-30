@@ -17,6 +17,7 @@ const LinkButton = (props) => {
   const [url, setUrl] = useState("");
   const [showInNewTab, setShowInNewTab] = useState(false);
   const [selection, setSelection] = useState<BaseSelection>();
+  const [leftPosition, setLeftPosition] = useState(false)
 
   const handleInsertLink = () => {
     Transforms.select(editor, selection as Location);
@@ -27,13 +28,18 @@ const LinkButton = (props) => {
     setShowInNewTab(false);
   };
 
-  const toggleLink = () => {
+  const toggleLink = (e) => {
+    // коригування позиції popup, коли він упирається в край вікна
+    const buttonLeftCoord = e.target.getBoundingClientRect().left
+    const documentWidth = document.documentElement.clientWidth
+    if (buttonLeftCoord < (documentWidth - 250)) setLeftPosition(true); else setLeftPosition(false)
     setSelection(editor.selection);
     // @ts-ignore
     setShowInput((prev) => !prev);
   };
 
   const handleInputChange = ({ target }) => {
+    Transforms.deselect = () => { }
     if (target.type === "checkbox") {
       setShowInNewTab((prev) => !prev);
     } else {
@@ -61,7 +67,7 @@ const LinkButton = (props) => {
       {showInput && (
         <div className={css`
             position: absolute;
-            left: 0;
+            ${leftPosition ? "left: 0;" : "right: 0;"}
             background-color: var(--c-lightgrey);
             padding: 6px 10px;
             border: 1px solid var(--c-cyan);

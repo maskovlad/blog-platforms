@@ -148,11 +148,11 @@ export const Image = ({ attributes, children, element }) => {
           className={cx("remove-btn", css`
             display: none;
             position: absolute;
-            top: 0.5em;
-            left: 0.5em;
+            top: 20px;
+            left: 20px;
             background-color: white !important;
             color: red !important;
-            padding: 8px;
+            padding: 5px;
           `)}
           data-tooltip-id="format-tooltip" data-tooltip-content="Прибрати"
         >
