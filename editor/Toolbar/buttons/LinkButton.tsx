@@ -10,6 +10,7 @@ import { Location } from "slate";
 import { isBlockActive } from "../../utils/toggleBlock";
 
 const LinkButton = (props) => {
+
   const { hint } = props;
   const editor = useSlate()
   const linkInputRef = useRef(null);
@@ -29,10 +30,12 @@ const LinkButton = (props) => {
   };
 
   const toggleLink = (e) => {
+
     // коригування позиції popup, коли він упирається в край вікна
     const buttonLeftCoord = e.target.getBoundingClientRect().left
     const documentWidth = document.documentElement.clientWidth
     if (buttonLeftCoord < (documentWidth - 250)) setLeftPosition(true); else setLeftPosition(false)
+
     setSelection(editor.selection);
     // @ts-ignore
     setShowInput((prev) => !prev);

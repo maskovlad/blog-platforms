@@ -1,18 +1,15 @@
 "use client"
 
 import { createEditor, Descendant } from 'slate'
-import { withReact, Slate, Editable } from 'slate-react'
+import { withReact, Slate, } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { CustomEditor } from "@/types/editor";
-import { Toolbar } from './ui/ui'
 import { ToolBar } from './Toolbar/ToolBar'
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Tooltip } from 'react-tooltip'
 import { withMedia } from './plugins/withMedia'
 import { initialValue } from './initialValue'
-import { RenderElement, RenderLeaf } from './Elements/elements'
-import { SetNodeToDecorations, useDecorate } from './codeDecorate/CodeDecorate'
-import useOnKeydown from './customHooks/useOnKeyDown'
+import { SetNodeToDecorations } from './Editable/codeDecorate/CodeDecorate'
 import { MarkButton } from './Toolbar/buttons/MarkButton'
 import { BlockButton } from "./Toolbar/buttons/BlockButton"
 import { MediaButton } from "./Toolbar/buttons/MediaButton"
@@ -21,24 +18,21 @@ import withLinks from "./plugins/withLinks"
 import withTable from "./plugins/withTable"
 import LinkButton from './Toolbar/buttons/LinkButton'
 import ColorPicker from "./Elements/ColorPicker/ColorPicker"
-import "material-icons/iconfont/material-icons.css"
+// import "material-icons/iconfont/material-icons.css"
 import { withHtml } from './plugins/withHtml';
+import EditableWithDecorate from './Editable/EditableWithDecorate';
 
-
+// @refresh reset
 export default function NewEditor() {
 
-  const renderElement = useCallback(props => <RenderElement {...props} />, [])
-  const renderLeaf = useCallback(props => <RenderLeaf {...props} />, [])
   const editor: CustomEditor = useMemo(() =>
     withHtml(
       withTable(
-      withLinks(
-        withMedia(
-          withHistory(
-            withReact(
-              createEditor())))))), [])
-  const decorate = useDecorate(editor)
-  const onKeyDown = useOnKeydown(editor)
+        withLinks(
+          withMedia(
+            withHistory(
+              withReact(
+                createEditor())))))), [])
   const [value, setValue] = useState<Descendant[]>(initialValue);
 
   console.log(value)
@@ -79,19 +73,9 @@ export default function NewEditor() {
 
         <SetNodeToDecorations />
 
-        <Editable
-          decorate={decorate}
-          renderElement={renderElement}
-          renderLeaf={renderLeaf}
-          placeholder="Enter some rich text…"
-          spellCheck
-          autoFocus
-          onKeyDown={onKeyDown}
-          style={{ padding: "0 3rem" }}
-        />
+        <EditableWithDecorate />
       </Slate>
     </>
   )
 }
-
 

@@ -5,7 +5,7 @@ import { createEditor, Descendant } from 'slate'
 import { withReact, Slate, Editable } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { CustomEditor } from "@/types/editor";
-import { normalizeTokens } from './codeDecorate/normalize-tokens'
+import { normalizeTokens } from './Editable/codeDecorate/normalize-tokens'
 import { Toolbar } from '@/editor/ui/ui'
 import { useCallback, useMemo, useState } from 'react';
 import { ToolBar } from './Toolbar/ToolBar'

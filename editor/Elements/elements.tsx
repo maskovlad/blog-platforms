@@ -216,7 +216,7 @@ export const RenderLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
   }
 
   if (leaf.highlighted) {
-    return <span {...attributes} style={{ background: 'yellow' }}>{children}</span>
+    return <span {...attributes} style={{ background: '#3390ff', color: "white" }}>{children}</span>
   }
 
   return <span

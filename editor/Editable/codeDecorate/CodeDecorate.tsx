@@ -1,4 +1,3 @@
-import { useCallback } from "react"
 import { normalizeTokens } from "./normalize-tokens"
 import Prism from 'prismjs';
 import 'prismjs/components/prism-javascript'
@@ -16,27 +15,59 @@ import {
   Range,
   Element as SlateElement,
   NodeEntry,
+  Text,
 } from 'slate'
 import { CodeBlockElement } from "@/types/editor";
 import { useSlate } from "slate-react";
-import isHotkey from "is-hotkey";
 
 const CODE_LINE_TYPE = 'code-line'
 const CODE_BLOCK_TYPE = 'code-block'
 
-export const useDecorate = (editor: Editor) => {
-  return useCallback(
-    ([node, path]) => {
-      if (SlateElement.isElement(node) && node.type === CODE_LINE_TYPE) {
-        const ranges = editor.nodeToDecorations?.get(node) || []
-        return ranges
-      }
+// const useDecorate = (editor: Editor) => {
 
-      return []
-    },
-    [editor.nodeToDecorations]
-  )
-}
+//   const [lastActiveSelection, setLastActiveSelection] = useState<Range>()
+
+//   useEffect(() => {
+//     if (editor.selection != null) setLastActiveSelection(editor.selection)
+//   }, [editor.selection])
+
+//   const decorate = useCallback(
+//     ([node, path]) => {
+
+
+//       if (SlateElement.isElement(node) && node.type === CODE_LINE_TYPE) {
+//         const ranges = editor.nodeToDecorations?.get(node) || []
+//         return ranges
+//       }
+
+//       if (
+//         Text.isText(node) &&
+//         // editor.selection == null &&
+//         lastActiveSelection != null
+//       ) {
+//         const intersection = Range.intersection(lastActiveSelection, Editor.range(editor, path))
+
+//         if (intersection == null) {
+//           return []
+//         }
+
+//         const range = {
+//           highlighted: true,
+//           ...intersection
+//         };
+
+//         return [range]
+//       }
+
+
+//       return []
+//     },
+//     [editor.nodeToDecorations, lastActiveSelection]
+//   )
+//   return decorate
+// }
+
+// export default useDecorate
 
 // precalculate editor.nodeToDecorations map to use it inside decorate function then
 export const SetNodeToDecorations = () => {

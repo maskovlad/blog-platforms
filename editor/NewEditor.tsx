@@ -11,7 +11,7 @@ import { Tooltip } from 'react-tooltip'
 import { withMedia } from './plugins/withMedia'
 import { initialValue } from './SviyEditor'
 import { RenderElement, RenderLeaf } from './Elements/elements'
-import { SetNodeToDecorations, useDecorate } from './codeDecorate/CodeDecorate'
+import { SetNodeToDecorations, useDecorate } from './Editable/codeDecorate/CodeDecorate'
 import useOnKeydown from './customHooks/useOnKeyDown'
 import { MarkButton } from './Toolbar/buttons/MarkButton'
 import { BlockButton } from "./Toolbar/buttons/BlockButton"

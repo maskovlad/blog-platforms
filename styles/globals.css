@@ -61,6 +61,11 @@ textarea {
   text-decoration: none;
 }
 
+::selection {
+  background: #3390ff;
+  color: white;
+}
+
 input,
 textarea {
   font-family: inherit;
