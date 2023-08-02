@@ -16,7 +16,8 @@
   opacity: 0;
   will-change: opacity, visibility;
   border-radius: 3px;
-  padding: 8px 16px;
+  /* padding: 8px 16px; */
+  padding: 4px 8px;
   font-size: 90%;
   transition: opacity .3s ease-out;
   position: absolute;

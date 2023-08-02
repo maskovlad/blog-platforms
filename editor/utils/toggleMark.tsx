@@ -17,6 +17,23 @@ export const isMarkActive = (editor: CustomEditor, format: string) => {
   return marks ? marks[format] === true : false
 }
 
+export const addMarkData = (editor, data) => {
+  console.log({data})
+  Editor.addMark(editor, data.format, data.value);
+};
+
+
+export const activeMark = (editor, format) => {
+  const defaultMarkData = {
+    color: "black",
+    bgColor: "black",
+    fontSize: "normal",
+    fontFamily: "sans",
+  };
+  const marks = Editor.marks(editor);
+  const defaultValue = defaultMarkData[format];
+  return marks?.[format] ?? defaultValue;
+};
 
 
 

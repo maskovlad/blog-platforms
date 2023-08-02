@@ -3,7 +3,7 @@ import { insertLink } from "../../utils/link.js";
 import Button from "./Button";
 import Icon from "../../ui/Icon"
 import usePopup from "../../customHooks/usePopup";
-import { BaseSelection, Transforms } from "slate";
+import { BaseSelection, Editor, Transforms } from "slate";
 import { css } from "@emotion/css";
 import { useSlate } from "slate-react";
 import { Location } from "slate";

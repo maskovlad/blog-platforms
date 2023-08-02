@@ -21,6 +21,11 @@ import ColorPicker from "./Elements/ColorPicker/ColorPicker"
 // import "material-icons/iconfont/material-icons.css"
 import { withHtml } from './plugins/withHtml';
 import EditableWithDecorate from './Editable/EditableWithDecorate';
+import { Dropdown } from './Toolbar/buttons/Dropdown';
+
+const fontSizeOptions = [{ text: 'Small', value: 'small' }, { text: 'Normal', value: 'normal' }, { text: 'Medium', value: 'medium' }, { text: 'Huge', value: 'huge' }]
+
+const fontFamilyOptions = [{ text: 'Sans Serif', value: 'sans' }, { text: 'Serif', value: 'serif' }, { text: 'MonoSpace', value: 'monospace' }, { text: 'Скинути', value: 'inherit' }]
 
 // @refresh reset
 export default function NewEditor() {
@@ -38,13 +43,15 @@ export default function NewEditor() {
   console.log(value)
   return (
     <>
-      <Tooltip id='format-tooltip' />
+      <Tooltip id='format-tooltip' delayShow={1000}/>
       <Slate
         editor={editor}
         initialValue={value}
         onChange={(content) => setValue(content)}
       >
         <ToolBar>
+          <Dropdown format="fontFamily" hint="Шрифт" options={fontFamilyOptions} />
+          <Dropdown format="fontSize" hint="Кегль шрифту" options={fontSizeOptions} />
           <MarkButton format="bold" hint="Жирний" />
           <MarkButton format="italic" hint="Нахилений" />
           <MarkButton format="underline" hint="Підкреслений" />

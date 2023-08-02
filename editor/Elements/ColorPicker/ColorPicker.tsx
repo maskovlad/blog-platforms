@@ -6,6 +6,7 @@ import usePopup from "../../customHooks/usePopup";
 import { ReactEditor, useSlate } from "slate-react";
 import { css } from "@emotion/css";
 import { Editor } from "slate";
+import { activeMark } from "../../utils/toggleMark";
 
 const SvgFormatColorText = () => {
   return (
@@ -211,17 +212,5 @@ export default ColorPicker;
 
 export const addMarkData = (editor, data) => {
   Editor.addMark(editor, data.format, data.value);
-};
-
-export const activeMark = (editor, format) => {
-  const defaultMarkData = {
-    color: "black",
-    bgColor: "black",
-    fontSize: "normal",
-    fontFamily: "sans",
-  };
-  const marks = Editor.marks(editor);
-  const defaultValue = defaultMarkData[format];
-  return marks?.[format] ?? defaultValue;
 };
 

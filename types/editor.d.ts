@@ -176,6 +176,8 @@ export type CustomText = {
   color?: string;
   bgColor?: string;
   highlighted?: boolean;
+  fontSize?: string;
+  fontFamily?: string;
   text: string;
 };
 

@@ -7,6 +7,18 @@ import Link from "./Link"
 import Youtube from "./Youtube"
 import Table from "./Table/Table"
 
+export const sizeMap = {
+  small: "0.75em",
+  normal: "1em",
+  medium: "1.75em",
+  huge: "2.5em",
+};
+
+export const fontFamilyMap = {
+  sans: "Helvetica,Arial, sans serif",
+  serif: "Georgia, Times New Roaman,serif",
+  monospace: "Monaco, Courier New,monospace",
+};
 
 export const RenderElement = (props) => {
   const { attributes, children, element } = props
@@ -215,6 +227,17 @@ export const RenderLeaf = ({ attributes, children, leaf }: RenderLeafProps) => {
     );
   }
 
+
+  if (leaf.fontSize) {
+    const size = sizeMap[leaf.fontSize];
+    children = <span {...attributes} style={{ fontSize: size }}>{children}</span>;
+  }
+
+  if (leaf.fontFamily) {
+    const family = fontFamilyMap[leaf.fontFamily];
+    children = <span style={{ fontFamily: family }}>{children}</span>;
+  }
+  //! must be on the down of code
   if (leaf.highlighted) {
     return <span {...attributes} style={{ background: '#3390ff', color: "white" }}>{children}</span>
   }
