@@ -41,6 +41,7 @@ import { SiLatex } from "@react-icons/all-files/si/SiLatex";
 
 import { BiCodeAlt } from "@react-icons/all-files/bi/BiCodeAlt";
 import { BiCodeBlock } from "@react-icons/all-files/bi/BiCodeBlock";
+import { BiParagraph } from "@react-icons/all-files/bi/BiParagraph";
 
 import { IoLogoYoutube } from "@react-icons/all-files/io/IoLogoYoutube";
 
@@ -53,6 +54,7 @@ const iconList = {
   "heading-one": <BsTypeH1 size={20} />,
   "heading-two": <BsTypeH2 size={20} />,
   "heading-three": <BsTypeH3 size={20} />,
+  "paragraph": <BiParagraph size={19} />,
 
   "block-quote": <MdFormatQuote size={20} />,
   superscript: <FaSuperscript size={15} />,

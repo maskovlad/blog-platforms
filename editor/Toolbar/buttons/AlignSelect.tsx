@@ -54,15 +54,18 @@ export default function AlignSelect() {
   const [showDialog, setShowDialog] = usePopup(dialogRef);
   const [leftPosition, setLeftPosition] = useState(false)
   const [activeFormat, setActiveFormat] = useState<TextAlign | undefined>(undefined)
+  let arrActiveBlocks: boolean[] = [false, false, false]
 
   useEffect(()=>{
-    TEXT_ALIGN_TYPES.map((item)=>{
+    arrActiveBlocks = TEXT_ALIGN_TYPES.map((item)=>{
       if(isBlockActive(editor, item, "align")) {
         setActiveFormat(item)
-        return
-      }
+        return true
+      } else return false
     })
-  },[editor.selection])
+    if (!arrActiveBlocks.includes(true))
+      setActiveFormat(undefined)
+  }, [arrActiveBlocks])
 
   const handleShowDialog = (e) => {
     // коригування позиції popup, коли він упирається в край вікна

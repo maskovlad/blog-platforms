@@ -24,6 +24,7 @@ import EditableWithDecorate from './Editable/EditableWithDecorate';
 import { Dropdown } from './Toolbar/buttons/Dropdown';
 import AlignSelect from './Toolbar/buttons/AlignSelect';
 import HeadingSelect from './Toolbar/buttons/HeadingSelect';
+import { css } from '@emotion/css';
 
 const fontSizeOptions = [{ text: 'Small', value: 'small' }, { text: 'Normal', value: 'normal' }, { text: 'Medium', value: 'medium' }, { text: 'Huge', value: 'huge' }]
 
@@ -45,7 +46,7 @@ export default function ExpEditor() {
   console.log(value)
   return (
     <>
-      <Tooltip id='format-tooltip' delayShow={1000}/>
+      <Tooltip id='format-tooltip' delayShow={1000} />
       <Slate
         editor={editor}
         initialValue={value}
@@ -54,25 +55,34 @@ export default function ExpEditor() {
         <ToolBar>
           <Dropdown format="fontFamily" hint="Шрифт" options={fontFamilyOptions} />
           <Dropdown format="fontSize" hint="Кегль шрифту" options={fontSizeOptions} />
-          <MarkButton format="bold" hint="Жирний" />
-          <MarkButton format="italic" hint="Нахилений" />
-          <MarkButton format="underline" hint="Підкреслений" />
-          <MarkButton format="code" hint="Код" />
-          <MarkButton format="strikethrough" hint="Перекреслений" />
-          <MarkButton format="superscript" hint="Верхній індекс" />
-          <MarkButton format="subscript" hint="Нижній індекс" />
-          <ColorPicker format="color" hint="Колір тексту" />
-          <ColorPicker format="bgColor" hint="Колір тла" />
-          <HeadingSelect />
-          <BlockButton format="block-quote" hint="Цитата" />
-          <BlockButton format="numbered-list" hint="Нумерований" />
-          <BlockButton format="bulleted-list" hint="Список" />
-          <AlignSelect />
-          <BlockButton format="code-block" hint="Блок коду" />
-          <TableSelector hint="Таблиця" />
-          <LinkButton hint="Виділіть текст у пості і натисніть цю кнопку, щоб додати посилання" />
-          <MediaButton format="image" hint="Вставити зображення" />
-          <MediaButton format="youtube" hint="Вставити відео Youtube" />
+          <span className={groupBlocks}>
+            <MarkButton format="bold" hint="Жирний" />
+            <MarkButton format="italic" hint="Нахилений" />
+            <MarkButton format="underline" hint="Підкреслений" />
+            <MarkButton format="code" hint="Код" />
+            <MarkButton format="strikethrough" hint="Перекреслений" />
+            <MarkButton format="superscript" hint="Верхній індекс" />
+            <MarkButton format="subscript" hint="Нижній індекс" />
+          </span>
+          <span className={groupBlocks}>
+            <ColorPicker format="color" hint="Колір тексту" />
+            <ColorPicker format="bgColor" hint="Колір тла" />
+          </span>
+          <span className={groupBlocks}>
+            <BlockButton format="paragraph" hint="Параграф" />
+            <HeadingSelect />
+            <BlockButton format="block-quote" hint="Цитата" />
+            <BlockButton format="numbered-list" hint="Нумерований" />
+            <BlockButton format="bulleted-list" hint="Список" />
+            <AlignSelect />
+            <BlockButton format="code-block" hint="Блок коду" />
+            <TableSelector hint="Таблиця" />
+          </span>
+          <span className={groupBlocks}>
+            <LinkButton hint="Виділіть текст у пості і натисніть цю кнопку, щоб додати посилання" />
+            <MediaButton format="image" hint="Вставити зображення" />
+            <MediaButton format="youtube" hint="Вставити відео Youtube" />
+          </span>
         </ToolBar>
 
         <SetNodeToDecorations />
@@ -83,3 +93,12 @@ export default function ExpEditor() {
   )
 }
 
+const groupBlocks = css`
+              height: 100%;
+              border: 1px solid var(--c-lightgrey);
+              border-radius: 2px;
+              display: flex;
+              flex-direction: row;
+              gap: 12px;
+              padding: 4px;
+            `

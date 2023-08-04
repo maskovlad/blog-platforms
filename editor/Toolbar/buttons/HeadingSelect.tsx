@@ -9,38 +9,38 @@ import headingTwo from "../toolbarIcons/headingTwo.svg"
 import headingThree from "../toolbarIcons/headingThree.svg"
 import { isBlockActive, toggleBlock } from "@/editor/utils/toggleBlock";
 
-type Heading = "heading-one" | "heading-two" | "heading-three" | "heading-four" | "heading-five" | "heading-six"
-const HeadingTypes: Heading[] = ["heading-one", "heading-two", "heading-three", "heading-four", "heading-five", "heading-six"]
+type Heading = "heading-one" | "heading-two" | "heading-three"
+const HeadingTypes: Heading[] = ["heading-one", "heading-two", "heading-three"]
 
 type BlockOption = {
   id: number;
   format: Heading;
   ico: string;
   title: string;
-  fontSize: {fontSize: number};
+  fontSize: { fontSize: number };
 }
 
-const blockOptions: BlockOption[] =[
+const blockOptions: BlockOption[] = [
   {
     id: 1,
     format: "heading-one",
     ico: headingOne.src,
     title: "Заголовок 1",
-    fontSize: {fontSize: 16},
+    fontSize: { fontSize: 16 },
   },
   {
     id: 2,
     format: "heading-two",
     ico: headingTwo.src,
     title: "Заголовок 2",
-    fontSize: {fontSize: 14},
+    fontSize: { fontSize: 14 },
   },
   {
     id: 3,
     format: "heading-three",
     ico: headingThree.src,
     title: "Заголовок 3",
-    fontSize: {fontSize: 12},
+    fontSize: { fontSize: 12 },
   },
 ]
 
@@ -50,6 +50,18 @@ export default function HeadingSelect() {
   const [showDialog, setShowDialog] = usePopup(dialogRef);
   const [leftPosition, setLeftPosition] = useState(false)
   const [activeFormat, setActiveFormat] = useState<Heading | undefined>(undefined)
+  let arrActiveBlocks: boolean[] = [false, false, false]
+
+  useEffect(() => {
+    arrActiveBlocks = HeadingTypes.map((item) => {
+      if (isBlockActive(editor, item)) {
+        setActiveFormat(item)
+        return true
+      } else return false
+    })
+    if (!arrActiveBlocks.includes(true))
+      setActiveFormat(undefined)
+  }, [arrActiveBlocks])
 
   const handleShowDialog = (e) => {
     // коригування позиції popup, коли він упирається в край вікна
@@ -59,16 +71,6 @@ export default function HeadingSelect() {
 
     setShowDialog((prev) => !prev)
   }
-
-  useEffect(() => {
-    HeadingTypes.map((item) => {
-      if (isBlockActive(editor, item)) {
-        setActiveFormat(item)
-        return
-      }
-    })
-  }, [editor.selection])
-
 
   const formatClick = (e) => {
     setActiveFormat(e.target.value)
