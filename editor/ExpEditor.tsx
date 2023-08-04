@@ -23,6 +23,7 @@ import { withHtml } from './plugins/withHtml';
 import EditableWithDecorate from './Editable/EditableWithDecorate';
 import { Dropdown } from './Toolbar/buttons/Dropdown';
 import AlignSelect from './Toolbar/buttons/AlignSelect';
+import HeadingSelect from './Toolbar/buttons/HeadingSelect';
 
 const fontSizeOptions = [{ text: 'Small', value: 'small' }, { text: 'Normal', value: 'normal' }, { text: 'Medium', value: 'medium' }, { text: 'Huge', value: 'huge' }]
 
@@ -62,17 +63,11 @@ export default function ExpEditor() {
           <MarkButton format="subscript" hint="Нижній індекс" />
           <ColorPicker format="color" hint="Колір тексту" />
           <ColorPicker format="bgColor" hint="Колір тла" />
-          <BlockButton format="heading-one" hint="Заголовок 1" />
-          <BlockButton format="heading-two" hint="Заголовок 2" />
-          <BlockButton format="heading-three" hint="Заголовок 3" />
+          <HeadingSelect />
           <BlockButton format="block-quote" hint="Цитата" />
           <BlockButton format="numbered-list" hint="Нумерований" />
           <BlockButton format="bulleted-list" hint="Список" />
           <AlignSelect />
-          {/* <BlockButton format="left" hint="По лівому краю" />
-          <BlockButton format="center" hint="По центру" />
-          <BlockButton format="right" hint="По правому краю" />
-          <BlockButton format="justify" hint="По ширині" /> */}
           <BlockButton format="code-block" hint="Блок коду" />
           <TableSelector hint="Таблиця" />
           <LinkButton hint="Виділіть текст у пості і натисніть цю кнопку, щоб додати посилання" />

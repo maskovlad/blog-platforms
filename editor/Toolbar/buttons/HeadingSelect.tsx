@@ -4,75 +4,72 @@ import { useSlate } from "slate-react";
 import { css } from "@emotion/css";
 import Button from "./Button";
 import Icon from "@/editor/ui/Icon";
-import alignLeftIco from "../toolbarIcons/align-left.svg"
-import alignCenterIco from "../toolbarIcons/align-center.svg"
-import alignRightIco from "../toolbarIcons/align-right.svg"
-import alignJustifyIco from "../toolbarIcons/align-justify.svg"
+import headingOne from "../toolbarIcons/headingOne.svg"
+import headingTwo from "../toolbarIcons/headingTwo.svg"
+import headingThree from "../toolbarIcons/headingThree.svg"
 import { isBlockActive, toggleBlock } from "@/editor/utils/toggleBlock";
 
-type TextAlign = 'left' | 'center' | 'right' | 'justify'
-const TEXT_ALIGN_TYPES: TextAlign[] = ['left', 'center', 'right', 'justify']
+type Heading = "heading-one" | "heading-two" | "heading-three" | "heading-four" | "heading-five" | "heading-six"
+const HeadingTypes: Heading[] = ["heading-one", "heading-two", "heading-three", "heading-four", "heading-five", "heading-six"]
 
 type BlockOption = {
   id: number;
-  format: TextAlign;
+  format: Heading;
   ico: string;
   title: string;
+  fontSize: {fontSize: number};
 }
 
-const blockOptions: BlockOption[] = [
+const blockOptions: BlockOption[] =[
   {
     id: 1,
-    format: "left",
-    ico: alignLeftIco.src,
-    title: "Зліва",
+    format: "heading-one",
+    ico: headingOne.src,
+    title: "Заголовок 1",
+    fontSize: {fontSize: 16},
   },
   {
     id: 2,
-    format: "center",
-    ico: alignCenterIco.src,
-    title: "По центру",
+    format: "heading-two",
+    ico: headingTwo.src,
+    title: "Заголовок 2",
+    fontSize: {fontSize: 14},
   },
   {
     id: 3,
-    format: "right",
-    ico: alignRightIco.src,
-    title: "Зправа",
-  },
-  {
-    id: 4,
-    format: "justify",
-    ico: alignJustifyIco.src,
-    title: "По ширині",
+    format: "heading-three",
+    ico: headingThree.src,
+    title: "Заголовок 3",
+    fontSize: {fontSize: 12},
   },
 ]
 
-export default function AlignSelect() {
-
+export default function HeadingSelect() {
   const editor = useSlate()
   const dialogRef = useRef(null);
   const [showDialog, setShowDialog] = usePopup(dialogRef);
   const [leftPosition, setLeftPosition] = useState(false)
-  const [activeFormat, setActiveFormat] = useState<TextAlign | undefined>(undefined)
-
-  useEffect(()=>{
-    TEXT_ALIGN_TYPES.map((item)=>{
-      if(isBlockActive(editor, item, "align")) {
-        setActiveFormat(item)
-        return
-      }
-    })
-  },[editor.selection])
+  const [activeFormat, setActiveFormat] = useState<Heading | undefined>(undefined)
 
   const handleShowDialog = (e) => {
     // коригування позиції popup, коли він упирається в край вікна
     const buttonLeftCoord = e.target.getBoundingClientRect().left
     const documentWidth = document.documentElement.clientWidth
     if (buttonLeftCoord < (documentWidth - 250)) setLeftPosition(true); else setLeftPosition(false)
-    
+
     setShowDialog((prev) => !prev)
   }
-  
+
+  useEffect(() => {
+    HeadingTypes.map((item) => {
+      if (isBlockActive(editor, item)) {
+        setActiveFormat(item)
+        return
+      }
+    })
+  }, [editor.selection])
+
+
   const formatClick = (e) => {
     setActiveFormat(e.target.value)
     toggleBlock(editor, e.target.value)
@@ -102,7 +99,7 @@ export default function AlignSelect() {
         onClick={handleShowDialog}
         hint={`Вирівнювання тексту: ${activeFormat}`}
       >
-        <Icon icon={activeFormat ? activeFormat : "left"} />
+        <Icon icon={activeFormat ? activeFormat : "heading-one"} />
       </Button>
 
       {showDialog && (
@@ -119,11 +116,12 @@ export default function AlignSelect() {
             flex-direction: column;
         `}>
 
-          {blockOptions.map((item)=>(
-            <button 
+          {blockOptions.map((item) => (
+            <button
               key={item.id}
               value={item.format}
               onClick={formatClick}
+              style={item.fontSize}
               className={css`
                 width: 100%;
                 display: flex;
@@ -131,13 +129,14 @@ export default function AlignSelect() {
                 padding: 0 3px 0 30px;
                 text-wrap: nowrap;
                 font-size: 0.9rem;
-                cursor: ${activeFormat===item.format ? "not-allowed" : "pointer"};
+                cursor: ${activeFormat === item.format ? "not-allowed" : "pointer"};
                 background-image: url(${item.ico});
                 background-repeat: no-repeat;
                 background-color: transparent;
                 background-position-x: 2px;
                 border: 1px solid transparent;
                 transition: all 0.2s;
+                line-height: 1.5rem;
 
                 :hover {
                   border: 1px solid var(--c-grey);
@@ -148,7 +147,7 @@ export default function AlignSelect() {
               `}
               disabled={activeFormat === item.format}
             >
-              {item.title} 
+              {item.title}
             </button>
           ))}
         </div>
@@ -156,4 +155,5 @@ export default function AlignSelect() {
 
     </div>
   )
+
 }
