@@ -24,7 +24,6 @@ const LinkButton = (props) => {
     Transforms.select(editor, selection as Location);
     insertLink(editor, { url, showInNewTab });
     setUrl("");
-    // @ts-ignore
     setShowInput((prev) => !prev);
     setShowInNewTab(false);
   };

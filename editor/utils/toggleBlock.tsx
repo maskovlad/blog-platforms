@@ -71,6 +71,7 @@ export const toggleBlock = (editor, format) => {
   }
 }
 
+// чи має вибраний блок format
 export const isBlockActive = (editor: CustomEditor, format: string, blockType = 'type') => {
   const { selection } = editor
   if (!selection) return false

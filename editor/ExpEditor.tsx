@@ -22,13 +22,14 @@ import ColorPicker from "./Elements/ColorPicker/ColorPicker"
 import { withHtml } from './plugins/withHtml';
 import EditableWithDecorate from './Editable/EditableWithDecorate';
 import { Dropdown } from './Toolbar/buttons/Dropdown';
+import AlignSelect from './Toolbar/buttons/AlignSelect';
 
 const fontSizeOptions = [{ text: 'Small', value: 'small' }, { text: 'Normal', value: 'normal' }, { text: 'Medium', value: 'medium' }, { text: 'Huge', value: 'huge' }]
 
 const fontFamilyOptions = [{ text: 'Sans Serif', value: 'sans' }, { text: 'Serif', value: 'serif' }, { text: 'MonoSpace', value: 'monospace' }, { text: 'Скинути', value: 'inherit' }]
 
 // @refresh reset
-export default function NewEditor() {
+export default function ExpEditor() {
 
   const editor: CustomEditor = useMemo(() =>
     withHtml(
@@ -67,10 +68,11 @@ export default function NewEditor() {
           <BlockButton format="block-quote" hint="Цитата" />
           <BlockButton format="numbered-list" hint="Нумерований" />
           <BlockButton format="bulleted-list" hint="Список" />
-          <BlockButton format="left" hint="По лівому краю" />
+          <AlignSelect />
+          {/* <BlockButton format="left" hint="По лівому краю" />
           <BlockButton format="center" hint="По центру" />
           <BlockButton format="right" hint="По правому краю" />
-          <BlockButton format="justify" hint="По ширині" />
+          <BlockButton format="justify" hint="По ширині" /> */}
           <BlockButton format="code-block" hint="Блок коду" />
           <TableSelector hint="Таблиця" />
           <LinkButton hint="Виділіть текст у пості і натисніть цю кнопку, щоб додати посилання" />
