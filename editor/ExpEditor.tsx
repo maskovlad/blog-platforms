@@ -83,6 +83,7 @@ export default function ExpEditor() {
             <MediaButton format="image" hint="Вставити зображення" />
             <MediaButton format="youtube" hint="Вставити відео Youtube" />
           </span>
+          <BlockButton format="settings" hint="Налаштування панелі" />
         </ToolBar>
 
         <SetNodeToDecorations />
@@ -96,7 +97,7 @@ export default function ExpEditor() {
 const groupBlocks = css`
               height: 100%;
               border: 1px solid var(--c-lightgrey);
-              border-radius: 2px;
+              border-radius: 5px;
               display: flex;
               flex-direction: row;
               gap: 12px;

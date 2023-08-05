@@ -11,7 +11,7 @@ import { MdFormatAlignJustify } from "@react-icons/all-files/md/MdFormatAlignJus
 import { MdFormatListNumbered } from "@react-icons/all-files/md/MdFormatListNumbered";
 import { MdFormatListBulleted } from "@react-icons/all-files/md/MdFormatListBulleted";
 import { MdInsertLink } from "@react-icons/all-files/md/MdInsertLink";
-import { MdImage } from "@react-icons/all-files/md/MdImage";
+import { FiImage } from "@react-icons/all-files/fi/FiImage";
 import { MdAdd } from "@react-icons/all-files/md/MdAdd";
 import { MdKeyboardArrowRight } from "@react-icons/all-files/md/MdKeyboardArrowRight";
 import { MdArrowForward } from "@react-icons/all-files/md/MdArrowForward";
@@ -36,14 +36,15 @@ import { AiOutlineInsertRowAbove } from "@react-icons/all-files/ai/AiOutlineInse
 import { AiOutlineInsertRowLeft } from "@react-icons/all-files/ai/AiOutlineInsertRowLeft";
 import { AiFillHtml5 } from "@react-icons/all-files/ai/AiFillHtml5";
 import { AiFillDelete } from "@react-icons/all-files/ai/AiFillDelete";
+import { AiOutlineYoutube } from "@react-icons/all-files/ai/AiOutlineYoutube";
 
 import { SiLatex } from "@react-icons/all-files/si/SiLatex";
 
 import { BiCodeAlt } from "@react-icons/all-files/bi/BiCodeAlt";
 import { BiCodeBlock } from "@react-icons/all-files/bi/BiCodeBlock";
 import { BiParagraph } from "@react-icons/all-files/bi/BiParagraph";
+import { FiSettings } from "@react-icons/all-files/fi/FiSettings";
 
-import { IoLogoYoutube } from "@react-icons/all-files/io/IoLogoYoutube";
 
 const iconList = {
   bold: <MdFormatBold size={20} />,
@@ -66,9 +67,9 @@ const iconList = {
   "numbered-list": <MdFormatListNumbered size={20} />,
   "bulleted-list": <MdFormatListBulleted size={20} />,
   link: <MdInsertLink size={20} />,
-  image: <MdImage color="#7a7ae5" size={20} />,
+  image: <FiImage size={20} />,
   video: <MdVideoLibrary size={20} />,
-  youtube: <IoLogoYoutube color={"#e73e3e"} size={19} />,
+  youtube: <AiOutlineYoutube size={20} />,
   "code-block": <BiCodeBlock size={20} />,
   add: <MdAdd size={20} />,
   table: <AiOutlineTable size={20} />,
@@ -85,6 +86,7 @@ const iconList = {
   insertHtml: <AiFillHtml5 size={20} />,
   arrowRight: <MdArrowForward size={35} />,
   pen: <AiFillEdit size={20} />,
+  settings: <FiSettings size={20} />,
   removeMedia: <AiFillDelete size={20} color="red" />
 };
 

@@ -4,9 +4,10 @@ import usePopup from "../../customHooks/usePopup";
 import { BaseSelection, Transforms, Location } from "slate";
 import { TableUtil } from "../../utils/table";
 
-import "./TableSelector.css";
 import { useSlate } from "slate-react";
 import { css } from "@emotion/css";
+import Button from "@/editor/Toolbar/buttons/Button";
+import { isBlockActive } from "@/editor/utils/toggleBlock";
 
 const TableSelector = ({ hint }) => {
   const editor = useSlate()
@@ -79,25 +80,19 @@ const TableSelector = ({ hint }) => {
         position: relative;
       `}
     >
-      <button
-        style={{
-          color: showOptions ? "black" : "lightgray",
-        }}
+      <Button
         className={css`
-          display: flex;
-          align-items: center;
-          background: transparent;
-          cursor: pointer;
-          border: 1px solid transparent;
-          border-bottom: none;
-          ${showOptions ? "border-color: lightgray;" : ""}
+          ${showOptions ? "border: 1px solid lightgray;border-bottom: none;" : ""}
         `}
-        title="Таблиця"
         onClick={handleButtonClick}
-        data-tooltip-id="format-tooltip" data-tooltip-content={hint}
+        active={isBlockActive(
+          editor,
+          "table"
+        )}
+        hint={hint}
       >
         <Icon icon="table" />
-      </button>
+      </Button>
 
       {showOptions && (
         <div className={css`

@@ -58,7 +58,9 @@ const LinkButton = (props) => {
     >
 
       <Button
-        // className={showInput ? css`border: 1px solid lightgray;border-bottom: none;` : ""}
+        className={css`
+          ${showInput ? "border: 1px solid lightgray;border-bottom: none;" : ""}
+        `}
         active={isBlockActive(editor, 'link')}
         onClick={toggleLink}
         hint={hint}

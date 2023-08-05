@@ -4,7 +4,7 @@ const Button = (props) => {
   return (
     <button 
       style={{ 
-        color: active ? "var(--c-white)" : "var(--c-black)",
+        color: active ? "#45ff48" : "var(--c-black)",
         width: '20px', 
         height: '20px', 
         background: "transparent",

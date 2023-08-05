@@ -16,6 +16,7 @@ export const ToolBar = ({ children }) => {
       border-top: 1px solid var(--c-lightgrey);
       border-bottom: 1px solid var(--c-lightgrey);
       z-index: 2;
+      background: linear-gradient(45deg, var(--c-grey), var(--c-cyan),var(--c-grey));
 
       @media (max-width: 640px) {
         // padding: 0.2rem 1rem;

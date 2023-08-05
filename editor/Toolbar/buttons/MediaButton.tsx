@@ -7,6 +7,7 @@ import { BaseSelection, } from 'slate'
 import { useRef, useState } from 'react'
 import usePopup from "../../customHooks/usePopup"
 import { css } from '@emotion/css'
+import { isBlockActive } from '@/editor/utils/toggleBlock'
 
 export const MediaButton = ({ format, hint }) => {
   const editor = useSlateStatic()
@@ -60,8 +61,15 @@ export const MediaButton = ({ format, hint }) => {
       `}
     >
       <Button
+        className={css`
+          ${showInput ? "border: 1px solid lightgray;border-bottom: none;" : ""}
+        `}
         onClick={handleButtonClick}
         hint={hint}
+        active={isBlockActive(
+          editor,
+          format
+        )}
       >
         <Icon icon={format} />
       </Button>

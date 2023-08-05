@@ -83,7 +83,7 @@ const TableContextMenu = () => {
           width: fit-content;
           height: fit-content;
           position: fixed;
-          background: white;
+          background: var(--c-lightgrey);
           border: 1px solid lightgray;
           border-radius: 10px;
           padding: 0.5%;

@@ -7,6 +7,7 @@ import { ReactEditor, useSlate } from "slate-react";
 import { css } from "@emotion/css";
 import { Editor } from "slate";
 import { activeMark } from "../../utils/toggleMark";
+import Button from "@/editor/Toolbar/buttons/Button";
 
 const SvgFormatColorText = () => {
   return (
@@ -118,16 +119,18 @@ const ColorPicker = ({ format, hint }) => {
       <button
         style={{
           color: showOptions ? "black" : activeMark(editor, format),
-          opacity: "1",
+          width: '20px',
+          height: '20px',
+          background: "transparent",
+          display: 'flex',
+          alignItems: "center",
+          cursor: "pointer",
         }}
         className={css`
-          display: flex;
-          align-items: center;
-          background: transparent;
-          cursor: pointer;
-          border: 1px solid transparent;
-          border-bottom: none;
-          ${showOptions ? "border-color: lightgray;" : ""}
+          // display: flex;
+          // align-items: center;
+          // background: transparent;
+          ${showOptions ? "border: 1px solid lightgray;border-bottom: none;" : ""}
         `}
         onClick={toggleOption}
         data-tooltip-id="format-tooltip" data-tooltip-content={hint}

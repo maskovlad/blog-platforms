@@ -94,11 +94,13 @@ export default function AlignSelect() {
         className={css`
           ${showDialog ? "border: 1px solid lightgray;border-bottom: none;" : ""}
           ::after {
-            content: "⬇️";
+            content: "▶";
+            color: var(--c-blue);
             position: absolute;
             left: 13px;
             top: 13px;
             font-size: 8px;
+            transform: rotate(90deg);
           }
         `}
         active={!!activeFormat}
