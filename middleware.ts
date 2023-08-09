@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
 export const config = {
   matcher: [
@@ -10,14 +11,21 @@ export const config = {
      - 4. /examples (inside /public)
      - 5. all root files inside /public (e.g. /favicon.ico)
      */
-    "/((?!api|_next|fonts|examples|[\\w-]+\\.\\w+).*)",
+    "/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)",
   ],
 };
 
-export default function middleware(req: NextRequest) {
+export default async function middleware(req: NextRequest) {
   const url = req.nextUrl
 
   const hostname = req.headers.get("host") || "sviy.site"
+
+  // Get the pathname of the request (e.g. /, /about, /blog/first-post)
+  const path = url.pathname;
+  console.log({path})
+
+  const session = await getToken({ req });
+  console.log({session})
 
   const currentHost =
     process.env.NODE_ENV === "production" && process.env.VERCEL === "1"
@@ -26,7 +34,7 @@ export default function middleware(req: NextRequest) {
       : hostname.replace(/\.localhost:\d+/, "");
   //  console.log({currentHost})
 
-  // rewrites for app pages
+   // rewrites for app pages
   if (currentHost == "app") {
     if (
       url.pathname === "/login" &&
@@ -37,7 +45,8 @@ export default function middleware(req: NextRequest) {
       return NextResponse.redirect(url);
     }
 
-    url.pathname = `/app${url.pathname}`;
+    url.pathname = `/app${path === "/" ? "" : path}`;
+    console.log({urlPathnaem:url.pathname})
     return NextResponse.rewrite(url);
   }
 
