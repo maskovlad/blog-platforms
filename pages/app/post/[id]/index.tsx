@@ -15,7 +15,6 @@ import { HttpMethod } from "@/types/http";
 import type { WithSitePost } from "@/types/common";
 
 import { Descendant } from "slate";
-import SviyEditor from "@/editor/SviyEditor";
 import Head from "next/head";
 import ExpEditor from "@/editor/ExpEditor";
 

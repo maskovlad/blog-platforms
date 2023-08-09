@@ -1,8 +1,5 @@
 import type { Metadata } from 'next'
 import ExpEditor from "@/editor/ExpEditor";
-import SviyEditor from '@/editor/SviyEditor';
-import NewEditor from '@/editor/NewEditor';
-
 //^ SVIY SITE HOME PAGE
 
 export const metadata: Metadata = {
@@ -18,7 +15,6 @@ export default async function Page({ params }: { params: { site: string } }) {
       <div className="m-auto w-48">
         <h1 className="text-white">Українська блогова платформа - Sviy.Site</h1>
         <ExpEditor />
-        {/* <SviyEditor /> */}
       </div>
     </article>
   )
