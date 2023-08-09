@@ -48,13 +48,13 @@ export default function Post() {
   const [savedState, setSavedState] = useState(
     post
       ? `Збереження ${Intl.DateTimeFormat("uk", { month: "short" }).format(
-          new Date(post.updatedAt)
-        )} ${Intl.DateTimeFormat("uk", { day: "2-digit" }).format(
-          new Date(post.updatedAt)
-        )} ${Intl.DateTimeFormat("uk", {
-          hour: "numeric",
-          minute: "numeric",
-        }).format(new Date(post.updatedAt))}`
+        new Date(post.updatedAt)
+      )} ${Intl.DateTimeFormat("uk", { day: "2-digit" }).format(
+        new Date(post.updatedAt)
+      )} ${Intl.DateTimeFormat("uk", {
+        hour: "numeric",
+        minute: "numeric",
+      }).format(new Date(post.updatedAt))}`
       : "Зберігаю..."
   );
 
@@ -260,7 +260,7 @@ export default function Post() {
             {publishing ? <LoadingDots /> : "Публікувати  →"}
           </button>
 
-{/* Заголовок посту */}
+          {/* Заголовок посту */}
           <TextareaAutosize
             name="title"
             onInput={(e: ChangeEvent<HTMLTextAreaElement>) =>
@@ -294,7 +294,7 @@ export default function Post() {
             value={data.title}
           />
 
-{/* Опис посту */}
+          {/* Опис посту */}
           <TextareaAutosize
             name="description"
             onInput={(e: ChangeEvent<HTMLTextAreaElement>) =>
@@ -325,12 +325,8 @@ export default function Post() {
           />
 
           {data?.content && (
-            <SviyEditor
-              // content={data.content as Descendant[]}
-              // onChange={onChange}
-            />
+            <ExpEditor />
           )}
-<ExpEditor />
         </div>
 
         <footer

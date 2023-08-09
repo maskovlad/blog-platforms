@@ -5,7 +5,7 @@ import { withReact, Slate, } from 'slate-react'
 import { withHistory } from 'slate-history'
 import { CustomEditor } from "@/types/editor";
 import { ToolBar } from './Toolbar/ToolBar'
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Tooltip } from 'react-tooltip'
 import { withMedia } from './plugins/withMedia'
 import { initialValue } from './initialValue'
@@ -88,7 +88,7 @@ export default function ExpEditor() {
 
         <SetNodeToDecorations />
 
-        <EditableWithDecorate />
+          <EditableWithDecorate />
       </Slate>
     </>
   )

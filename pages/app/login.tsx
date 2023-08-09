@@ -89,10 +89,8 @@ export default function Login() {
             position: relative; 
             margin-left: auto;
             margin-right: auto; 
-            width: auto; 
-            height: 3rem; 
           `}
-          src="/favicon_bird.png"
+          src="/ss-logo-black.png"
         />
         <h2 className={css`
           margin-top: 1.5rem; 

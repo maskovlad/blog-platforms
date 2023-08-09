@@ -4,10 +4,8 @@ import { Element as SlateElement, Range } from "slate"
 import { Editable, useSlate } from "slate-react"
 import useOnKeydown from "../customHooks/useOnKeyDown"
 import { RenderElement, RenderLeaf } from "../Elements/elements"
-import { CodeBlockElement } from "@/types/editor";
 
 const CODE_LINE_TYPE = 'code-line'
-const CODE_BLOCK_TYPE = 'code-block'
 
 const EditableWithDecorate = () => {
   const editor = useSlate()
@@ -25,9 +23,10 @@ const EditableWithDecorate = () => {
     ([node, path]) => {
       if (
         Text.isText(node) &&
-        // editor.selection == null &&
-        !Editor.isEditor(node) &&
-        lastActiveSelection != null
+        !Editor.isEditor(node) && 
+        lastActiveSelection != null &&
+        //@ts-ignore
+        (!!editor.selection && !Range.isCollapsed(editor.selection) )
       ) {
         const intersection = Range.intersection(lastActiveSelection, Editor.range(editor, path))
 
@@ -55,6 +54,7 @@ const EditableWithDecorate = () => {
 
   return (
     <Editable
+    readOnly
       decorate={decorate}
       renderElement={renderElement}
       renderLeaf={renderLeaf}
