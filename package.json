@@ -22,6 +22,8 @@
     "@types/prismjs": "^1.26.0",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
+    "@vercel/analytics": "^1.0.1",
+    "clsx": "^2.0.0",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.3",
     "image-extensions": "^1.1.0",
@@ -46,6 +48,7 @@
     "suneditor": "^2.44.3",
     "suneditor-react": "^3.4.1",
     "swr": "^2.1.0",
+    "tailwind-merge": "^1.14.0",
     "typescript": "4.9.5",
     "use-debounce": "^9.0.3"
   },
