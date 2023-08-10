@@ -45,6 +45,7 @@
     "slate-hyperscript": "^0.77.0",
     "slate-react": "^0.97.1",
     "slate-serializers": "^0.1.0",
+    "sonner": "^0.6.2",
     "suneditor": "^2.44.3",
     "suneditor-react": "^3.4.1",
     "swr": "^2.1.0",
