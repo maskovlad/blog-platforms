@@ -14,7 +14,8 @@ module.exports = {
   experimental: {
     appDir: true,
     serverComponentsExternalPackages: ["prisma", "@prisma/client"],
+    serverActions: true,
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: false, // Required to fix: https://nextjs.org/docs/messages/failed-loading-swc
 };

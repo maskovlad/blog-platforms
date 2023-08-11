@@ -3,7 +3,7 @@
 import { createPost, deletePost, getPost, updatePost } from "@/lib/api";
 import { getServerSession } from "next-auth/next";
 
-import { authOptions } from "./auth/[...nextauth]";
+import { authOptions } from "./_auth/[...nextauth]";
 import { HttpMethod } from "@/types/http";
 
 import type { NextApiRequest, NextApiResponse } from "next";
