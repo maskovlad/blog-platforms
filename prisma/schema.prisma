@@ -4,6 +4,7 @@
 datasource db {
   provider     = "postgres"
   url          = env("DATABASE_URL")
+  shadowDatabaseUrl = env("DATABASE_URL")
   relationMode = "prisma"
 }
 

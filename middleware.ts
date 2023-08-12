@@ -21,6 +21,8 @@ export default async function middleware(req: NextRequest) {
 
   // Get the pathname of the request (e.g. /, /about, /blog/first-post)
   const path = url.pathname;
+  const session = await getToken({ req });
+  
 
   const currentHost =
     process.env.NODE_ENV === "production" && process.env.VERCEL === "1"
@@ -30,6 +32,7 @@ export default async function middleware(req: NextRequest) {
 
    // rewrites for app pages
   if (currentHost == "app") {
+      console.log({session})
     if (
       path === "/login" &&
       (req.cookies.get("next-auth.session-token") ||
