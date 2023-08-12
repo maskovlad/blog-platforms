@@ -21,8 +21,6 @@ export default async function middleware(req: NextRequest) {
 
   // Get the pathname of the request (e.g. /, /about, /blog/first-post)
   const path = url.pathname;
-  const session = await getToken({ req });
-  
 
   const currentHost =
     process.env.NODE_ENV === "production" && process.env.VERCEL === "1"
@@ -32,19 +30,16 @@ export default async function middleware(req: NextRequest) {
 
    // rewrites for app pages
   if (currentHost == "app") {
-      console.log({session})
-    if (
-      path === "/login" &&
-      (req.cookies.get("next-auth.session-token") ||
-        req.cookies.get("__Secure-next-auth.session-token"))
-    ) {
-      url.pathname = "/";
-      return NextResponse.redirect(url);
+    const session = await getToken({ req });
+    console.log({session})
+    if (!session && path !== "/login") {
+      return NextResponse.redirect(new URL("/login", req.url));
+    } else if (session && path == "/login") {
+      return NextResponse.redirect(new URL("/", req.url));
     }
-
-    url.pathname = `/app${path === "/" ? "" : path}`;
-    console.log({urlPathnaem:url.pathname})
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(
+      new URL(`/app${path === "/" ? "" : path}`, req.url),
+    );
   }
 
   // rewrite root application to `/home` folder
