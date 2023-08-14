@@ -2,6 +2,7 @@ import { getServerSession, type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
+import { cookies, headers } from "next/headers";
 
 const VERCEL_DEPLOYMENT = !!process.env.VERCEL_URL;
 
@@ -62,6 +63,38 @@ export const authOptions: NextAuthOptions = {
     },
   },
 };
+
+// костиль для обходу помилки getserversession "Error: Invariant: Method expects to have requestAsyncStorage, none available"
+export const getServerActionSession = () => {
+  const req = {
+    headers: Object.fromEntries(headers()),
+    cookies: Object.fromEntries(
+      cookies()
+        .getAll()
+        .map(c => [c.name, c.value]),
+    ),
+  } as any;
+  const res = {
+    getHeader() {
+      /* empty */
+    },
+    setCookie() {
+      /* empty */
+    },
+    setHeader() {
+      /* empty */
+    },
+  } as any;
+  return getServerSession(req, res, authOptions) as Promise<{
+    user: {
+      id: string;
+      name: string;
+      username: string;
+      email: string;
+      image: string;
+    };
+  } | null>
+}
 
 export function getSession() {
   return getServerSession(authOptions) as Promise<{

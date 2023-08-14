@@ -8,7 +8,11 @@ module.exports = {
       "abs.twimg.com",
       "pbs.twimg.com",
       "avatars.githubusercontent.com",
-      "localhost:3000"
+      "localhost:3000",
+      "public.blob.vercel-storage.com",
+      "www.google.com",
+      "flag.vercel.app",
+      "illustrations.popsy.co",
     ],
   },
   experimental: {
