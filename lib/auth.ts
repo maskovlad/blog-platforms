@@ -114,7 +114,7 @@ export function withSiteAuth(action: any) {
     siteId: string,
     key: string | null,
   ) => {
-    const session = await getSession();
+    const session = await getServerActionSession();
     if (!session) {
       return {
         error: "Not authenticated",

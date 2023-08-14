@@ -54,7 +54,6 @@ const EditableWithDecorate = () => {
 
   return (
     <Editable
-    readOnly
       decorate={decorate}
       renderElement={renderElement}
       renderLeaf={renderLeaf}
